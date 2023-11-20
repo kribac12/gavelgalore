@@ -28,11 +28,11 @@
           <div class="container-fluid">
             <div class="gavelgalore-logo">
               <span class="material-symbols-outlined">gavel</span>
-              <a class="navbar-brand" href="index.html">GavelGalore</a>
+              <a class="navbar-brand fs-3" href="index.html"> GavelGalore</a>
             </div>
 
             <button
-              class="navbar-toggler"
+              class="navbar-toggler mb-4"
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#hamburger-nav"
@@ -43,7 +43,7 @@
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="hamburger-nav">
-              <form class="d-flex">
+              <form class="d-flex w-50">
                 <input
                   class="form-control me-2"
                   type="search"
@@ -63,21 +63,69 @@
                 <li class="nav-item">
                   <a class="nav-link" href="#">BUY</a>
                 </li>
-                <div class="ms-auto navbar-nav">
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Login</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Register</a>
-                  </li>
-                </div>
+              </ul>
+              <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <span
+                      class="material-symbols-outlined align-middle fs-5 pe-1"
+                      >login</span
+                    >Login
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">
+                    <span
+                      class="material-symbols-outlined align-middle fs-5 pe-1"
+                      >how_to_reg</span
+                    >Register
+                  </a>
+                </li>
               </ul>
             </div>
           </div>
         </nav>
       </header>
       <main>
-        <h1>Testing</h1>
+        <section class="row">
+          <div class="col-md-6 d-flex align-items-center">
+            <h1>
+              Explore the endless ordinary and extraordinary items at Gavel
+              Galore.
+            </h1>
+          </div>
+          <div class="col-md-6">
+            <img
+              src="/assets/images/hero-illustration.png"
+              class="img-fluid"
+              alt="Hero image"
+            />
+          </div>
+        </section>
+        <section class="my-5">
+          <div id="carousel" class="carousel slide" data-bs-ride="carousel">
+            <!-- Carousel items -->
+          </div>
+        </section>
+        <section class="row">
+          <div class="col-md-6">
+            <h1>Sell your items with Gavel Galore</h1>
+            <p>
+              Looking for a simple and effective way to sell your art,
+              headphones, jewellery. furniture, clothes or anything else? Look
+              no further. Provide us with information and images, and we will
+              take care of the rest.
+            </p>
+            <button class="primary">Start your selling journey</button>
+          </div>
+          <div class="col-md-6">
+            <img
+              src="/assets/images/sell-image.png"
+              class="img-fluid"
+              alt="Sell image"
+            />
+          </div>
+        </section>
       </main>
     </div>
   </body>

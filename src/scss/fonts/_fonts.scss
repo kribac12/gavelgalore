@@ -1,16 +1,17 @@
 h1,
 h2,
-h3 {
+h3,
+.navbar-brand {
   font-family: 'playfair display';
 }
 
-h1,
-.navbar-brand {
-  font-family: 'Playfair Display';
-  font-size: 2rem;
+body,
+.nav-link,
+.navbar form {
+  font-family: 'lato';
 }
 
-p,
-a {
-  font-family: 'lato';
+.navbar a,
+span {
+  font-weight: 600;
 }
