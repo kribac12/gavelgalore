@@ -4,21 +4,10 @@
 
 @import 'fonts/fonts';
 
+@import 'components/icons';
+
 @import '../../node_modules/bootstrap/scss/bootstrap.scss';
 
-.icons,
 .navbar-brand {
   color: $primary;
-}
-
-h1,
-h2,
-h3 {
-  font-family: 'playfair display';
-}
-
-h1,
-.navbar-brand {
-  font-family: 'Playfair Display';
-  font-size: 2rem;
 }
