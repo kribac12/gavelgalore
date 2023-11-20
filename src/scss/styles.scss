@@ -1,3 +1,13 @@
-@import "variables/variables";
+@import 'variables/variables';
 
-@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+@import 'components/buttons';
+
+@import 'fonts/fonts';
+
+@import 'components/icons';
+
+@import '../../node_modules/bootstrap/scss/bootstrap.scss';
+
+.navbar-brand {
+  color: $primary;
+}
