@@ -9,7 +9,7 @@ function switchToRegister() {
   }
 }
 
-function switchToLogin() {
+export function switchToLogin() {
   const loginContent = document.getElementById('loginFormContent');
   const registerContent = document.getElementById('registerFormContent');
 

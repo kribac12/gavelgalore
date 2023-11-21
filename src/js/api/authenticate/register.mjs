@@ -5,7 +5,8 @@ import {
   validateUsername,
   validateAvatarUrl,
 } from '../../utilities/auth-utils.mjs';
-import { loginUser } from './login.mjs';
+import { switchToLogin } from '../../utilities/pills-nav.mjs';
+import { displaySuccess } from '../../utilities/success.mjs';
 
 const registerForm = document.getElementById('registerForm');
 const registerName = document.getElementById('registerName');
@@ -15,10 +16,10 @@ const registerAvatar = document.getElementById('registerAvatar');
 
 export async function registerUser() {
   try {
-    const name = registerName.value.trim();
-    const email = registerEmail.value.trim();
-    const password = registerPassword.value.trim();
-    const avatar = registerAvatar.value.trim();
+    const name = registerName.value;
+    const email = registerEmail.value;
+    const password = registerPassword.value;
+    const avatar = registerAvatar.value;
     const emailValidation = validateInputs(email, password);
     const usernameValidation = validateUsername(name);
     const avatarValidation = validateAvatarUrl(avatar);
@@ -39,11 +40,15 @@ export async function registerUser() {
 
     const response = await makeApiRequest('auth/register', 'POST', newUser);
 
-    if (response && response.accessToken) {
-      loginUser(response);
+    if (response) {
+      displaySuccess('Registration successful! You can now login.');
+      switchToLogin();
     } else {
-      document.getElementById('registerMessage').innerText =
-        'Registration successful, you can now log in';
+      if (response && response.errorMessage) {
+        displayError(response.errorMessage);
+      } else {
+        displayError('Registration failed. Please try again.');
+      }
     }
   } catch (error) {
     const errorMessage = error.response
