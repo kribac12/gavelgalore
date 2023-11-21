@@ -37,7 +37,7 @@ export async function registerUser() {
       ...(avatar && { avatar }),
     };
 
-    const response = await makeApiRequest('aut/register', 'POST', newUser);
+    const response = await makeApiRequest('auth/register', 'POST', newUser);
 
     if (response && response.accessToken) {
       loginUser(response);
