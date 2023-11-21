@@ -2,7 +2,6 @@
   "name": "gavelgalore",
   "version": "0.0.1",
   "description": "Auction website",
-  "main": "index.js",
   "scripts": {
     "build": "sass src/scss:dist/css",
     "watch": "sass --watch src/scss:dist/css",
