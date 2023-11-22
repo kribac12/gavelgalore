@@ -14,3 +14,11 @@ function removeError() {
   const existingErrorAlert = document.getElementById('dynamicErrorAlert');
   if (existingErrorAlert) existingErrorAlert.remove();
 }
+
+export function showValidationError(inputElement, errorMessage) {
+  inputElement.classList.add('is-invalid');
+  const errorElement = document.getElementById(inputElement.id + 'Error');
+  if (errorElement) {
+    errorElement.textContent = errorMessage;
+  }
+}

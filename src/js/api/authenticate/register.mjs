@@ -1,9 +1,12 @@
-import { displayError } from '../../utilities/error-handler.mjs';
+import {
+  displayError,
+  showValidationError,
+} from '../../utilities/error-handler.mjs';
 import { makeApiRequest } from '../api-service.mjs';
 import {
-  validateInputs,
   validateUsername,
   validateAvatarUrl,
+  validateInputs,
 } from '../../utilities/auth-utils.mjs';
 import { switchToLogin } from '../../utilities/pills-nav.mjs';
 import { displaySuccess } from '../../utilities/success.mjs';
@@ -20,17 +23,37 @@ export async function registerUser() {
     const email = registerEmail.value;
     const password = registerPassword.value;
     const avatar = registerAvatar.value;
-    const emailValidation = validateInputs(email, password);
-    const usernameValidation = validateUsername(name);
-    const avatarValidation = validateAvatarUrl(avatar);
 
-    if (emailValidation || usernameValidation || avatarValidation) {
-      const errorMessage =
-        emailValidation || usernameValidation || avatarValidation;
-      displayError(errorMessage);
+    // Clear any previous validation errors
+    [registerEmail, registerPassword, registerName, registerAvatar].forEach(
+      (input) => {
+        input.classList.remove('is-invalid');
+      }
+    );
+
+    // Validate inputs
+    const emailPasswordError = validateInputs(email, password);
+    if (emailPasswordError) {
+      showValidationError(
+        email ? registerEmail : registerPassword,
+        emailPasswordError
+      );
       return;
     }
 
+    const usernameError = validateUsername(name);
+    if (usernameError) {
+      showValidationError(registerName, usernameError);
+      return;
+    }
+
+    const avatarError = validateAvatarUrl(avatar);
+    if (avatarError) {
+      showValidationError(registerAvatar, avatarError);
+      return;
+    }
+
+    // Prepare user data for registration
     const newUser = {
       name,
       email,
@@ -38,12 +61,14 @@ export async function registerUser() {
       ...(avatar && { avatar }),
     };
 
+    // API call for registration
     const response = await makeApiRequest('auth/register', 'POST', newUser);
 
     if (response) {
       displaySuccess('Registration successful! You can now login.');
       switchToLogin();
     } else {
+      // Handle unsuccessful registration
       if (response && response.errorMessage) {
         displayError(response.errorMessage);
       } else {
@@ -51,6 +76,7 @@ export async function registerUser() {
       }
     }
   } catch (error) {
+    // Handle errors from API call
     const errorMessage = error.response
       ? await error.response.json()
       : error.message;

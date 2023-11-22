@@ -1,7 +1,10 @@
-import { displayError } from '../../utilities/error-handler.mjs';
+import {
+  displayError,
+  showValidationError,
+} from '../../utilities/error-handler.mjs';
 import { makeApiRequest } from '../api-service.mjs';
-import { validateInputs } from '../../utilities/auth-utils.mjs';
 import { saveUserInfo, getUserInfo } from '../../storage/storage.mjs';
+import { validateInputs } from '../../utilities/auth-utils.mjs';
 
 const loginForm = document.getElementById('loginForm');
 const loginEmail = document.getElementById('loginEmail');
@@ -15,18 +18,24 @@ export async function loginUser(registrationResponse = null) {
       // Use the response from registration
       response = registrationResponse;
     } else {
-      // Proceed with regular login process
       const email = loginEmail.value;
       const password = loginPassword.value;
 
-      console.log(loginEmail.value);
-      console.log(loginPassword.value);
-      if (!validateInputs(email, password)) {
-        console.log(validateInputs);
-        displayError('Invalid email or password');
-        console.log(displayError);
+      const validationErrors = validateInputs(email, password);
+      if (validationErrors.length > 0) {
+        validationErrors.forEach((error) => {
+          if (error.includes('Email')) {
+            showValidationError(loginEmail, error);
+          } else if (error.includes('Password')) {
+            showValidationError(loginPassword, error);
+          }
+        });
         return;
       }
+
+      [loginEmail, loginPassword].forEach((input) => {
+        input.classList.remove('is-invalid');
+      });
 
       const userCredentials = { email, password };
       response = await makeApiRequest(
@@ -35,7 +44,6 @@ export async function loginUser(registrationResponse = null) {
         userCredentials,
         null
       );
-      console.log(response);
     }
 
     if (response && response.accessToken) {
