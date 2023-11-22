@@ -16,11 +16,15 @@ export async function loginUser(registrationResponse = null) {
       response = registrationResponse;
     } else {
       // Proceed with regular login process
-      const email = loginEmail.value.trim();
-      const password = loginPassword.value.trim();
+      const email = loginEmail.value;
+      const password = loginPassword.value;
 
+      console.log(loginEmail.value);
+      console.log(loginPassword.value);
       if (!validateInputs(email, password)) {
+        console.log(validateInputs);
         displayError('Invalid email or password');
+        console.log(displayError);
         return;
       }
 
@@ -31,6 +35,7 @@ export async function loginUser(registrationResponse = null) {
         userCredentials,
         null
       );
+      console.log(response);
     }
 
     if (response && response.accessToken) {

@@ -7,6 +7,6 @@ export function displaySuccess(message) {
     // Optionally hide the message after a few seconds
     setTimeout(() => {
       successMessageElement.style.display = 'none';
-    }, 5000); // Hides the message after 5 seconds
+    }, 8000); // Hides the message after 8 seconds
   }
 }

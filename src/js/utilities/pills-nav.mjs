@@ -43,4 +43,19 @@ document.addEventListener('DOMContentLoaded', function () {
     loginTab.addEventListener('click', switchToLogin);
     registerTab.addEventListener('click', switchToRegister);
   }
+
+  switchToTabBasedOnHash();
 });
+
+//Switch tabs based on URL hash
+function switchToTabBasedOnHash() {
+  const hash = window.location.hash;
+  if (hash === '#register') {
+    switchToRegister();
+  } else {
+    switchToLogin();
+  }
+}
+
+//Handle hash change event
+window.addEventListener('hashchange', switchToTabBasedOnHash);
