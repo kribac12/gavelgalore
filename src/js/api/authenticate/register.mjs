@@ -32,12 +32,16 @@ export async function registerUser() {
     );
 
     // Validate inputs
-    const emailPasswordError = validateInputs(email, password);
-    if (emailPasswordError) {
-      showValidationError(
-        email ? registerEmail : registerPassword,
-        emailPasswordError
-      );
+    const emailPasswordErrors = validateInputs(email, password);
+    if (emailPasswordErrors.length > 0) {
+      emailPasswordErrors.forEach((error) => {
+        if (error.toLowerCase().includes('email')) {
+          showValidationError(registerEmail, error);
+        }
+        if (error.toLowerCase().includes('password')) {
+          showValidationError(registerPassword, error);
+        }
+      });
       return;
     }
 
