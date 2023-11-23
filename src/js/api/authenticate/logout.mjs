@@ -8,7 +8,7 @@ export function setUpLogoutLink() {
       event.preventDefault();
 
       localStorage.removeItem('userInfo');
-      window.location.href = '/src/html/index.html';
+      window.location.href = '/index.html';
     });
   } else {
     console.error('Logout link not found');
