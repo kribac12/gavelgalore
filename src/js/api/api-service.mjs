@@ -1,18 +1,26 @@
-import { API_BASE_URL } from '../utilities/base-url.mjs';
+import { API_BASE_URL } from './constants.mjs';
 
 export async function makeApiRequest(
   path,
   method,
   body = null,
+  authToken = null,
   extraHeaders = {}
 ) {
   try {
+    const headers = {
+      'Content-Type': 'application/json',
+      ...extraHeaders,
+    };
+
+    // Include authorization header if authToken is provided
+    if (authToken) {
+      headers['Authorization'] = `Bearer ${authToken}`;
+    }
+
     const options = {
       method: method,
-      headers: {
-        'Content-Type': 'application/json',
-        ...extraHeaders,
-      },
+      headers: headers,
     };
 
     if (body !== null) {
