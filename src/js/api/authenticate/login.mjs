@@ -4,47 +4,43 @@ import {
 } from '../../utilities/error-handler.mjs';
 import { makeApiRequest } from '../api-service.mjs';
 import { saveUserInfo, getUserInfo } from '../../storage/storage.mjs';
-import { validateInputs } from '../../utilities/auth-utils.mjs';
+import {
+  validateEmail,
+  validatePassword,
+} from '../../utilities/auth-utils.mjs';
 
 const loginForm = document.getElementById('loginForm');
 const loginEmail = document.getElementById('loginEmail');
 const loginPassword = document.getElementById('loginPassword');
 
-export async function loginUser(registrationResponse = null) {
+export async function loginUser() {
   try {
-    let response;
+    const email = loginEmail.value;
+    const password = loginPassword.value;
 
-    if (registrationResponse) {
-      // Use the response from registration
-      response = registrationResponse;
-    } else {
-      const email = loginEmail.value;
-      const password = loginPassword.value;
+    [loginEmail, loginPassword].forEach((input) => {
+      input.classList.remove('is-invalid');
+    });
 
-      const validationErrors = validateInputs(email, password);
-      if (validationErrors.length > 0) {
-        validationErrors.forEach((error) => {
-          if (error.includes('Email')) {
-            showValidationError(loginEmail, error);
-          } else if (error.includes('Password')) {
-            showValidationError(loginPassword, error);
-          }
-        });
-        return;
-      }
+    const emailError = validateEmail(email);
+    const passwordError = validatePassword(password);
 
-      [loginEmail, loginPassword].forEach((input) => {
-        input.classList.remove('is-invalid');
-      });
-
-      const userCredentials = { email, password };
-      response = await makeApiRequest(
-        'auth/login',
-        'POST',
-        userCredentials,
-        null
-      );
+    if (emailError) {
+      showValidationError(loginEmail, emailError);
+      return;
     }
+    if (passwordError) {
+      showValidationError(loginPassword, passwordError);
+      return;
+    }
+
+    const userCredentials = { email, password };
+    const response = await makeApiRequest(
+      'auth/login',
+      'POST',
+      userCredentials,
+      null
+    );
 
     if (response && response.accessToken) {
       const userInfo = {

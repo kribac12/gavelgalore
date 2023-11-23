@@ -1,21 +1,21 @@
-export function validateInputs(email, password) {
-  let errors = [];
-  // Check if email and password are not empty
-  if (!email || !password) {
-    errors.push('Email and password must not be empty.');
+export function validateEmail(email) {
+  if (!email) {
+    return 'Email must not be empty.';
   }
-
-  // Check if password is at least 8 characters long
-  if (password.length < 8) {
-    errors.push('Password must be at least 8 characters long.');
-  }
-
-  // Check if email ends with 'noroff.no' or 'stud.noroff.no'
   if (!email.endsWith('noroff.no') && !email.endsWith('stud.noroff.no')) {
-    errors.push('Email must end with "noroff.no" or "stud.noroff.no"');
+    return 'Email must end with "noroff.no" or "stud.noroff.no"';
   }
+  return '';
+}
 
-  return errors;
+export function validatePassword(password) {
+  if (!password) {
+    return 'Password must not be empty.';
+  }
+  if (password.length < 8) {
+    return 'Password must be at least 8 characters.';
+  }
+  return '';
 }
 
 export function validateUsername(username) {

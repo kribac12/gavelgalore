@@ -6,7 +6,8 @@ import { makeApiRequest } from '../api-service.mjs';
 import {
   validateUsername,
   validateAvatarUrl,
-  validateInputs,
+  validateEmail,
+  validatePassword,
 } from '../../utilities/auth-utils.mjs';
 import { switchToLogin } from '../../utilities/pills-nav.mjs';
 import { displaySuccess } from '../../utilities/success.mjs';
@@ -32,26 +33,25 @@ export async function registerUser() {
     );
 
     // Validate inputs
-    const emailPasswordErrors = validateInputs(email, password);
-    if (emailPasswordErrors.length > 0) {
-      emailPasswordErrors.forEach((error) => {
-        if (error.toLowerCase().includes('email')) {
-          showValidationError(registerEmail, error);
-        }
-        if (error.toLowerCase().includes('password')) {
-          showValidationError(registerPassword, error);
-        }
-      });
+    const emailError = validateEmail(email);
+    const passwordError = validatePassword(password);
+    const usernameError = validateUsername(name);
+    const avatarError = validateAvatarUrl(avatar);
+
+    if (emailError) {
+      showValidationError(registerEmail, emailError);
+      return;
+    }
+    if (passwordError) {
+      showValidationError(registerPassword, passwordError);
       return;
     }
 
-    const usernameError = validateUsername(name);
     if (usernameError) {
       showValidationError(registerName, usernameError);
       return;
     }
 
-    const avatarError = validateAvatarUrl(avatar);
     if (avatarError) {
       showValidationError(registerAvatar, avatarError);
       return;
