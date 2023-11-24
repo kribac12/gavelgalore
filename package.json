@@ -1,6 +1,6 @@
 {
   "name": "gavelgalore",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Auction website",
   "scripts": {
     "build": "sass src/scss:dist/css",
