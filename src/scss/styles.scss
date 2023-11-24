@@ -13,3 +13,8 @@
 .navbar-brand {
   color: $primary;
 }
+
+.show-when-logged-in,
+.show-when-logged-out {
+  display: none;
+}

@@ -2,7 +2,8 @@ import { getUserInfo } from '../storage/storage.mjs';
 
 export function updateUIOnLogin() {
   const userInfo = getUserInfo();
-  const isLoggedIn = userInfo && userInfo.token;
+  const isLoggedIn = Boolean(userInfo?.token);
+
   const elementsVisibleWhenLoggedIn = document.querySelectorAll(
     '.show-when-logged-in'
   );
@@ -10,12 +11,13 @@ export function updateUIOnLogin() {
     '.show-when-logged-out'
   );
 
-  elementsVisibleWhenLoggedOut.forEach((el) => {
-    el.style.display = isLoggedIn ? 'none' : 'block';
-  });
-  elementsVisibleWhenLoggedIn.forEach((el) => {
-    el.style.display = isLoggedIn ? 'block' : 'none';
-  });
+  if (isLoggedIn) {
+    elementsVisibleWhenLoggedIn.forEach((el) => (el.style.display = 'block'));
+    elementsVisibleWhenLoggedOut.forEach((el) => (el.style.display = 'none'));
+  } else {
+    elementsVisibleWhenLoggedIn.forEach((el) => (el.style.display = 'none'));
+    elementsVisibleWhenLoggedOut.forEach((el) => (el.style.display = 'block'));
+  }
 }
 
 document.addEventListener('DOMContentLoaded', updateUIOnLogin);
