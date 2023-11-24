@@ -4,40 +4,43 @@ export async function makeApiRequest(
   path,
   method,
   body = null,
-  authToken = null,
-  extraHeaders = {}
+  extraHeaders = {},
+  query = {}
 ) {
   try {
+    const { 'Content-Type': contentType = 'application/json' } = extraHeaders;
+    const token = localStorage.getItem('accessToken');
+
     const headers = {
-      'Content-Type': 'application/json',
+      'Content-Type': contentType,
       ...extraHeaders,
+      ...(token && { Authorization: `Bearer ${token}` }),
     };
 
-    // Include authorization header if authToken is provided
-    if (authToken) {
-      headers['Authorization'] = `Bearer ${authToken}`;
-    }
+    const queryString = new URLSearchParams(query).toString();
+    const fullUrl = `${API_BASE_URL}${path}${
+      queryString ? `?${queryString}` : ''
+    }`;
 
     const options = {
-      method: method,
-      headers: headers,
+      method,
+      headers,
+      body: body ? JSON.stringify(body) : null,
     };
 
-    if (body !== null) {
-      options.body = JSON.stringify(body);
-    }
-
-    const response = await fetch(`${API_BASE_URL}${path}`, options);
+    const response = await fetch(fullUrl, options);
 
     if (!response.ok) {
-      const error = new Error(`HTTP error. Status: ${response.status}`);
-      error.response = response;
-      throw error;
+      if (response.status === 401) {
+        const error = await response.json();
+        throw new Error(error.message || 'No access.');
+      }
+      throw new Error(`HTTP error. Status: ${response.status}`);
     }
 
     return await response.json();
   } catch (error) {
     console.error(`${method} request to ${path} failed:`, error);
-    throw error;
+    return { error: true, message: error.message };
   }
 }

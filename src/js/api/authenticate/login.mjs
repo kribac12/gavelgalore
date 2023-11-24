@@ -14,54 +14,44 @@ const loginEmail = document.getElementById('loginEmail');
 const loginPassword = document.getElementById('loginPassword');
 
 export async function loginUser() {
-  try {
-    const email = loginEmail.value;
-    const password = loginPassword.value;
+  const email = loginEmail.value;
+  const password = loginPassword.value;
 
-    [loginEmail, loginPassword].forEach((input) => {
-      input.classList.remove('is-invalid');
-    });
+  [loginEmail, loginPassword].forEach((input) => {
+    input.classList.remove('is-invalid');
+  });
 
-    const emailError = validateEmail(email);
-    const passwordError = validatePassword(password);
+  const emailError = validateEmail(email);
+  const passwordError = validatePassword(password);
 
-    if (emailError) {
-      showValidationError(loginEmail, emailError);
-      return;
-    }
-    if (passwordError) {
-      showValidationError(loginPassword, passwordError);
-      return;
-    }
+  if (emailError) {
+    showValidationError(loginEmail, emailError);
+    return;
+  }
+  if (passwordError) {
+    showValidationError(loginPassword, passwordError);
+    return;
+  }
 
-    const userCredentials = { email, password };
-    const response = await makeApiRequest(
-      'auth/login',
-      'POST',
-      userCredentials,
-      null
-    );
+  const userCredentials = { email, password };
+  const response = await makeApiRequest('auth/login', 'POST', userCredentials);
 
-    if (response && response.accessToken) {
-      const userInfo = {
-        name: response.name,
-        email: response.email,
-        credits: response.credits,
-        avatar: response.avatar,
-        token: response.accessToken,
-      };
+  const { error, message, accessToken, name, credits, avatar } = response;
 
-      saveUserInfo(userInfo); // Save user info in localStorage
-      window.location.href = '/src/html/profile/index.html';
-    } else {
-      throw new Error('Authentication failed: No token received');
-    }
-  } catch (error) {
-    const errorMessage = error.response
-      ? await error.response.json()
-      : error.message;
+  if (!error && accessToken) {
+    const userInfo = {
+      name,
+      email,
+      credits,
+      avatar,
+      token: accessToken,
+    };
+    saveUserInfo(userInfo); // Save user info in localStorage
+    window.location.href = '/src/html/profile/index.html';
+  } else {
+    const errorMessage = message || 'Login failed. Please try again.';
     console.error('Login failed', errorMessage);
-    displayError(`Login failed: ${errorMessage}`);
+    displayError(errorMessage);
   }
 }
 
