@@ -1,7 +1,7 @@
 import {
   displayError,
   showValidationError,
-} from '../../utilities/error-handler.mjs';
+} from '../../utilities//messages/error-handler.mjs';
 import { makeApiRequest } from '../api-service.mjs';
 import {
   validateUsername,
@@ -10,7 +10,7 @@ import {
   validatePassword,
 } from '../../utilities/auth-utils.mjs';
 import { switchToLogin } from '../../utilities/pills-nav.mjs';
-import { displaySuccess } from '../../utilities/success.mjs';
+import { displaySuccess } from '../../utilities/messages/success.mjs';
 
 const registerForm = document.getElementById('registerForm');
 const registerName = document.getElementById('registerName');
@@ -38,21 +38,10 @@ export async function registerUser() {
     const usernameError = validateUsername(name);
     const avatarError = validateAvatarUrl(avatar);
 
-    if (emailError) {
+    if (emailError || passwordError || usernameError || avatarError) {
       showValidationError(registerEmail, emailError);
-      return;
-    }
-    if (passwordError) {
       showValidationError(registerPassword, passwordError);
-      return;
-    }
-
-    if (usernameError) {
       showValidationError(registerName, usernameError);
-      return;
-    }
-
-    if (avatarError) {
       showValidationError(registerAvatar, avatarError);
       return;
     }
@@ -68,24 +57,17 @@ export async function registerUser() {
     // API call for registration
     const response = await makeApiRequest('auth/register', 'POST', newUser);
 
-    if (response) {
+    const { error, message } = response;
+
+    if (!error) {
       displaySuccess('Registration successful! You can now login.');
       switchToLogin();
     } else {
-      // Handle unsuccessful registration
-      if (response && response.errorMessage) {
-        displayError(response.errorMessage);
-      } else {
-        displayError('Registration failed. Please try again.');
-      }
+      displayError(message || 'Registration failed. Please try again.');
     }
   } catch (error) {
-    // Handle errors from API call
-    const errorMessage = error.response
-      ? await error.response.json()
-      : error.message;
-    console.error('Registration failed', errorMessage);
-    displayError(`Registration failed: ${errorMessage}`);
+    console.error('Registration failed', error);
+    displayError(error.message || 'Registration failed.');
   }
 }
 

@@ -13,3 +13,12 @@
 .navbar-brand {
   color: $primary;
 }
+
+.card {
+  border: none;
+}
+
+.show-when-logged-in,
+.show-when-logged-out {
+  display: none;
+}

@@ -3,23 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../../dist/css/styles.css" />
-    <script type="module" src="/src/js/index.mjs"></script>
+    <link rel="stylesheet" href="../../../dist/css/styles.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
       rel="stylesheet"
     />
-    <script
-      src="../../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
-      defer
-    ></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&display=swap"
       rel="stylesheet"
     />
-
+    <script type="module" src="/src/js/pages/index.mjs"></script>
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <title>Gavel Galore Homepage</title>
   </head>
   <body cz-shortcut-listen="true">
@@ -61,13 +57,22 @@
                   >
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">BUY</a>
+                  <a class="nav-link" href="/src/html/buy-page/index.html"
+                    >BUY</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link show-when-logged-in"
+                    href="/src/html/sell-page/index.html"
+                    >SELL</a
+                  >
                 </li>
               </ul>
               <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
                   <a
-                    class="nav-link"
+                    class="nav-link show-when-logged-out"
                     href="/src/html/login-register/index.html#login"
                   >
                     <span
@@ -78,13 +83,21 @@
                 </li>
                 <li class="nav-item">
                   <a
-                    class="nav-link"
+                    class="nav-link show-when-logged-out"
                     href="/src/html/login-register/index.html#register"
                   >
                     <span
                       class="material-symbols-outlined align-middle fs-5 pe-1"
                       >how_to_reg</span
                     >Register
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="logoutLink show-when-logged-in" href="#">
+                    <span
+                      class="material-symbols-outlined align-middle fs-5 pe-1"
+                      >logout</span
+                    >Logout
                   </a>
                 </li>
               </ul>
@@ -108,7 +121,125 @@
             />
           </div>
         </section>
-        <section class="row"></section>
+        <section class="listings-popular">
+          <div class="container my-5" id="listing-container">
+            <div class="row">
+              <h2>Popular listings</h2>
+              <div class="col-md-3">
+                <div class="card w-70">
+                  <img
+                    src="/assets/images/hostaphoto-XFhny3yLA0c-unsplash.jpg"
+                    class="card-img-top"
+                    alt="..."
+                  />
+                  <div class="card-img-overlay">
+                    <p
+                      class="card-text btn btn-secondary position-absolute top-0 end-0"
+                    >
+                      Bids: 10
+                    </p>
+                  </div>
+                  <div class="card-body">
+                    <h3 class="card-title">Item</h3>
+                    <p class="card-text">Item description</p>
+                    <p class="card-text">Winning bid: 10</p>
+                    <p class="card-text">
+                      <span
+                        class="material-symbols-outlined align-middle fs-5 pe-1"
+                        >hourglass_top</span
+                      >
+                      4 days, 3 hours
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="card w-70">
+                  <img
+                    src="/assets/images/hostaphoto-XFhny3yLA0c-unsplash.jpg"
+                    class="card-img-top"
+                    alt="..."
+                  />
+                  <div class="card-img-overlay">
+                    <p
+                      class="card-text btn btn-secondary position-absolute top-0 end-0"
+                    >
+                      Bids: 10
+                    </p>
+                  </div>
+                  <div class="card-body">
+                    <h3 class="card-title">Item</h3>
+                    <p class="card-text">Item description</p>
+                    <p class="card-text">Winning bid: 10</p>
+                    <p class="card-text">
+                      <span
+                        class="material-symbols-outlined align-middle fs-5 pe-1"
+                        >hourglass_top</span
+                      >
+                      4 days, 3 hours
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="card w-70">
+                  <img
+                    src="/assets/images/hostaphoto-XFhny3yLA0c-unsplash.jpg"
+                    class="card-img-top"
+                    alt="..."
+                  />
+                  <div class="card-img-overlay">
+                    <p
+                      class="card-text btn btn-secondary position-absolute top-0 end-0"
+                    >
+                      Bids: 10
+                    </p>
+                  </div>
+                  <div class="card-body">
+                    <h3 class="card-title">Item</h3>
+                    <p class="card-text">Item description</p>
+                    <p class="card-text">Winning bid: 10</p>
+                    <p class="card-text">
+                      <span
+                        class="material-symbols-outlined align-middle fs-5 pe-1"
+                        >hourglass_top</span
+                      >
+                      4 days, 3 hours
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="card w-70">
+                  <img
+                    src="/assets/images/hostaphoto-XFhny3yLA0c-unsplash.jpg"
+                    class="card-img-top"
+                    alt="..."
+                  />
+                  <div class="card-img-overlay">
+                    <p
+                      class="card-text btn btn-secondary position-absolute top-0 end-0"
+                    >
+                      Bids: 10
+                    </p>
+                  </div>
+                  <div class="card-body">
+                    <h3 class="card-title">Item</h3>
+                    <p class="card-text">Item description</p>
+                    <p class="card-text">Winning bid: 10</p>
+                    <p class="card-text">
+                      <span
+                        class="material-symbols-outlined align-middle fs-5 pe-1"
+                        >hourglass_top</span
+                      >
+                      4 days, 3 hours
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
         <section class="row">
           <div class="col-md-6 d-flex flex-column justify-content-center">
             <h1>Sell your items with Gavel Galore</h1>
