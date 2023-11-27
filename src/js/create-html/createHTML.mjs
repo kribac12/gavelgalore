@@ -33,7 +33,9 @@ export function createNewElement(
     childElements.forEach((child) => element.appendChild(child));
   }
 
-  Object.assign(element, attributes);
+  for (const [attr, value] of Object.entries(attributes)) {
+    element.setAttribute(attr, value);
+  }
 
   return element;
 }
