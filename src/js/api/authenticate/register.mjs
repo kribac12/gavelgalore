@@ -1,7 +1,7 @@
 import {
   displayError,
   showValidationError,
-} from '../../utilities/error-handler.mjs';
+} from '../../utilities//messages/error-handler.mjs';
 import { makeApiRequest } from '../api-service.mjs';
 import {
   validateUsername,
@@ -10,7 +10,7 @@ import {
   validatePassword,
 } from '../../utilities/auth-utils.mjs';
 import { switchToLogin } from '../../utilities/pills-nav.mjs';
-import { displaySuccess } from '../../utilities/success.mjs';
+import { displaySuccess } from '../../utilities/messages/success.mjs';
 
 const registerForm = document.getElementById('registerForm');
 const registerName = document.getElementById('registerName');

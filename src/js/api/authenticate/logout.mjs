@@ -1,4 +1,4 @@
-import { displayError } from '../../utilities/error-handler.mjs';
+import { displayError } from '../../utilities/messages/error-handler.mjs';
 
 export function setUpLogoutLink() {
   const logoutLink = document.querySelector('.logoutLink');

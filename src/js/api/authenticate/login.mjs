@@ -1,7 +1,7 @@
 import {
   displayError,
   showValidationError,
-} from '../../utilities/error-handler.mjs';
+} from '../../utilities/messages/error-handler.mjs';
 import { makeApiRequest } from '../api-service.mjs';
 import { saveUserInfo, getUserInfo } from '../../storage/storage.mjs';
 import {
