@@ -18,6 +18,12 @@
   border: none;
 }
 
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+  width: 100%;
+}
+
 .show-when-logged-in,
 .show-when-logged-out {
   display: none;
