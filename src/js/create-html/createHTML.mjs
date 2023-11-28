@@ -1,40 +1,33 @@
-/**
- * Creates a new HTML element with properties and attributes.
- *
- * @param {*} elementType - Type of the HTML element.
- * @param {Object} options - Options to customize element.
- * @param {Object} options.styles - Styles to apply.
- * @param {string} options.className - Class name for the element.
- * @param {Array<string>} options.classNames - Array of class names for the element.
- * @param {string} options.text - Text to be set as innerText.
- * @param {HTMLElement[]} options.childElements - Array of child elements to append.
- * @param {Object} options.attributes - Additional attributes.
- * @returns {HTMLElement} - The created HTML element.
- */
-
-export function createNewElement(
-  elementType,
-  { styles, className, classNames, text, childElements, ...attributes } = {}
-) {
+export function createNewElement(elementType, options = {}) {
   const element = document.createElement(elementType);
-  if (styles) {
-    Object.assign(element.style, styles);
-  }
-  if (classNames) {
-    element.classList.add(...classNames);
-  } else if (className) {
-    element.className = className;
-  }
-  if (text) {
-    element.innerText = text;
+
+  // Apply styles
+  if (options.styles) {
+    Object.assign(element.style, options.styles);
   }
 
-  if (childElements) {
-    childElements.forEach((child) => element.appendChild(child));
+  // Apply class name
+  if (options.classNames) {
+    element.classList.add(...options.classNames);
+  } else if (options.className) {
+    element.className = options.className;
   }
 
-  for (const [attr, value] of Object.entries(attributes)) {
-    element.setAttribute(attr, value);
+  // Set text content
+  if (options.text) {
+    element.innerText = options.text;
+  }
+
+  // Append child elements
+  if (options.childElements) {
+    options.childElements.forEach((child) => element.appendChild(child));
+  }
+
+  // Set attributes
+  if (options.attributes) {
+    for (const [key, value] of Object.entries(options.attributes)) {
+      element.setAttribute(key, value);
+    }
   }
 
   return element;
