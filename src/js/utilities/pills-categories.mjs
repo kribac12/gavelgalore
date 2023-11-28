@@ -16,6 +16,9 @@ export function switchTab(selectedTabId) {
     newestTab: 'newest',
   };
 
+  // Update active state of tabs
+  updateActiveTabState(selectedTabId);
+
   const selectedCategory = tabMapping[selectedTabId];
   if (selectedCategory) {
     // Hide all containers first
@@ -37,4 +40,17 @@ export function switchTab(selectedTabId) {
 
     populateSections(false, selectedCategory);
   }
+}
+
+//Function to update active state of tabs
+
+function updateActiveTabState(activeTabId) {
+  const tabs = document.querySelectorAll('.nav-pills .nav-link');
+  tabs.forEach((tab) => {
+    if (tab.id == activeTabId) {
+      tab.classList.add('active');
+    } else {
+      tab.classList.remove('active');
+    }
+  });
 }

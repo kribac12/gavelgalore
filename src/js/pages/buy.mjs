@@ -1,19 +1,24 @@
 import '../userstate-display/logged-in-visible.mjs';
 import { setUpLogoutLink } from '../api/authenticate/logout.mjs';
-import { setUpTabs } from '../utilities/pills-categories.mjs';
-import { switchTab } from '../utilities/pills-categories.mjs';
+import { setUpTabs, switchTab } from '../utilities/pills-categories.mjs';
 
 document.addEventListener('DOMContentLoaded', () => {
   setUpLogoutLink();
   setUpTabs();
-  handleFirstTabBasedOnHash();
+  handleInitialTabBasedOnHash();
 });
 
-function handleFirstTabBasedOnHash() {
+function handleInitialTabBasedOnHash() {
   const hash = window.location.hash;
-  if (hash === '#popular') {
-    switchTab('popularTab');
+  const tabMapping = {
+    '#popular': 'popularTab',
+    '#endsSoon': 'endsSoonTab',
+    '#newest': 'newestTab',
+  };
+  const selectedTabId = tabMapping[hash];
+  if (selectedTabId) {
+    switchTab(selectedTabId);
   } else {
-    //
+    switchTab('popularTab');
   }
 }
