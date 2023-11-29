@@ -10,6 +10,10 @@ export async function getAllListings(
   return await makeApiRequest('listings', 'GET', null, {}, query);
 }
 
+export async function getListingById(id) {
+  return await makeApiRequest(`listings/${id}`, 'GET');
+}
+
 export function getMostPopularListings(listings) {
   return listings.sort((a, b) => b._count.bids - a._count.bids);
 }

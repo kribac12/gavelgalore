@@ -10,5 +10,8 @@ export function formatTimeRemaining(time) {
   if (time.total <= 0) {
     return 'Auction ended';
   }
-  return `${time.days} days, ${time.hours} hours left`;
+
+  let daysText = time.days === 1 ? 'day' : 'days';
+  let hoursText = time.hours === 1 ? 'hour' : 'hours';
+  return `${time.days} ${daysText}, ${time.hours} ${hoursText} left`;
 }

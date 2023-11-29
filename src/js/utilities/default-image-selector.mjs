@@ -1,17 +1,30 @@
 const tagBasedOnDefaultImages = {
-  electronics: '/assets/images/hostaphoto-XFhny3yLA0c-unsplash.jpg',
-  flower: '/assets/images/flower.jpg',
-  flowers: '/assets/images/flower.jpg',
-  clothing: '/assets/images/pexels-felipe-alves-3.jpg',
-  clothes: '/assets/images/pexels-felipe-alves-3.jpg',
-  watch: '/assets/images/watch.jpg',
+  'electronics, phone, tablet, pc, playstation':
+    '/assets/images/hostaphoto-XFhny3yLA0c-unsplash.jpg',
+  'flower, flowers': '/assets/images/flower.jpg',
+  'clothing, clothes, dress, pants, sweather':
+    '/assets/images/pexels-felipe-alves-3.jpg',
+  'watch, watches': '/assets/images/watch.jpg',
+  'food, pizza, hamburger, cake': '/assets/images/fastfood.jpg',
+  'animals,animal, dog, cat, lion': '/assets/images/dogcat.jpg',
+  'bøver, bølver, bever': '/assets/images/bever.jpg',
 };
 
 export function selectDefaultImage(tags, title, description) {
-  const allKeyWords = [...tags, title.toLowerCase(), description.toLowerCase()];
-  for (const keyword of allKeyWords) {
-    if (tagBasedOnDefaultImages[keyword]) {
-      return tagBasedOnDefaultImages[keyword];
+  const allText = [
+    ...tags,
+    title.toLowerCase(),
+    description.toLowerCase(),
+  ].concat(tags.map((tag) => tag.toLowerCase()));
+
+  for (const key in tagBasedOnDefaultImages) {
+    const synonyms = key
+      .split(',')
+      .map((synonym) => synonym.trim().toLowerCase());
+    if (
+      allText.some((text) => synonyms.some((synonym) => text.includes(synonym)))
+    ) {
+      return tagBasedOnDefaultImages[key];
     }
   }
   return '/assets/images/hostaphoto-XFhny3yLA0c-unsplash.jpg';

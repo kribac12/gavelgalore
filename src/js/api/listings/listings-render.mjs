@@ -78,9 +78,8 @@ export function populateSection(sectionId, listings, limitCards, containerId) {
 }
 
 export function createListingCard(listing) {
-  console.log('Creating card for listing:', listing);
   const card = createNewElement('div', {
-    classNames: ['col-sm-6', 'col-md-6', 'col-lg-3'],
+    classNames: ['col-sm-6', 'col-md-6', 'col-lg-3', 'listing-card'],
   });
   const cardInner = createNewElement('div', { classNames: ['card', 'w-70'] });
   card.appendChild(cardInner);
@@ -146,5 +145,8 @@ export function createListingCard(listing) {
   timeText.appendChild(document.createTextNode(timeRemaining));
   cardBody.appendChild(timeText);
 
+  card.addEventListener('click', () => {
+    window.location.href = `/src/html/listing-specific/index.html?id=${listing.id}`;
+  });
   return card;
 }
