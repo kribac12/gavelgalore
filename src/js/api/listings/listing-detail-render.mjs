@@ -34,7 +34,7 @@ export async function renderListingDetail(listing) {
   let imageUrl =
     listing.media && listing.media.length > 0 ? listing.media[0] : defaultImage;
   const img = createNewElement('img', {
-    className: 'listing-image img-fluid',
+    classNames: ['listing-image', 'img-fluid', 'w-100'],
     attributes: { src: imageUrl, alt: listing.title },
   });
 
