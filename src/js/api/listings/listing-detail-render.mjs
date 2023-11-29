@@ -31,20 +31,17 @@ export function renderListingDetail(listing) {
     listing.description || ''
   );
   console.log(defaultImage);
+
   listing.media.forEach((url) => {
     const img = document.createElement('img');
+    console.log(img);
     img.className = 'listing-image img-fluid';
     img.alt = listing.title;
-
-    // Set onerror before setting src
     img.onerror = () => {
       console.log(`Error loading image: ${url}, switching to default.`);
-      // To prevent infinite loop in case default image also fails to load
-      img.onerror = null;
       img.src = defaultImage;
     };
 
-    // Set src after onerror
     img.src = url;
 
     imageColumn.appendChild(img);

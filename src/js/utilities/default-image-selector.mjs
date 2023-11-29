@@ -1,5 +1,5 @@
 const tagBasedOnDefaultImages = {
-  'electronics, phone, tablet, pc, playstation':
+  'electronics, phone, tablet, pc, playstation, console':
     '/assets/images/hostaphoto-XFhny3yLA0c-unsplash.jpg',
   'flower, flowers': '/assets/images/flower.jpg',
   'clothing, clothes, dress, pants, sweather':
