@@ -9,6 +9,7 @@ import {
   formatTimeRemaining,
 } from '../../utilities/date-time.mjs';
 import { createNewElement } from '../../create-html/createHTML.mjs';
+import { selectDefaultImage } from '../../utilities/default-image-selector.mjs';
 
 export async function populateSections(limitCards = false, category) {
   const allListings = await getAllListings();
@@ -85,13 +86,21 @@ export function createListingCard(listing) {
   card.appendChild(cardInner);
 
   // Define default image, use if none other, and add first listing image
-  const defaultImage = '/assets/images/hostaphoto-XFhny3yLA0c-unsplash.jpg';
-  const imageUrl =
+  const defaultImage = selectDefaultImage(
+    listing.tags,
+    listing.title,
+    listing.description || ''
+  );
+  let imageUrl =
     listing.media && listing.media.length > 0 ? listing.media[0] : defaultImage;
   const img = createNewElement('img', {
     className: 'card-img-top',
     attributes: { src: imageUrl, alt: listing.title },
   });
+
+  img.onerror = () => {
+    img.src = defaultImage;
+  };
   cardInner.appendChild(img);
 
   // Add card-img-overlay with bids
