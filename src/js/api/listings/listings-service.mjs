@@ -11,7 +11,11 @@ export async function getAllListings(
 }
 
 export async function getListingById(id) {
-  return await makeApiRequest(`listings/${id}`, 'GET');
+  const query = {
+    _seller: true,
+    _bids: true,
+  };
+  return await makeApiRequest(`listings/${id}`, 'GET', null, {}, query);
 }
 
 export function getMostPopularListings(listings) {

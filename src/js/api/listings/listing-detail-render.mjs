@@ -5,7 +5,7 @@ import {
 } from '../../utilities/date-time.mjs';
 import { selectDefaultImage } from '../../utilities/default-image-selector.mjs';
 
-export function renderListingDetail(listing) {
+export async function renderListingDetail(listing) {
   const imageColumn = document.getElementById('imageColumn');
   const detailsColumn = document.getElementById('detailsColumn');
   const sellerDetails = document.getElementById('sellerDetails');
@@ -25,27 +25,24 @@ export function renderListingDetail(listing) {
   });
 
   // Define default image based on tags, title, or description
+  // Define default image, use if none other, and add first listing image
   const defaultImage = selectDefaultImage(
     listing.tags,
     listing.title,
     listing.description || ''
   );
-  console.log(defaultImage);
-
-  listing.media.forEach((url) => {
-    const img = document.createElement('img');
-    console.log(img);
-    img.className = 'listing-image img-fluid';
-    img.alt = listing.title;
-    img.onerror = () => {
-      console.log(`Error loading image: ${url}, switching to default.`);
-      img.src = defaultImage;
-    };
-
-    img.src = url;
-
-    imageColumn.appendChild(img);
+  let imageUrl =
+    listing.media && listing.media.length > 0 ? listing.media[0] : defaultImage;
+  const img = createNewElement('img', {
+    className: 'listing-image img-fluid',
+    attributes: { src: imageUrl, alt: listing.title },
   });
+
+  img.onerror = () => {
+    img.src = defaultImage;
+  };
+
+  imageColumn.appendChild(img);
 
   //Render tags
   const tagsContainer = createNewElement('ul', {
@@ -70,10 +67,56 @@ export function renderListingDetail(listing) {
   timeText.appendChild(hourglassIcon);
   timeText.appendChild(document.createTextNode(timeRemaining));
 
-  // Append all elements to container
-
   detailsColumn.appendChild(titleElement);
   detailsColumn.appendChild(descriptionElement);
   detailsColumn.appendChild(tagsContainer);
   detailsColumn.appendChild(timeText);
+
+  // Render bids details
+  let highestBid = {};
+  if (Array.isArray(listing.bids) && listing.bids.length > 0) {
+    highestBid = listing.bids.sort((a, b) => b.amount - a.amount)[0];
+  }
+
+  const bidCountElement = createNewElement('p', {
+    text: `Number of Bids: ${listing._count.bids}`,
+    classNames: ['bid-count'],
+  });
+
+  const highestBidElement = createNewElement('p', {
+    text: `Highest bid: ${highestBid.amount || 'No bids'}`,
+    classNames: ['highest-bid'],
+  });
+
+  const highestBidderElement = createNewElement('p', {
+    text: `Highest bidder: ${highestBid.bidderName || 'None'}`,
+    classNames: ['highest-bidder'],
+  });
+
+  detailsColumn.appendChild(bidCountElement);
+  detailsColumn.appendChild(highestBidElement);
+  detailsColumn.appendChild(highestBidderElement);
+
+  //Render seller details
+
+  let sellerName = 'No seller info';
+  let sellerAvatar = '/assets/images/flower.jpg';
+
+  if (listing.seller && typeof listing.seller === 'object') {
+    sellerName = listing.seller.name || sellerName;
+    sellerAvatar = listing.seller.avatar || sellerAvatar;
+  }
+  const sellerNameElement = createNewElement('p', {
+    text: `Seller: ${sellerName}`,
+  });
+  const sellerAvatarElement = createNewElement('img', {
+    attributes: {
+      src: sellerAvatar,
+      alt: `Avatar of ${sellerName}`,
+    },
+    classNames: ['seller-avatar', 'rounded-circle', 'img-fluid', 'w-25'],
+  });
+
+  sellerDetails.appendChild(sellerNameElement);
+  sellerDetails.appendChild(sellerAvatarElement);
 }
