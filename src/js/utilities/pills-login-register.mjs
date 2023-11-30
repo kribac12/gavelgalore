@@ -20,7 +20,7 @@ export function switchToLogin() {
   }
 }
 
-function activateTab(activeTabId, inactiveTabId) {
+export function activateTab(activeTabId, inactiveTabId) {
   const activeTab = document.getElementById(activeTabId);
   const inactiveTab = document.getElementById(inactiveTabId);
 
