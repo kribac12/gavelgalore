@@ -9,7 +9,10 @@ export async function makeApiRequest(
 ) {
   try {
     const { 'Content-Type': contentType = 'application/json' } = extraHeaders;
-    const token = localStorage.getItem('accessToken');
+
+    const userInfo = JSON.parse(localStorage.getItem('userInfo')) || {};
+    const token = userInfo.accessToken;
+    console.log('Token: ', token);
 
     const headers = {
       'Content-Type': contentType,
@@ -31,11 +34,11 @@ export async function makeApiRequest(
     const response = await fetch(fullUrl, options);
 
     if (!response.ok) {
-      if (response.status === 401) {
-        const error = await response.json();
-        throw new Error(error.message || 'No access.');
-      }
-      throw new Error(`HTTP error. Status: ${response.status}`);
+      const errorResponse = await response.json();
+      console.error('API error response:', errorResponse);
+      throw new Error(
+        errorResponse.errors?.[0]?.message || 'An error occurred'
+      );
     }
 
     return await response.json();

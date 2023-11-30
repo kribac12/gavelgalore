@@ -44,7 +44,7 @@ export async function loginUser() {
       email,
       credits,
       avatar,
-      token: accessToken,
+      accessToken,
     };
     saveUserInfo(userInfo); // Save user info in localStorage
     window.location.href = '/src/html/profile/index.html';

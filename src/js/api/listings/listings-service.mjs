@@ -29,3 +29,7 @@ export function getNewestListings(listings) {
 export function getSoonEndingListings(listings) {
   return listings.sort((a, b) => new Date(a.endsAt) - new Date(b.endsAt));
 }
+
+export async function getUpdatedListingById(id) {
+  return await makeApiRequest(`listings/${id}`, 'GET');
+}
