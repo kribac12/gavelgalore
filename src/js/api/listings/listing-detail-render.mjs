@@ -6,7 +6,7 @@ import {
 import { selectDefaultImage } from '../../utilities/default-image-selector.mjs';
 import { displayError } from '../../utilities/messages/error-handler.mjs';
 import { placeBid } from '../bids/bids-service.mjs';
-import { getUpdatedListingById } from './listings-service.mjs';
+import { getListingById } from './listings-service.mjs';
 
 export async function renderListingDetail(listing) {
   const imageColumn = document.getElementById('imageColumn');
@@ -99,7 +99,7 @@ function populateDetailsColumn(
   // Time remaining
   const timeRemaining = getTimeRemaining(listing.endsAt);
   const timeText = formatTimeRemaining(timeRemaining);
-  const timeRemainingElement = createNewElement('div', {
+  const timeRemainingElement = createNewElement('p', {
     classNames: ['time-remaining'],
   });
 
@@ -124,7 +124,7 @@ function setupBidForm(detailsColumn, listing, bidHistory) {
   });
 
   const bidInput = createNewElement('input', {
-    classNames: ['form-control'],
+    classNames: ['form-control', 'mb-3'],
     attributes: {
       type: 'number',
       id: 'bidAmount',
@@ -135,7 +135,7 @@ function setupBidForm(detailsColumn, listing, bidHistory) {
   });
 
   const bidButton = createNewElement('button', {
-    classNames: ['btn', 'btn-primary'],
+    classNames: ['btn', 'btn-primary', 'btn-lg'],
     text: 'Place bid',
     attributes: { type: 'submit' },
   });
@@ -154,7 +154,7 @@ function setupBidForm(detailsColumn, listing, bidHistory) {
         await placeBid(listing.id, bidAmount);
 
         // Fetch updated listing details, including bid history
-        const updatedListing = await getUpdatedListingById(listing.id);
+        const updatedListing = await getListingById(listing.id);
         console.log('Updated listing:', updatedListing);
         console.log('Updated Listing:', updatedListing); // Debugging
 
@@ -178,6 +178,13 @@ function populateSellerDetails(listing, sellerDetails) {
   const sellerEmail = listing.seller?.email || 'No seller email';
 
   sellerDetails.appendChild(
+    createNewElement('h1', {
+      text: 'Seller',
+      classNames: ['seller-details-title', 'mb-4'],
+    })
+  );
+
+  sellerDetails.appendChild(
     createNewElement('img', {
       attributes: { src: sellerAvatar, alt: `Avatar of ${sellerName}` },
       classNames: [
@@ -198,6 +205,8 @@ function populateSellerDetails(listing, sellerDetails) {
 }
 
 function populateBidHistory(listing, bidHistory) {
+  bidHistory.innerHTML = '';
+
   const bidHistoryTitle = createNewElement('h1', {
     text: 'Recent bids',
     classNames: ['bid-history-title', 'mb-4'],
@@ -221,13 +230,16 @@ function populateBidHistory(listing, bidHistory) {
   headerRow.appendChild(amountHeaderCol);
   bidHistory.appendChild(headerRow);
 
-  listing.bids
-    .slice(-10)
-    .reverse()
-    .forEach((bid) => {
-      const bidRow = createBidRow(bid);
-      bidHistory.appendChild(bidRow);
-    });
+  // Reverse order
+
+  const sortedBids = listing.bids
+    .slice()
+    .sort((a, b) => new Date(b.created) - new Date(a.created));
+
+  sortedBids.slice(0, 10).forEach((bid) => {
+    const bidRow = createBidRow(bid);
+    bidHistory.appendChild(bidRow);
+  });
 }
 
 function createBidRow(bid) {

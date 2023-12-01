@@ -1,3 +1,4 @@
+import { getAccessToken } from '../storage/storage.mjs';
 import { API_BASE_URL } from './constants.mjs';
 
 export async function makeApiRequest(
@@ -8,12 +9,9 @@ export async function makeApiRequest(
   query = {}
 ) {
   try {
+    const token = getAccessToken();
+
     const { 'Content-Type': contentType = 'application/json' } = extraHeaders;
-
-    const userInfo = JSON.parse(localStorage.getItem('userInfo')) || {};
-    const token = userInfo.accessToken;
-    console.log('Token: ', token);
-
     const headers = {
       'Content-Type': contentType,
       ...extraHeaders,
