@@ -21,11 +21,11 @@ document.addEventListener('DOMContentLoaded', () => {
         .value.trim()
         .split(',')
         .map((tag) => tag.trim());
-      const media = document
-        .getElementById('media')
-        .value.trim()
-        .split(',')
-        .map((url) => url.trim());
+      const mediaInputs = document.querySelectorAll('#mediaContainer input');
+      const media = Array.from(mediaInputs)
+        .map((input) => input.value.trim())
+        .filter((url) => url);
+
       const endsAt = document.getElementById('endsAt').value;
 
       try {

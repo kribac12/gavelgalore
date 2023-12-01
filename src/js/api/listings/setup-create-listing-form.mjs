@@ -33,14 +33,22 @@ export function setupCreateListingForm() {
     classNames: ['form-control'],
   });
 
-  const mediaInput = createNewElement('input', {
-    attributes: {
-      type: 'text',
-      id: 'media',
-      placeholder: 'Media URLs (separated by comma)',
-    },
-    classNames: ['form-control'],
+  const mediaContainer = createNewElement('div', {
+    attributes: { id: 'mediaContainer' },
+    classNames: ['media-container'],
   });
+
+  const initialMediaInput = createMediaInput();
+  mediaContainer.appendChild(initialMediaInput);
+
+  const addMoreButton = createNewElement('button', {
+    text: 'Add another image',
+    classNames: ['btn', 'btn-secondary', 'mt-2'],
+    attributes: { type: 'button' },
+  });
+
+  addMoreButton.addEventListener('click', () => addMediaInput(mediaContainer));
+  mediaContainer.appendChild(addMoreButton);
 
   const endsAtInput = createNewElement('input', {
     attributes: { type: 'datetime-local', id: 'endsAt', required: true },
@@ -57,7 +65,7 @@ export function setupCreateListingForm() {
     titleInput,
     descriptionInput,
     tagsInput,
-    mediaInput,
+    mediaContainer,
     endsAtInput,
     submitButton
   );
@@ -68,4 +76,16 @@ export function setupCreateListingForm() {
     console.error('Create listing container not found');
     displayError();
   }
+}
+
+function createMediaInput() {
+  return createNewElement('input', {
+    classNames: ['form-control', 'mt-2'],
+    attributes: { type: 'text', placeholder: 'Media URL', name: 'mediaUrls[]' },
+  });
+}
+
+function addMediaInput(container) {
+  const newMediaInput = createMediaInput();
+  container.insertBefore(newMediaInput, container.lastChild);
 }

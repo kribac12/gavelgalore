@@ -3,7 +3,8 @@
   object-fit: cover;
 }
 
-.listing-image {
+.listing-image,
+.carousel-item img {
   height: 400px !important;
   object-fit: cover;
   width: 100%;

@@ -7,6 +7,7 @@ import { selectDefaultImage } from '../../utilities/default-image-selector.mjs';
 import { displayError } from '../../utilities/messages/error-handler.mjs';
 import { placeBid } from '../bids/bids-service.mjs';
 import { getListingById } from './listings-service.mjs';
+import { createBootstrapCarousel } from '../../utilities/carousel.mjs';
 
 export async function renderListingDetail(listing) {
   const imageColumn = document.getElementById('imageColumn');
@@ -35,23 +36,28 @@ function populateDetailsColumn(
   detailsColumn,
   bidHistory
 ) {
-  // Image
-  const defaultImage = selectDefaultImage(
-    listing.tags,
-    listing.title,
-    listing.description || ''
-  );
-  const img = createNewElement('img', {
-    classNames: ['listing-image', 'img-fluid', 'w-100'],
-    attributes: {
-      src: listing.media.length > 0 ? listing.media[0] : defaultImage,
-      alt: listing.title,
-    },
-  });
-  img.onerror = () => {
-    img.src = defaultImage;
-  };
-  imageColumn.appendChild(img);
+  // Media
+  if (listing.media && listing.media.length > 0) {
+    // Use the createBootstrapCarousel function
+    const carouselId = 'listingCarousel'; // Unique ID for the carousel
+    const carousel = createBootstrapCarousel(listing.media, carouselId);
+    imageColumn.appendChild(carousel);
+  } else {
+    // Fallback to default image if no media
+    const defaultImage = selectDefaultImage(
+      listing.tags,
+      listing.title,
+      listing.description || ''
+    );
+    const img = createNewElement('img', {
+      classNames: ['listing-image', 'img-fluid', 'w-100'],
+      attributes: { src: defaultImage, alt: listing.title },
+    });
+    img.onerror = () => {
+      img.src = defaultImage;
+    };
+    imageColumn.appendChild(img);
+  }
 
   // Title, Description, Tags, Highest bid, Time Remaining
   detailsColumn.appendChild(
