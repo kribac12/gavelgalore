@@ -8,6 +8,7 @@ import { displayError } from '../../utilities/messages/error-handler.mjs';
 import { placeBid } from '../bids/bids-service.mjs';
 import { getListingById } from './listings-service.mjs';
 import { createBootstrapCarousel } from '../../utilities/carousel.mjs';
+import { updateHighestBidDetails } from '../bids/update-highest-bid-details.mjs';
 
 export async function renderListingDetail(listing) {
   const imageColumn = document.getElementById('imageColumn');
@@ -83,24 +84,7 @@ function populateDetailsColumn(
   );
   detailsColumn.appendChild(tagsContainer);
 
-  //Highest bid details
-  let highestBid = {};
-  if (Array.isArray(listing.bids) && listing.bids.length > 0) {
-    highestBid = listing.bids.sort((a, b) => b.amount - a.amount)[0];
-  }
-
-  const highestBidElement = createNewElement('p', {
-    text: `Highest bid: ${highestBid.amount || 'No bids'}`,
-    classNames: ['highest-bid'],
-  });
-
-  const highestBidderElement = createNewElement('p', {
-    text: `Highest bidder: ${highestBid.bidderName || 'No bidder'}`,
-    classNames: ['highest-bidder'],
-  });
-
-  detailsColumn.appendChild(highestBidElement);
-  detailsColumn.appendChild(highestBidderElement);
+  updateHighestBidDetails(listing, detailsColumn);
 
   // Time remaining
   const timeRemaining = getTimeRemaining(listing.endsAt);
@@ -168,6 +152,7 @@ function setupBidForm(detailsColumn, listing, bidHistory) {
         if (updatedListing && Array.isArray(updatedListing.bids)) {
           // Refresh bid history display
           populateBidHistory(updatedListing, bidHistory);
+          updateHighestBidDetails(updatedListing, detailsColumn);
         } else {
           console.error('Updated listing does not contain bids array');
         }
