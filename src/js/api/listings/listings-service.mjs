@@ -19,13 +19,26 @@ export async function getListingById(id) {
 }
 
 export function getMostPopularListings(listings) {
-  return listings.sort((a, b) => b._count.bids - a._count.bids);
+  const now = new Date();
+  return listings
+    .filter((listing) => new Date(listing.endsAt) > now) // Exclude ended listings
+    .sort((a, b) => b._count.bids - a._count.bids);
 }
 
 export function getNewestListings(listings) {
-  return listings.sort((a, b) => new Date(b.created) - new Date(a.created));
+  const now = new Date();
+  return listings
+    .filter((listing) => new Date(listing.endsAt) > now) // Exclude ended listings
+    .sort((a, b) => new Date(b.created) - new Date(a.created));
 }
 
 export function getSoonEndingListings(listings) {
-  return listings.sort((a, b) => new Date(a.endsAt) - new Date(b.endsAt));
+  const now = new Date();
+  return listings
+    .filter((listing) => new Date(listing.endsAt) > now) // Exclude ended listings
+    .sort((a, b) => new Date(a.endsAt) - new Date(b.endsAt)); // Sort by end date
+}
+
+export async function getUpdatedListingById(id) {
+  return await makeApiRequest(`listings/${id}`, 'GET');
 }

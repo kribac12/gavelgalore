@@ -1,3 +1,4 @@
+import { getAccessToken } from '../storage/storage.mjs';
 import { API_BASE_URL } from './constants.mjs';
 
 export async function makeApiRequest(
@@ -8,9 +9,9 @@ export async function makeApiRequest(
   query = {}
 ) {
   try {
-    const { 'Content-Type': contentType = 'application/json' } = extraHeaders;
-    const token = localStorage.getItem('accessToken');
+    const token = getAccessToken();
 
+    const { 'Content-Type': contentType = 'application/json' } = extraHeaders;
     const headers = {
       'Content-Type': contentType,
       ...extraHeaders,
@@ -31,11 +32,11 @@ export async function makeApiRequest(
     const response = await fetch(fullUrl, options);
 
     if (!response.ok) {
-      if (response.status === 401) {
-        const error = await response.json();
-        throw new Error(error.message || 'No access.');
-      }
-      throw new Error(`HTTP error. Status: ${response.status}`);
+      const errorResponse = await response.json();
+      console.error('API error response:', errorResponse);
+      throw new Error(
+        errorResponse.errors?.[0]?.message || 'An error occurred'
+      );
     }
 
     return await response.json();

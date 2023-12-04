@@ -1,8 +1,8 @@
-import { getUserInfo } from '../storage/storage.mjs';
+import { getAccessToken } from '../storage/storage.mjs';
 
 export function updateUIOnLogin() {
-  const userInfo = getUserInfo();
-  const isLoggedIn = Boolean(userInfo?.token);
+  const token = getAccessToken();
+  const isLoggedIn = Boolean(token);
 
   const elementsVisibleWhenLoggedIn = document.querySelectorAll(
     '.show-when-logged-in'

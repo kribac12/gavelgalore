@@ -6,3 +6,8 @@ export function getUserInfo() {
   const userInfo = localStorage.getItem('userInfo');
   return userInfo ? JSON.parse(userInfo) : null;
 }
+
+export function getAccessToken() {
+  const userInfo = getUserInfo();
+  return userInfo ? userInfo.accessToken : null;
+}

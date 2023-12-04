@@ -10,6 +10,7 @@ async function loadListing() {
   if (listingId) {
     try {
       const listing = await getListingById(listingId);
+
       renderListingDetail(listing);
     } catch (error) {
       console.error('Error loading listing:', error);

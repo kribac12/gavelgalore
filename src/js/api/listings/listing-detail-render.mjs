@@ -4,119 +4,246 @@ import {
   getTimeRemaining,
 } from '../../utilities/date-time.mjs';
 import { selectDefaultImage } from '../../utilities/default-image-selector.mjs';
+import { displayError } from '../../utilities/messages/error-handler.mjs';
+import { placeBid } from '../bids/bids-service.mjs';
+import { getListingById } from './listings-service.mjs';
+import { createBootstrapCarousel } from '../../utilities/carousel.mjs';
+import { updateHighestBidDetails } from '../bids/update-highest-bid-details.mjs';
 
 export async function renderListingDetail(listing) {
   const imageColumn = document.getElementById('imageColumn');
   const detailsColumn = document.getElementById('detailsColumn');
   const sellerDetails = document.getElementById('sellerDetails');
+  const bidHistory = document.getElementById('bidHistory');
 
   if (imageColumn) imageColumn.innerHTML = '';
   if (detailsColumn) detailsColumn.innerHTML = '';
   if (sellerDetails) sellerDetails.innerHTML = '';
+  if (bidHistory) bidHistory.innerHTML = '';
 
-  // Create elements for listing details
-  const titleElement = createNewElement('h1', {
-    text: listing.title,
-    classNames: ['listing-title'],
-  });
-  const descriptionElement = createNewElement('p', {
-    text: listing.description,
-    classNames: ['listing-description'],
-  });
+  // Populate image, title, description, tags, and time remaining in detailsColumn
+  populateDetailsColumn(listing, imageColumn, detailsColumn, bidHistory);
 
-  // Define default image based on tags, title, or description
-  // Define default image, use if none other, and add first listing image
-  const defaultImage = selectDefaultImage(
-    listing.tags,
-    listing.title,
-    listing.description || ''
+  // Populate seller details in sellerDetails
+  populateSellerDetails(listing, sellerDetails);
+
+  // Populate bid history in bidHistory
+  populateBidHistory(listing, bidHistory);
+}
+
+function populateDetailsColumn(
+  listing,
+  imageColumn,
+  detailsColumn,
+  bidHistory
+) {
+  // Media
+  if (listing.media && listing.media.length > 0) {
+    // Use the createBootstrapCarousel function
+    const carouselId = 'listingCarousel'; // Unique ID for the carousel
+    const carousel = createBootstrapCarousel(listing.media, carouselId);
+    imageColumn.appendChild(carousel);
+  } else {
+    // Fallback to default image if no media
+    const defaultImage = selectDefaultImage(
+      listing.tags,
+      listing.title,
+      listing.description || ''
+    );
+    const img = createNewElement('img', {
+      classNames: ['listing-image', 'img-fluid', 'w-100'],
+      attributes: { src: defaultImage, alt: listing.title },
+    });
+    img.onerror = () => {
+      img.src = defaultImage;
+    };
+    imageColumn.appendChild(img);
+  }
+
+  // Title, Description, Tags, Highest bid, Time Remaining
+  detailsColumn.appendChild(
+    createNewElement('h1', {
+      text: listing.title,
+      classNames: ['listing-title'],
+    })
   );
-  let imageUrl =
-    listing.media && listing.media.length > 0 ? listing.media[0] : defaultImage;
-  const img = createNewElement('img', {
-    classNames: ['listing-image', 'img-fluid', 'w-100'],
-    attributes: { src: imageUrl, alt: listing.title },
-  });
+  detailsColumn.appendChild(
+    createNewElement('p', {
+      text: listing.description,
+      classNames: ['listing-description'],
+    })
+  );
 
-  img.onerror = () => {
-    img.src = defaultImage;
-  };
-
-  imageColumn.appendChild(img);
-
-  //Render tags
   const tagsContainer = createNewElement('ul', {
     classNames: ['tags-container'],
   });
-  listing.tags.forEach((tag) => {
-    const tagElement = createNewElement('li', {
-      text: tag,
-      classNames: ['tag'],
-    });
-    tagsContainer.appendChild(tagElement);
+  listing.tags.forEach((tag) =>
+    tagsContainer.appendChild(
+      createNewElement('li', { text: tag, classNames: ['tag'] })
+    )
+  );
+  detailsColumn.appendChild(tagsContainer);
+
+  updateHighestBidDetails(listing, detailsColumn);
+
+  // Time remaining
+  const timeRemaining = getTimeRemaining(listing.endsAt);
+  const timeText = formatTimeRemaining(timeRemaining);
+  const timeRemainingElement = createNewElement('p', {
+    classNames: ['time-remaining'],
   });
 
-  //Time remaining on bids
-  //Add hourglass icon and time remaining
-  const timeRemaining = formatTimeRemaining(getTimeRemaining(listing.endsAt));
-  const timeText = createNewElement('p', { classNames: ['card-text'] });
   const hourglassIcon = createNewElement('span', {
     classNames: ['material-symbols-outlined', 'align-middle', 'fs-5', 'pe-1'],
     text: 'hourglass_top',
   });
-  timeText.appendChild(hourglassIcon);
-  timeText.appendChild(document.createTextNode(timeRemaining));
 
-  detailsColumn.appendChild(titleElement);
-  detailsColumn.appendChild(descriptionElement);
-  detailsColumn.appendChild(tagsContainer);
-  detailsColumn.appendChild(timeText);
+  timeRemainingElement.appendChild(hourglassIcon);
+  timeRemainingElement.appendChild(document.createTextNode(`${timeText}`));
 
-  // Render bids details
-  let highestBid = {};
-  if (Array.isArray(listing.bids) && listing.bids.length > 0) {
-    highestBid = listing.bids.sort((a, b) => b.amount - a.amount)[0];
-  }
+  detailsColumn.appendChild(timeRemainingElement);
 
-  const bidCountElement = createNewElement('p', {
-    text: `Number of Bids: ${listing._count.bids}`,
-    classNames: ['bid-count'],
+  setupBidForm(detailsColumn, listing, bidHistory);
+}
+
+function setupBidForm(detailsColumn, listing, bidHistory) {
+  //Add bid form
+  const bidForm = createNewElement('form', {
+    classNames: ['bid-form'],
+    attributes: { id: 'bidForm' },
   });
 
-  const highestBidElement = createNewElement('p', {
-    text: `Highest bid: ${highestBid.amount || 'No bids'}`,
-    classNames: ['highest-bid'],
-  });
-
-  const highestBidderElement = createNewElement('p', {
-    text: `Highest bidder: ${highestBid.bidderName || 'None'}`,
-    classNames: ['highest-bidder'],
-  });
-
-  detailsColumn.appendChild(bidCountElement);
-  detailsColumn.appendChild(highestBidElement);
-  detailsColumn.appendChild(highestBidderElement);
-
-  //Render seller details
-
-  let sellerName = 'No seller info';
-  let sellerAvatar = '/assets/images/flower.jpg';
-
-  if (listing.seller && typeof listing.seller === 'object') {
-    sellerName = listing.seller.name || sellerName;
-    sellerAvatar = listing.seller.avatar || sellerAvatar;
-  }
-  const sellerNameElement = createNewElement('p', {
-    text: `Seller: ${sellerName}`,
-  });
-  const sellerAvatarElement = createNewElement('img', {
+  const bidInput = createNewElement('input', {
+    classNames: ['form-control', 'mb-3'],
     attributes: {
-      src: sellerAvatar,
-      alt: `Avatar of ${sellerName}`,
+      type: 'number',
+      id: 'bidAmount',
+      placeholder: 'Enter bid amount',
+      required: true,
+      min: 1,
     },
-    classNames: ['seller-avatar', 'rounded-circle', 'img-fluid', 'w-25'],
   });
 
-  sellerDetails.appendChild(sellerNameElement);
-  sellerDetails.appendChild(sellerAvatarElement);
+  const bidButton = createNewElement('button', {
+    classNames: ['btn', 'btn-primary', 'btn-lg'],
+    text: 'Place bid',
+    attributes: { type: 'submit' },
+  });
+
+  bidForm.appendChild(bidInput);
+  bidForm.appendChild(bidButton);
+  detailsColumn.appendChild(bidForm);
+
+  document
+    .getElementById('bidForm')
+    .addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const bidAmount = Number(document.getElementById('bidAmount').value);
+      try {
+        // Attempt to place the bid
+        await placeBid(listing.id, bidAmount);
+
+        // Fetch updated listing details, including bid history
+        const updatedListing = await getListingById(listing.id);
+        console.log('Updated listing:', updatedListing);
+        console.log('Updated Listing:', updatedListing); // Debugging
+
+        // Check if bids array exists in the updated listing
+        if (updatedListing && Array.isArray(updatedListing.bids)) {
+          // Refresh bid history display
+          populateBidHistory(updatedListing, bidHistory);
+          updateHighestBidDetails(updatedListing, detailsColumn);
+        } else {
+          console.error('Updated listing does not contain bids array');
+        }
+      } catch (error) {
+        console.error('Error placing bid:', error);
+        displayError();
+      }
+    });
+}
+
+function populateSellerDetails(listing, sellerDetails) {
+  const sellerAvatar = listing.seller?.avatar || '/assets/images/flower.jpg';
+  const sellerName = listing.seller?.name || 'No seller name';
+  const sellerEmail = listing.seller?.email || 'No seller email';
+
+  sellerDetails.appendChild(
+    createNewElement('h1', {
+      text: 'Seller',
+      classNames: ['seller-details-title', 'mb-4'],
+    })
+  );
+
+  sellerDetails.appendChild(
+    createNewElement('img', {
+      attributes: { src: sellerAvatar, alt: `Avatar of ${sellerName}` },
+      classNames: [
+        'seller-avatar',
+        'rounded-circle',
+        'img-fluid',
+        'avatar-small',
+        'mb-4',
+      ],
+    })
+  );
+  sellerDetails.appendChild(
+    createNewElement('p', { text: `Seller: ${sellerName}` })
+  );
+  sellerDetails.appendChild(
+    createNewElement('p', { text: `Email: ${sellerEmail}` })
+  );
+}
+
+function populateBidHistory(listing, bidHistory) {
+  bidHistory.innerHTML = '';
+
+  const bidHistoryTitle = createNewElement('h1', {
+    text: 'Recent bids',
+    classNames: ['bid-history-title', 'mb-4'],
+  });
+  bidHistory.appendChild(bidHistoryTitle);
+
+  //Header row for column titles
+  const headerRow = createNewElement('div', {
+    classNames: ['row', 'mb-2'],
+  });
+  const bidderHeaderCol = createNewElement('div', {
+    text: 'Bidder',
+    classNames: ['col-6'],
+  });
+  const amountHeaderCol = createNewElement('div', {
+    text: 'Amount',
+    classNames: ['col-6'],
+  });
+
+  headerRow.appendChild(bidderHeaderCol);
+  headerRow.appendChild(amountHeaderCol);
+  bidHistory.appendChild(headerRow);
+
+  // Reverse order
+
+  const sortedBids = listing.bids
+    .slice()
+    .sort((a, b) => new Date(b.created) - new Date(a.created));
+
+  sortedBids.slice(0, 10).forEach((bid) => {
+    const bidRow = createBidRow(bid);
+    bidHistory.appendChild(bidRow);
+  });
+}
+
+function createBidRow(bid) {
+  const bidRow = createNewElement('div', { classNames: ['row', 'mb-2'] });
+  const bidderNameElement = createNewElement('span', {
+    text: bid.bidderName,
+    classNames: ['col-6', 'bidder-name'],
+  });
+  const bidAmountElement = createNewElement('span', {
+    text: `${bid.amount}`,
+    classNames: ['col-6', 'bid-amount'],
+  });
+  bidRow.appendChild(bidderNameElement);
+  bidRow.appendChild(bidAmountElement);
+  return bidRow;
 }
