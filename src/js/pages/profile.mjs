@@ -43,13 +43,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderSectionHeader('listingsContainer', 'My listings');
     renderSectionHeader('winsContainer', 'My wins');
     renderSectionHeader('bidsContainer', 'My bids');
+
     // Populate user's listings, bids, and wins
-    populateListings(userListings, 'listingsContainer', createListingCard);
-    populateListings(userWins, 'winsContainer', createListingCard); // Assuming you have a separate function to fetch wins
+    populateListings(userListings, 'listingsContent', createListingCard, false);
+    populateListings(userWins, 'winsContent', createListingCard, false);
     populateListings(
       userBids.map((bid) => bid.listing),
-      'bidsContainer',
-      createListingCard
+      'bidsContent',
+      createListingCard,
+      false
     ); // Map bids to their respective listings
   } catch (error) {
     console.error('Error loading profile page:', error);

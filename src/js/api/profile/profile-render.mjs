@@ -54,18 +54,30 @@ export function renderEditAvatarButton() {
   editAvatarColumn.appendChild(editButton);
 }
 
-export function populateListings(listings, containerId) {
-  const container = document.getElementById(containerId);
-
-  if (!container) {
-    console.error(`No container found for ID: ${containerId}`);
-    return;
-  }
-
-  listings.forEach((listing) => {
-    const listingCard = createListingCard(listing);
-    container.appendChild(listingCard);
+export function populateListings(
+  listings,
+  contentContainerId,
+  createCardFunction,
+  showAll = false
+) {
+  const contentContainer = document.getElementById(contentContainerId);
+  contentContainer.innerHTML = '';
+  const listingsToDisplay = showAll ? listings : listings.slice(0, 4);
+  listingsToDisplay.forEach((listing) => {
+    const card = createCardFunction(listing);
+    contentContainer.appendChild(card);
   });
+
+  if (!showAll && listings.length > 4) {
+    const showAllButton = createNewElement('button', {
+      text: 'Show all',
+      classNames: ['btn', 'btn-primary', 'mt-2'],
+    });
+    showAllButton.addEventListener('click', () => {
+      populateListings(listings, contentContainerId, createCardFunction, true);
+    });
+    contentContainer.appendChild(showAllButton);
+  }
 }
 
 export function populateBids(bids) {

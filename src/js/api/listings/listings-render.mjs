@@ -64,13 +64,7 @@ export async function populateSections(
   }
 }
 
-export function populateSection(
-  sectionId,
-  listings,
-  limitCards,
-  containerId,
-  showAll = false
-) {
+export function populateSection(sectionId, listings, limitCards, containerId) {
   const targetId = containerId || sectionId;
   const section = document.getElementById(targetId);
 
@@ -89,30 +83,13 @@ export function populateSection(
   }
 
   container.innerHTML = '';
-  const listingsToDisplay = showAll
-    ? listings
-    : limitCards
-      ? listings.slice(0, 4)
-      : listings;
+  const listingsToDisplay = limitCards ? listings.slice(0, 4) : listings;
 
   listingsToDisplay.forEach((listing) => {
     const card = createListingCard(listing);
     console.log('Appending card:', card);
     container.appendChild(card);
   });
-
-  //Add "Show all" button if it does not show all and there are more listings
-
-  if (!showAll && limitCards && listings.length > 4) {
-    const showAllButton = createNewElement('button', {
-      text: 'Show All',
-      classNames: ['btn', 'btn-primary', 'mt-2'],
-    });
-    showAllButton.addEventListener('click', () => {
-      populateSection(sectionId, listings, false, containerId, true);
-    });
-    container.appendChild(showAllButton);
-  }
 }
 
 export function createListingCard(listing) {
