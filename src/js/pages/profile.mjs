@@ -1,21 +1,24 @@
 import '../userstate-display/logged-in-visible.mjs';
 import { setUpLogoutLink } from '../api/authenticate/logout.mjs';
 import {
+  getUserBids,
   getUserListings,
   getUserProfile,
   getUserWins,
-  getUserBids,
 } from '../api/profile/profile-fetch.mjs';
 import { getUserInfo } from '../storage/storage.mjs';
 import {
   populateListings,
+  populateWins,
   renderProfileDetails,
   renderAvatar,
   renderEditAvatarButton,
   renderSectionHeader,
+  populateBids,
 } from '../api/profile/profile-render.mjs';
 import { createListingCard } from '../api/listings/listings-render.mjs';
 import { displayError } from '../utilities/messages/error-handler.mjs';
+import { createBidCard } from '../api/profile/profile-bid-card.mjs';
 
 document.addEventListener('DOMContentLoaded', async () => {
   setUpLogoutLink();
@@ -42,17 +45,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     renderSectionHeader('listingsContainer', 'My listings');
     renderSectionHeader('winsContainer', 'My wins');
-    renderSectionHeader('bidsContainer', 'My bids');
 
-    // Populate user's listings, bids, and wins
+    // Populate user's listings
+    console.log('User listings for populateListings:', userListings);
     populateListings(userListings, 'listingsContent', createListingCard, false);
-    populateListings(userWins, 'winsContent', createListingCard, false);
-    populateListings(
-      userBids.map((bid) => bid.listing),
-      'bidsContent',
-      createListingCard,
-      false
-    ); // Map bids to their respective listings
+
+    // Populate user's wins
+    console.log(document.getElementById('winsContent'));
+    populateWins(userWins, 'winsContent', createListingCard, false);
+
+    // populate user's bids
+    populateBids(userBids, 'bidsContent', createBidCard, false);
   } catch (error) {
     console.error('Error loading profile page:', error);
     displayError();

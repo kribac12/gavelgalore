@@ -16,8 +16,11 @@ export async function getUserProfile(username) {
 export async function getUserListings(username) {
   try {
     const urlPath = `profiles/${username}/listings`;
+
     const query = { _seller: true, _bids: true };
-    return await makeApiRequest(urlPath, 'GET', null, {}, query);
+    const listings = await makeApiRequest(urlPath, 'GET', null, {}, query);
+    console.log('getUserListings data:', listings);
+    return listings;
   } catch (error) {
     console.error('Error fetching user listings:', error);
     displayError();
@@ -40,10 +43,13 @@ export async function getUserWins(username) {
 export async function getUserBids(username) {
   try {
     const urlPath = `profiles/${username}/bids`;
-    const query = { _listing: true, _seller: true, _bids: true, _active: true };
-    return await makeApiRequest(urlPath, 'GET', null, {}, query);
+    const query = { _listings: true };
+    const bids = await makeApiRequest(urlPath, 'GET', null, {}, query);
+
+    console.log('getUserBids data:', bids);
+    return bids;
   } catch (error) {
-    console.error('Error fetching bids:', error);
+    console.error('Error fetching user bids:', error);
     displayError();
   }
 }

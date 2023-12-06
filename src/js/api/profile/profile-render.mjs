@@ -1,5 +1,4 @@
 import { createNewElement } from '../../create-html/createHTML.mjs';
-import { createListingCard } from '../listings/listings-render.mjs';
 
 export function renderSectionHeader(containerId, headerText) {
   const container = document.getElementById(containerId);
@@ -11,7 +10,7 @@ export function renderSectionHeader(containerId, headerText) {
     text: headerText,
     classNames: ['section-header'],
   });
-  container.appendChild(header);
+  container.prepend(header);
 }
 export function renderAvatar(avatarUrl) {
   const avatarColumn = document.getElementById('avatarColumn');
@@ -80,22 +79,60 @@ export function populateListings(
   }
 }
 
-export function populateBids(bids) {
-  const bidsContainer = document.getElementById('bidsContainer');
+export function populateWins(
+  wins,
+  contentContainerId,
+  createCardFunction,
+  showAll = false
+) {
+  const contentContainer = document.getElementById(contentContainerId);
+  contentContainer.innerHTML = '';
 
-  if (bidsContainer) {
-    bids.forEach((bid) => {
-      const bidCard = createListingCard(bid.listing);
-      bidsContainer.appendChild(bidCard);
+  // Slice the wins array to display only a limited number of wins initially
+  const winsToDisplay = showAll ? wins : wins.slice(0, 4);
+  winsToDisplay.forEach((win) => {
+    const card = createCardFunction(win);
+    contentContainer.appendChild(card);
+  });
+
+  // Adding a 'Show all' button if there are more than 4 wins
+  if (!showAll && wins.length > 4) {
+    const showAllButton = createNewElement('button', {
+      text: 'Show all',
+      classNames: ['btn', 'btn-primary', 'mt-2'],
     });
+    showAllButton.addEventListener('click', () => {
+      populateWins(wins, contentContainerId, createCardFunction, true);
+    });
+    contentContainer.appendChild(showAllButton);
   }
 }
-export function populateWins(wins) {
-  const winsContainer = document.getElementById('winsContainer');
-  if (winsContainer) {
-    wins.forEach((win) => {
-      const winCard = createListingCard(win);
-      winsContainer.appendChild(winCard);
+
+export function populateBids(
+  bids,
+  contentContainerId,
+  createCardFunction,
+  showAll = false
+) {
+  const contentContainer = document.getElementById(contentContainerId);
+  contentContainer.innerHTML = '';
+
+  const bidsToDisplay = showAll ? bids : bids.slice(0, 4);
+
+  bidsToDisplay.forEach((bid) => {
+    console.log('Bid data:', bid);
+    const card = createCardFunction(bid);
+    contentContainer.appendChild(card);
+  });
+
+  if (!showAll && bids.length > 4) {
+    const showAllButton = createNewElement('button', {
+      text: 'Show all',
+      classNames: ['btn', 'btn-primary', 'mt-2'],
     });
+    showAllButton.addEventListener('click', () => {
+      populateBids(bids, contentContainerId, createCardFunction, true);
+    });
+    contentContainer.appendChild(showAllButton);
   }
 }
