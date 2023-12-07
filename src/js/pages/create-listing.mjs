@@ -3,12 +3,13 @@ import { setUpLogoutLink } from '../api/authenticate/logout.mjs';
 import { setupCreateListingForm } from '../api/listings/setup-create-listing-form.mjs';
 import { makeApiRequest } from '../api/api-service.mjs';
 import { displayError } from '../utilities/messages/error-handler.mjs';
-
+import { updateUserCredits } from '../utilities/update-credit.mjs';
 import { displaySuccess } from '../utilities/messages/success.mjs';
 
 document.addEventListener('DOMContentLoaded', () => {
   setUpLogoutLink();
   setupCreateListingForm();
+  updateUserCredits();
   document
     .getElementById('createListingForm')
     .addEventListener('submit', async (event) => {

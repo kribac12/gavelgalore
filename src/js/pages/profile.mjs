@@ -19,9 +19,11 @@ import { createListingCard } from '../api/listings/listings-render.mjs';
 import { displayError } from '../utilities/messages/error-handler.mjs';
 import { createBidCard } from '../api/profile/profile-bid-card.mjs';
 import { renderEditAvatarButton } from '../api/profile/avatar-editing.mjs';
+import { updateUserCredits } from '../utilities/update-credit.mjs';
 
 document.addEventListener('DOMContentLoaded', async () => {
   setUpLogoutLink();
+  updateUserCredits();
   try {
     // Retrieve the logged-in user's info
     const userInfo = getUserInfo();

@@ -3,6 +3,7 @@ import { setUpLogoutLink } from '../api/authenticate/logout.mjs';
 import { getListingById } from '../api/listings/listings-service.mjs';
 import { renderListingDetail } from '../api/listings/listing-detail-render.mjs';
 import { displayError } from '../utilities/messages/error-handler.mjs';
+import { updateUserCredits } from '../utilities/update-credit.mjs';
 
 async function loadListing() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -21,4 +22,5 @@ async function loadListing() {
 document.addEventListener('DOMContentLoaded', () => {
   setUpLogoutLink();
   loadListing();
+  updateUserCredits();
 });
