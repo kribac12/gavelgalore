@@ -4,6 +4,7 @@ import {
   formatTimeRemaining,
   getTimeRemaining,
 } from '../../utilities/date-time.mjs';
+import { limitTags, trimText } from '../../utilities/text-trimmer.mjs';
 
 export function createBidCard(bid) {
   const listing = bid.listing;
@@ -62,12 +63,15 @@ export function createBidCard(bid) {
   cardInner.appendChild(cardBody);
 
   cardBody.appendChild(
-    createNewElement('h3', { classNames: ['card-title'], text: listing.title })
+    createNewElement('h3', {
+      classNames: ['card-title'],
+      text: trimText(listing.title, 40),
+    })
   );
   cardBody.appendChild(
     createNewElement('p', {
       classNames: ['card-text'],
-      text: listing.description,
+      text: trimText(listing.description, 100),
     })
   );
 
@@ -80,6 +84,25 @@ export function createBidCard(bid) {
     text: creationDateText,
   });
   cardBody.appendChild(creationDateElement);
+
+  // Create a container for tags
+  const tagsContainer = createNewElement('div', {
+    classNames: ['tags-container', 'mb-2'],
+  });
+
+  // Limit the number of tags to display
+  const displayedTags = limitTags(listing.tags, 3); // Show up to 3 tags
+
+  // Add tags as badges
+  displayedTags.forEach((tag) => {
+    const tagBadge = createNewElement('span', {
+      classNames: ['badge', 'bg-secondary', 'me-1'],
+      text: tag,
+    });
+    tagsContainer.appendChild(tagBadge);
+  });
+
+  cardBody.appendChild(tagsContainer);
 
   // Hourglass icon and time remaining
   const timeRemaining = formatTimeRemaining(getTimeRemaining(listing.endsAt));

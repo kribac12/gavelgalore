@@ -10,6 +10,7 @@ import {
 } from '../../utilities/date-time.mjs';
 import { createNewElement } from '../../create-html/createHTML.mjs';
 import { selectDefaultImage } from '../../utilities/default-image-selector.mjs';
+import { limitTags, trimText } from '../../utilities/text-trimmer.mjs';
 
 export async function populateSections(
   limitCards = false,
@@ -140,13 +141,16 @@ export function createListingCard(listing) {
 
   //Add title, description, etc
   cardBody.appendChild(
-    createNewElement('h3', { classNames: ['card-title'], text: listing.title })
+    createNewElement('h3', {
+      classNames: ['card-title'],
+      text: trimText(listing.title, 40),
+    })
   );
   listing.title.slice(0, 7);
   cardBody.appendChild(
     createNewElement('p', {
       classNames: ['card-text'],
-      text: listing.description,
+      text: trimText(listing.description, 100),
     })
   );
 
@@ -160,6 +164,26 @@ export function createListingCard(listing) {
   });
   cardBody.appendChild(creationDateElement);
 
+  // Create container for tags
+  const tagsContainer = createNewElement('div', {
+    classNames: ['tags-container', 'mb-2'],
+  });
+
+  // Limit the number of tags to display
+  const displayedTags = limitTags(listing.tags, 3); // Show up to 3 tags
+
+  // Add tags as badges
+  displayedTags.forEach((tag) => {
+    const tagBadge = createNewElement('span', {
+      classNames: ['badge', 'bg-light'],
+      text: tag,
+    });
+    tagsContainer.appendChild(tagBadge);
+  });
+
+  cardBody.appendChild(tagsContainer);
+
+  cardBody.appendChild(tagsContainer);
   //Add hourglass icon and time remaining
   const timeRemaining = formatTimeRemaining(getTimeRemaining(listing.endsAt));
   const timeText = createNewElement('p', { classNames: ['card-text'] });

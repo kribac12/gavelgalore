@@ -74,14 +74,16 @@ function populateDetailsColumn(
     })
   );
 
-  const tagsContainer = createNewElement('ul', {
-    classNames: ['tags-container'],
+  const tagsContainer = createNewElement('div', {
+    classNames: ['tags-container', 'mb-2'],
   });
-  listing.tags.forEach((tag) =>
-    tagsContainer.appendChild(
-      createNewElement('li', { text: tag, classNames: ['tag'] })
-    )
-  );
+  listing.tags.forEach((tag) => {
+    const tagBadge = createNewElement('span', {
+      classNames: ['badge', 'badge-pill', 'bg-secondary', 'me-1'], // Bootstrap classes
+      text: tag,
+    });
+    tagsContainer.appendChild(tagBadge);
+  });
   detailsColumn.appendChild(tagsContainer);
 
   updateHighestBidDetails(listing, detailsColumn);
