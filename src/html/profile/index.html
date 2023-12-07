@@ -59,7 +59,19 @@
                   >
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link show-when-logged-in" href="#">SELL</a>
+                  <a
+                    class="nav-link show-when-logged-in"
+                    href="/src/html/sell-page/index.html"
+                    >SELL</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="nav-link active show-when-logged-in"
+                    aria-current="page"
+                    href="/src/html/profile/index.html"
+                    >| Profile |</a
+                  >
                 </li>
               </ul>
               <ul class="navbar-nav ms-auto">
@@ -76,7 +88,25 @@
           </div>
         </nav>
       </header>
-      <main></main>
+      <main>
+        <div class="container py-5 h-100" id="profileContainer">
+          <section class="row" id="profileDetails">
+            <div class="col-md-4" id="avatarColumn"></div>
+
+            <div class="col-md-4" id="detailsColumn"></div>
+            <div class="col-md-4" id="editAvatarColumn"></div>
+          </section>
+          <section id="listingsContainer">
+            <div class="row mt-4" id="listingsContent"></div>
+          </section>
+          <section id="bidsContainer">
+            <div class="row mt-4" id="bidsContent"></div>
+          </section>
+          <section id="winsContainer">
+            <div class="row mt-4" id="winsContent"></div>
+          </section>
+        </div>
+      </main>
       <div class="container my-5">
         <footer class="bg-light text-center text-lg-start text-dark">
           <div class="container pt-4">

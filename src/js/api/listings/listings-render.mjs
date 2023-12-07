@@ -11,39 +11,55 @@ import {
 import { createNewElement } from '../../create-html/createHTML.mjs';
 import { selectDefaultImage } from '../../utilities/default-image-selector.mjs';
 
-export async function populateSections(limitCards = false, category) {
+export async function populateSections(
+  limitCards = false,
+  category,
+  containerId = null
+) {
   const allListings = await getAllListings();
-  console.log(allListings);
+  console.log('All listings:', allListings);
 
   if (category) {
     let listingsToUse;
     switch (category) {
       case 'popular':
         listingsToUse = getMostPopularListings(allListings);
+        populateSection(`${category}Content`, listingsToUse, limitCards);
         break;
       case 'endsSoon':
         listingsToUse = getSoonEndingListings(allListings);
+        populateSection(`${category}Content`, listingsToUse, limitCards);
         break;
       case 'newest':
         listingsToUse = getNewestListings(allListings);
+        populateSection(`${category}Content`, listingsToUse, limitCards);
         break;
+      default:
+        // Default case for profile page
+        populateSection(containerId, allListings, limitCards);
     }
-    populateSection(`${category}Content`, listingsToUse, limitCards);
   } else {
+    // Populate default sections for the homepage/listings page
     populateSection(
       'listings-popular',
       getMostPopularListings(allListings),
-      limitCards
+      limitCards,
+      null,
+      false
     );
     populateSection(
       'listings-ends-soon',
       getSoonEndingListings(allListings),
-      limitCards
+      limitCards,
+      null,
+      false
     );
     populateSection(
       'listings-newest',
       getNewestListings(allListings),
-      limitCards
+      limitCards,
+      null,
+      false
     );
   }
 }
@@ -67,7 +83,6 @@ export function populateSection(sectionId, listings, limitCards, containerId) {
   }
 
   container.innerHTML = '';
-  console.log('Container cleared:', container);
   const listingsToDisplay = limitCards ? listings.slice(0, 4) : listings;
 
   listingsToDisplay.forEach((listing) => {
@@ -86,7 +101,7 @@ export function createListingCard(listing) {
 
   // Define default image, use if none other, and add first listing image
   const defaultImage = selectDefaultImage(
-    listing.tags,
+    listing.tags || [],
     listing.title,
     listing.description || ''
   );
@@ -114,7 +129,7 @@ export function createListingCard(listing) {
       'end-0',
       'bid-button',
     ],
-    text: `Bids: ${listing._count.bids}`,
+    text: `Bid: ${listing._count.bids}`,
   });
   overlay.appendChild(bidsText);
   cardInner.appendChild(overlay);
@@ -127,12 +142,23 @@ export function createListingCard(listing) {
   cardBody.appendChild(
     createNewElement('h3', { classNames: ['card-title'], text: listing.title })
   );
+  listing.title.slice(0, 7);
   cardBody.appendChild(
     createNewElement('p', {
       classNames: ['card-text'],
       text: listing.description,
     })
   );
+
+  //Format creation date
+  const creationDateText = `Created: ${new Date(
+    listing.created
+  ).toLocaleDateString()}`;
+  const creationDateElement = createNewElement('p', {
+    classNames: ['card-text', 'creation-date'],
+    text: creationDateText,
+  });
+  cardBody.appendChild(creationDateElement);
 
   //Add hourglass icon and time remaining
   const timeRemaining = formatTimeRemaining(getTimeRemaining(listing.endsAt));
