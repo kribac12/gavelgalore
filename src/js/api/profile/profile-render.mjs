@@ -8,7 +8,7 @@ export function renderSectionHeader(containerId, headerText) {
   }
   const header = createNewElement('h1', {
     text: headerText,
-    classNames: ['section-header'],
+    classNames: ['section-header', 'mt-5'],
   });
   container.prepend(header);
 }
@@ -67,15 +67,22 @@ export function populateListings(
     contentContainer.appendChild(card);
   });
 
-  if (!showAll && listings.length > 4) {
-    const showAllButton = createNewElement('button', {
-      text: 'Show all',
+  //Check if show all or show less button is needed
+
+  if (listings.length > 4) {
+    const showButton = createNewElement('button', {
+      text: showAll ? 'Show less' : 'Show all',
       classNames: ['btn', 'btn-primary', 'mt-2'],
     });
-    showAllButton.addEventListener('click', () => {
-      populateListings(listings, contentContainerId, createCardFunction, true);
+    showButton.addEventListener('click', () => {
+      populateListings(
+        listings,
+        contentContainerId,
+        createCardFunction,
+        !showAll
+      );
     });
-    contentContainer.appendChild(showAllButton);
+    contentContainer.appendChild(showButton);
   }
 }
 
@@ -96,15 +103,15 @@ export function populateWins(
   });
 
   // Adding a 'Show all' button if there are more than 4 wins
-  if (!showAll && wins.length > 4) {
-    const showAllButton = createNewElement('button', {
-      text: 'Show all',
-      classNames: ['btn', 'btn-primary', 'mt-2'],
+  if (wins.length > 4) {
+    const showButton = createNewElement('button', {
+      text: showAll ? 'Show less' : 'Show all',
+      classNames: ['btn', 'btn-primary', 'mt-4'],
     });
-    showAllButton.addEventListener('click', () => {
-      populateWins(wins, contentContainerId, createCardFunction, true);
+    showButton.addEventListener('click', () => {
+      populateWins(wins, contentContainerId, createCardFunction, !showAll);
     });
-    contentContainer.appendChild(showAllButton);
+    contentContainer.appendChild(showButton);
   }
 }
 
@@ -117,22 +124,33 @@ export function populateBids(
   const contentContainer = document.getElementById(contentContainerId);
   contentContainer.innerHTML = '';
 
-  const bidsToDisplay = showAll ? bids : bids.slice(0, 4);
+  // Filter out duplicates
+
+  const uniqueListingIds = new Set();
+
+  const uniqueBids = bids.filter((bid) => {
+    if (!uniqueListingIds.has(bid.listing.id)) {
+      uniqueListingIds.add(bid.listing.id);
+      return true;
+    }
+    return false;
+  });
+
+  const bidsToDisplay = showAll ? uniqueBids : uniqueBids.slice(0, 4);
 
   bidsToDisplay.forEach((bid) => {
-    console.log('Bid data:', bid);
     const card = createCardFunction(bid);
     contentContainer.appendChild(card);
   });
 
-  if (!showAll && bids.length > 4) {
-    const showAllButton = createNewElement('button', {
-      text: 'Show all',
+  if (uniqueBids.length > 4) {
+    const showButton = createNewElement('button', {
+      text: showAll ? 'Show less' : 'Show all',
       classNames: ['btn', 'btn-primary', 'mt-2'],
     });
-    showAllButton.addEventListener('click', () => {
-      populateBids(bids, contentContainerId, createCardFunction, true);
+    showButton.addEventListener('click', () => {
+      populateBids(bids, contentContainerId, createCardFunction, !showAll);
     });
-    contentContainer.appendChild(showAllButton);
+    contentContainer.appendChild(showButton);
   }
 }

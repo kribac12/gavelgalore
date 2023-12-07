@@ -8,6 +8,11 @@ import {
 export function createBidCard(bid) {
   const listing = bid.listing;
 
+  if (!listing) {
+    console.error('Listing data is missing in the bid:', bid);
+    return null;
+  }
+
   const card = createNewElement('div', {
     classNames: ['col-sm-6', 'col-md-6', 'col-lg-3', 'listing-card'],
   });
@@ -20,11 +25,7 @@ export function createBidCard(bid) {
   const tags = listing.tags || [];
 
   // Select a default image
-  const defaultImage = selectDefaultImage(
-    tags, // Pass the tags array, which could be empty
-    title,
-    description
-  );
+  const defaultImage = selectDefaultImage(tags, title, description);
   let imageUrl =
     listing.media && listing.media.length > 0 ? listing.media[0] : defaultImage;
   const img = createNewElement('img', {
@@ -36,6 +37,27 @@ export function createBidCard(bid) {
   };
 
   cardInner.appendChild(img);
+
+  // Add card-img-overlay with bid count
+
+  const overlay = createNewElement('div', {
+    classNames: ['card-img-overlay'],
+  });
+  const bidCountText = createNewElement('p', {
+    classNames: [
+      'card-text',
+      'btn',
+      'btn-secondary',
+      'position-absolute',
+      'top-0',
+      'end-0',
+      'bid-button',
+    ],
+    text: `Bid: ${bid.amount}`,
+  });
+  overlay.appendChild(bidCountText);
+  cardInner.appendChild(overlay);
+
   const cardBody = createNewElement('div', { classNames: ['card-body'] });
   cardInner.appendChild(cardBody);
 
@@ -49,13 +71,15 @@ export function createBidCard(bid) {
     })
   );
 
-  const bidInfoText = createNewElement('p', {
-    classNames: ['card-text'],
-    text: `Bid: ${bid.amount} - Date: ${new Date(
-      bid.created
-    ).toLocaleDateString()}`,
+  //Format creation date
+  const creationDateText = `Created: ${new Date(
+    listing.created
+  ).toLocaleDateString()}`;
+  const creationDateElement = createNewElement('p', {
+    classNames: ['card-text', 'creation-date'],
+    text: creationDateText,
   });
-  cardBody.appendChild(bidInfoText);
+  cardBody.appendChild(creationDateElement);
 
   // Hourglass icon and time remaining
   const timeRemaining = formatTimeRemaining(getTimeRemaining(listing.endsAt));

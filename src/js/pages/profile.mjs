@@ -12,13 +12,13 @@ import {
   populateWins,
   renderProfileDetails,
   renderAvatar,
-  renderEditAvatarButton,
   renderSectionHeader,
   populateBids,
 } from '../api/profile/profile-render.mjs';
 import { createListingCard } from '../api/listings/listings-render.mjs';
 import { displayError } from '../utilities/messages/error-handler.mjs';
 import { createBidCard } from '../api/profile/profile-bid-card.mjs';
+import { renderEditAvatarButton } from '../api/profile/avatar-editing.mjs';
 
 document.addEventListener('DOMContentLoaded', async () => {
   setUpLogoutLink();
@@ -40,10 +40,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderAvatar(userProfile.avatar);
     renderProfileDetails(userProfile);
     renderEditAvatarButton();
+    console.log(renderEditAvatarButton);
 
     //Render section headers
 
     renderSectionHeader('listingsContainer', 'My listings');
+    renderSectionHeader('bidsContainer', 'My bids');
     renderSectionHeader('winsContainer', 'My wins');
 
     // Populate user's listings

@@ -129,7 +129,7 @@ export function createListingCard(listing) {
       'end-0',
       'bid-button',
     ],
-    text: `Bids: ${listing._count.bids}`,
+    text: `Bid: ${listing._count.bids}`,
   });
   overlay.appendChild(bidsText);
   cardInner.appendChild(overlay);
@@ -149,6 +149,16 @@ export function createListingCard(listing) {
       text: listing.description,
     })
   );
+
+  //Format creation date
+  const creationDateText = `Created: ${new Date(
+    listing.created
+  ).toLocaleDateString()}`;
+  const creationDateElement = createNewElement('p', {
+    classNames: ['card-text', 'creation-date'],
+    text: creationDateText,
+  });
+  cardBody.appendChild(creationDateElement);
 
   //Add hourglass icon and time remaining
   const timeRemaining = formatTimeRemaining(getTimeRemaining(listing.endsAt));
