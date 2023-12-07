@@ -44,15 +44,6 @@ export function renderProfileDetails(userProfile) {
   detailsColumn.appendChild(credits);
 }
 
-export function renderEditAvatarButton() {
-  const editAvatarColumn = document.getElementById('editAvatarColumn');
-  const editButton = createNewElement('button', {
-    text: 'Edit avatar',
-    classNames: ['btn', 'btn-primary'],
-  });
-  editAvatarColumn.appendChild(editButton);
-}
-
 export function populateListings(
   listings,
   contentContainerId,
