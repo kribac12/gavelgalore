@@ -4,7 +4,8 @@ export async function getAllListings(
   sort = 'created',
   order = 'desc',
   offset = 0,
-  limit = 100
+  limit = 100,
+  searchQuery = ''
 ) {
   const query = {
     sort,
@@ -13,6 +14,7 @@ export async function getAllListings(
     limit,
     _active: true,
     _bids: true,
+    searchQuery,
   };
   return await makeApiRequest('listings', 'GET', null, {}, query);
 }
