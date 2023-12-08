@@ -9,6 +9,8 @@ import { placeBid } from '../bids/bids-service.mjs';
 import { getListingById } from './listings-service.mjs';
 import { createBootstrapCarousel } from '../../utilities/carousel.mjs';
 import { updateHighestBidDetails } from '../bids/update-highest-bid-details.mjs';
+import { updateUserCredits } from '../../utilities/update-credit.mjs';
+import { populateSections } from './listings-render.mjs';
 
 export async function renderListingDetail(listing) {
   const imageColumn = document.getElementById('imageColumn');
@@ -141,24 +143,29 @@ function setupBidForm(detailsColumn, listing, bidHistory) {
     .addEventListener('submit', async (event) => {
       event.preventDefault();
       const bidAmount = Number(document.getElementById('bidAmount').value);
+
       try {
         // Attempt to place the bid
-        await placeBid(listing.id, bidAmount);
+        const bidResponse = await placeBid(listing.id, bidAmount);
+        console.log('Bid response:', bidResponse);
 
-        // Fetch updated listing details, including bid history
-        const updatedListing = await getListingById(listing.id);
-        console.log('Updated listing:', updatedListing);
-        console.log('Updated Listing:', updatedListing); // Debugging
+        // If placeBid function executes successfully, proceed to update bid history and credits
+        // Fetch updated listing details for bid history
+        if (bidResponse) {
+          const updatedListing = await getListingById(listing.id);
+          if (updatedListing && Array.isArray(updatedListing.bids)) {
+            populateBidHistory(updatedListing, bidHistory);
+            updateHighestBidDetails(updatedListing, detailsColumn);
+          }
 
-        // Check if bids array exists in the updated listing
-        if (updatedListing && Array.isArray(updatedListing.bids)) {
-          // Refresh bid history display
-          populateBidHistory(updatedListing, bidHistory);
-          updateHighestBidDetails(updatedListing, detailsColumn);
+          // Separate call to update user credits
+          await updateUserCredits();
+          populateSections();
         } else {
-          console.error('Updated listing does not contain bids array');
+          console.error('Bid placement unsuccessful:', bidResponse);
         }
       } catch (error) {
+        // Handle unsuccessful bid here
         console.error('Error placing bid:', error);
         displayError();
       }

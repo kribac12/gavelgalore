@@ -5,6 +5,7 @@ export async function updateUserCredits() {
   const userInfo = getUserInfo();
   if (userInfo) {
     const userProfile = await getUserProfile(userInfo.name);
+    console.log('Updated profile', userProfile);
     const creditsElement = document.getElementById('userCredits');
     if (creditsElement) {
       creditsElement.innerHTML = `<span class="material-symbols-outlined align-middle fs-5">

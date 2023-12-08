@@ -118,6 +118,15 @@ export function createListingCard(listing) {
   };
   cardInner.appendChild(img);
 
+  // Determine highest bid
+  let highestBidAmount = 'No bids';
+  if (Array.isArray(listing.bids) && listing.bids.length > 0) {
+    const highestBid = listing.bids.reduce(
+      (max, bid) => (bid.amount > max.amount ? bid : max),
+      listing.bids[0]
+    );
+    highestBidAmount = highestBid.amount;
+  }
   // Add card-img-overlay with bids
   const overlay = createNewElement('div', { classNames: ['card-img-overlay'] });
   const bidsText = createNewElement('p', {
@@ -130,7 +139,7 @@ export function createListingCard(listing) {
       'end-0',
       'bid-button',
     ],
-    text: `Bid: ${listing._count.bids}`,
+    text: `Bid: ${highestBidAmount}`,
   });
   overlay.appendChild(bidsText);
   cardInner.appendChild(overlay);
@@ -175,7 +184,7 @@ export function createListingCard(listing) {
   // Add tags as badges
   displayedTags.forEach((tag) => {
     const tagBadge = createNewElement('span', {
-      classNames: ['badge', 'bg-light'],
+      classNames: ['badge', 'bg-secondary', 'me-1'],
       text: tag,
     });
     tagsContainer.appendChild(tagBadge);
