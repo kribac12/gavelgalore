@@ -54,7 +54,7 @@ export function createBidCard(bid) {
       'end-0',
       'bid-button',
     ],
-    text: `Bid: ${bid.amount}`,
+    text: `Highest bid: ${bid.amount}`,
   });
   overlay.appendChild(bidCountText);
   cardInner.appendChild(overlay);
