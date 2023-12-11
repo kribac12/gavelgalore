@@ -20,8 +20,6 @@ export function renderEditAvatarButton() {
     classNames: ['btn', 'btn-primary'],
   });
 
-  console.log('Edit button', editButton);
-  console.log('Edit avatar column:', editAvatarColumn);
   //create update button (hidden initially)
   const updateButton = createNewElement('button', {
     text: 'Update avatar',
@@ -34,7 +32,6 @@ export function renderEditAvatarButton() {
   editAvatarColumn.appendChild(editButton);
 
   editButton.addEventListener('click', () => {
-    console.log('editbutton clicked');
     input.style.display = '';
     updateButton.style.display = '';
     editButton.style.display = 'none';
@@ -42,10 +39,10 @@ export function renderEditAvatarButton() {
 
   updateButton.addEventListener('click', async () => {
     const newAvatarUrl = input.value;
-    console.log(newAvatarUrl);
+
     if (newAvatarUrl) {
       const result = await updateAvatar(newAvatarUrl);
-      console.log(result);
+
       if (result && result.avatar) {
         // Clear existing avatar
         const avatarColumn = document.getElementById('avatarColumn');
@@ -53,7 +50,6 @@ export function renderEditAvatarButton() {
 
         // Render new avatar
         renderAvatar(result.avatar);
-        console.log(result.avatar);
 
         displaySuccess('Avatar updated successfully');
 

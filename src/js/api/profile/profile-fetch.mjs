@@ -45,11 +45,17 @@ export async function getUserListings(username) {
 export async function getUserWins(username) {
   try {
     const userProfile = await getUserProfile(username);
-    const wins = await Promise.all(
+    console.log('User profile wins:', userProfile.wins);
+    let wins = await Promise.all(
       userProfile.wins.map(async (winId) => {
         try {
-          return await makeApiRequest(`listings/${winId}?_bids=true`, 'GET');
+          const listing = await makeApiRequest(
+            `listings/${winId}?_bids=true`,
+            'GET'
+          );
+          return listing;
         } catch (error) {
+          console.error(`Error fetching listing ${winId}:`, error);
           // Check if the error is a 404 (listing not found)
           if (error.message && error.message.includes('404')) {
             console.log(`Listing ${winId} not found, skipping.`);
@@ -60,8 +66,11 @@ export async function getUserWins(username) {
       })
     );
 
-    // Filter out null values (i.e., invalid or deleted listings)
-    return wins.filter((win) => win !== null);
+    // Filter out null values and sort wins in descending order
+    wins = wins
+      .filter((win) => win !== null)
+      .sort((a, b) => new Date(b.endsAt) - new Date(a.endsAt));
+    return wins;
   } catch (error) {
     console.error('Error fetching wins:', error);
     displayError();
@@ -74,7 +83,6 @@ export async function getUserBids(username) {
     const query = { _listings: true };
     const bids = await makeApiRequest(urlPath, 'GET', null, {}, query);
 
-    console.log('getUserBids data:', bids);
     return bids;
   } catch (error) {
     console.error('Error fetching user bids:', error);

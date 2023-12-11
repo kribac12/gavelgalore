@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const userProfile = await getUserProfile(userInfo.name);
     const userListings = await getUserListings(userInfo.name);
     const userWins = await getUserWins(userInfo.name);
+    console.log('User wins:', userWins);
     const userBids = await getUserBids(userInfo.name);
 
     // Render user profile details
@@ -51,7 +52,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderSectionHeader('winsContainer', 'My wins');
 
     // Populate user's listings
-    console.log('User listings for populateListings:', userListings);
+
     populateListings(userListings, 'listingsContent', createListingCard, false);
 
     // Populate user's wins

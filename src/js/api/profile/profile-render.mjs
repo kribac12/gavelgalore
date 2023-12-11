@@ -84,6 +84,7 @@ export function populateWins(
   showAll = false
 ) {
   const contentContainer = document.getElementById(contentContainerId);
+  console.log('Content container for wins:', contentContainer);
   contentContainer.innerHTML = '';
 
   // Check if 'wins' is undefined or not an array, and handle accordingly
@@ -91,8 +92,10 @@ export function populateWins(
     console.error('populateWins: wins is not an array', wins);
     // Optionally, display a message or handle the empty state
     contentContainer.innerHTML = '<p>No wins to display.</p>';
-    return; // Exit the function early
+    return;
   }
+
+  console.log('Wins to be populated:', wins);
 
   // Slice the wins array to display only a limited number of wins initially
   const winsToDisplay = showAll ? wins : wins.slice(0, 4);

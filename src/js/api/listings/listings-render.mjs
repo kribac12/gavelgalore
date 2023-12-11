@@ -121,13 +121,11 @@ export function createListingCard(listing) {
   // Determine highest bid
   let highestBidAmount = 'No bids';
   if (Array.isArray(listing.bids) && listing.bids.length > 0) {
-    console.log('Listing bids:', listing.bids);
     const highestBid = listing.bids.reduce(
       (max, bid) => (bid.amount > max.amount ? bid : max),
       listing.bids[0]
     );
     highestBidAmount = highestBid.amount;
-    console.log('Listing bids:', listing.bids);
   }
   // Add card-img-overlay with bids
   const overlay = createNewElement('div', { classNames: ['card-img-overlay'] });
