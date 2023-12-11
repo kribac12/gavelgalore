@@ -86,11 +86,21 @@ export function populateWins(
   const contentContainer = document.getElementById(contentContainerId);
   contentContainer.innerHTML = '';
 
+  // Check if 'wins' is undefined or not an array, and handle accordingly
+  if (!Array.isArray(wins)) {
+    console.error('populateWins: wins is not an array', wins);
+    // Optionally, display a message or handle the empty state
+    contentContainer.innerHTML = '<p>No wins to display.</p>';
+    return; // Exit the function early
+  }
+
   // Slice the wins array to display only a limited number of wins initially
   const winsToDisplay = showAll ? wins : wins.slice(0, 4);
   winsToDisplay.forEach((win) => {
-    const card = createCardFunction(win);
-    contentContainer.appendChild(card);
+    if (win) {
+      const card = createCardFunction(win);
+      contentContainer.appendChild(card);
+    }
   });
 
   // Adding a 'Show all' button if there are more than 4 wins

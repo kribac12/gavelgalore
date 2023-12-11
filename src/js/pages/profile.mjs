@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Populate user's wins
     console.log(document.getElementById('winsContent'));
+
     populateWins(userWins, 'winsContent', createListingCard, false);
 
     // populate user's bids

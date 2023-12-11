@@ -1,9 +1,6 @@
 import { createNewElement } from '../../create-html/createHTML.mjs';
 import { selectDefaultImage } from '../../utilities/default-image-selector.mjs';
-import {
-  formatTimeRemaining,
-  getTimeRemaining,
-} from '../../utilities/date-time.mjs';
+import { getTimeRemainingFormatted } from '../../utilities/date-time.mjs';
 import { limitTags, trimText } from '../../utilities/text-trimmer.mjs';
 
 export function createBidCard(bid) {
@@ -105,7 +102,7 @@ export function createBidCard(bid) {
   cardBody.appendChild(tagsContainer);
 
   // Hourglass icon and time remaining
-  const timeRemaining = formatTimeRemaining(getTimeRemaining(listing.endsAt));
+  const timeRemaining = getTimeRemainingFormatted(listing.endsAt);
   const timeText = createNewElement('p', { classNames: ['card-text'] });
   const hourglassIcon = createNewElement('span', {
     classNames: ['material-symbols-outlined', 'align-middle', 'fs-5', 'pe-1'],

@@ -11,11 +11,11 @@ const tagBasedOnDefaultImages = {
 };
 
 export function selectDefaultImage(tags, title, description) {
-  const allText = [
-    ...tags,
-    title.toLowerCase(),
-    description.toLowerCase(),
-  ].concat(tags.map((tag) => tag.toLowerCase()));
+  const safeTitle = title ? title.toLowerCase() : '';
+  const safeDescription = description ? description.toLowerCase() : '';
+  const allText = [...tags, safeTitle, safeDescription].concat(
+    tags.map((tag) => tag.toLowerCase())
+  );
 
   for (const key in tagBasedOnDefaultImages) {
     const synonyms = key

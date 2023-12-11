@@ -4,10 +4,7 @@ import {
   getNewestListings,
   getSoonEndingListings,
 } from './listings-service.mjs';
-import {
-  getTimeRemaining,
-  formatTimeRemaining,
-} from '../../utilities/date-time.mjs';
+import { getTimeRemainingFormatted } from '../../utilities/date-time.mjs';
 import { createNewElement } from '../../create-html/createHTML.mjs';
 import { selectDefaultImage } from '../../utilities/default-image-selector.mjs';
 import { limitTags, trimText } from '../../utilities/text-trimmer.mjs';
@@ -107,7 +104,10 @@ export function createListingCard(listing) {
     listing.description || ''
   );
   let imageUrl =
-    listing.media && listing.media.length > 0 ? listing.media[0] : defaultImage;
+    listing.media && listing.media.length > 0 && isValidUrl(listing.media[0])
+      ? listing.media[0]
+      : defaultImage;
+
   const img = createNewElement('img', {
     className: 'card-img-top',
     attributes: { src: imageUrl, alt: listing.title },
@@ -121,11 +121,13 @@ export function createListingCard(listing) {
   // Determine highest bid
   let highestBidAmount = 'No bids';
   if (Array.isArray(listing.bids) && listing.bids.length > 0) {
+    console.log('Listing bids:', listing.bids);
     const highestBid = listing.bids.reduce(
       (max, bid) => (bid.amount > max.amount ? bid : max),
       listing.bids[0]
     );
     highestBidAmount = highestBid.amount;
+    console.log('Listing bids:', listing.bids);
   }
   // Add card-img-overlay with bids
   const overlay = createNewElement('div', { classNames: ['card-img-overlay'] });
@@ -139,7 +141,7 @@ export function createListingCard(listing) {
       'end-0',
       'bid-button',
     ],
-    text: `Bid: ${highestBidAmount}`,
+    text: `Highest bid: ${highestBidAmount}`,
   });
   overlay.appendChild(bidsText);
   cardInner.appendChild(overlay);
@@ -194,18 +196,30 @@ export function createListingCard(listing) {
 
   cardBody.appendChild(tagsContainer);
   //Add hourglass icon and time remaining
-  const timeRemaining = formatTimeRemaining(getTimeRemaining(listing.endsAt));
-  const timeText = createNewElement('p', { classNames: ['card-text'] });
+  const timeRemaining = getTimeRemainingFormatted(listing.endsAt);
+  const timeRemainingElement = createNewElement('p', {
+    classNames: ['card-text'],
+  });
   const hourglassIcon = createNewElement('span', {
     classNames: ['material-symbols-outlined', 'align-middle', 'fs-5', 'pe-1'],
     text: 'hourglass_top',
   });
-  timeText.appendChild(hourglassIcon);
-  timeText.appendChild(document.createTextNode(timeRemaining));
-  cardBody.appendChild(timeText);
+  timeRemainingElement.appendChild(hourglassIcon);
+  timeRemainingElement.appendChild(document.createTextNode(`${timeRemaining}`));
+  cardBody.appendChild(timeRemainingElement);
 
   card.addEventListener('click', () => {
     window.location.href = `/src/html/listing-specific/index.html?id=${listing.id}`;
   });
   return card;
+}
+
+// Helper function to check if a string is a valid URL
+function isValidUrl(string) {
+  try {
+    new URL(string);
+    return true;
+  } catch (_) {
+    return false;
+  }
 }

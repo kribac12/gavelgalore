@@ -1,8 +1,5 @@
 import { createNewElement } from '../../create-html/createHTML.mjs';
-import {
-  formatTimeRemaining,
-  getTimeRemaining,
-} from '../../utilities/date-time.mjs';
+import { getTimeRemainingFormatted } from '../../utilities/date-time.mjs';
 import { selectDefaultImage } from '../../utilities/default-image-selector.mjs';
 import { displayError } from '../../utilities/messages/error-handler.mjs';
 import { placeBid } from '../bids/bids-service.mjs';
@@ -91,8 +88,8 @@ function populateDetailsColumn(
   updateHighestBidDetails(listing, detailsColumn);
 
   // Time remaining
-  const timeRemaining = getTimeRemaining(listing.endsAt);
-  const timeText = formatTimeRemaining(timeRemaining);
+  const timeRemaining = getTimeRemainingFormatted(listing.endsAt);
+
   const timeRemainingElement = createNewElement('p', {
     classNames: ['time-remaining'],
   });
@@ -103,7 +100,7 @@ function populateDetailsColumn(
   });
 
   timeRemainingElement.appendChild(hourglassIcon);
-  timeRemainingElement.appendChild(document.createTextNode(`${timeText}`));
+  timeRemainingElement.appendChild(document.createTextNode(`${timeRemaining}`));
 
   detailsColumn.appendChild(timeRemainingElement);
 
