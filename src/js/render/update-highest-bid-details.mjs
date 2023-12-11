@@ -1,4 +1,4 @@
-import { createNewElement } from '../../create-html/createHTML.mjs';
+import { createNewElement } from '../utilities/createHTML.mjs';
 
 export function updateHighestBidDetails(listing, detailsColumn) {
   // Determine highest bid

@@ -1,12 +1,12 @@
-import { createNewElement } from '../../create-html/createHTML.mjs';
-import { getTimeRemainingFormatted } from '../../utilities/date-time.mjs';
-import { selectDefaultImage } from '../../utilities/default-image-selector.mjs';
-import { displayError } from '../../utilities/messages/error-handler.mjs';
-import { placeBid } from '../bids/bids-service.mjs';
-import { getListingById } from './listings-service.mjs';
-import { createBootstrapCarousel } from '../../utilities/carousel.mjs';
-import { updateHighestBidDetails } from '../bids/update-highest-bid-details.mjs';
-import { updateUserCredits } from '../../utilities/update-credit.mjs';
+import { createNewElement } from '../utilities/createHTML.mjs';
+import { getTimeRemainingFormatted } from '../utilities/date-time.mjs';
+import { selectDefaultImage } from '../utilities/default-image-selector.mjs';
+import { displayError } from '../utilities/messages/error-handler.mjs';
+import { placeBid } from '../api/bids/bids-service-API.mjs';
+import { getListingById } from '../api/listings/listings-service.mjs';
+import { createBootstrapCarousel } from '../utilities/carousel.mjs';
+import { updateHighestBidDetails } from './update-highest-bid-details.mjs';
+import { updateUserCredits } from '../utilities/update-credit.mjs';
 import { populateSections } from './listings-render.mjs';
 
 export async function renderListingDetail(listing) {

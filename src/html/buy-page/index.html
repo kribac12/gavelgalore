@@ -26,7 +26,7 @@
           <div class="container-fluid">
             <div class="gavelgalore-logo">
               <span class="material-symbols-outlined">gavel</span>
-              <a class="navbar-brand fs-2" href="/index.html"> GavelGalore</a>
+              <a class="navbar-brand fs-2" href="/index.html">GavelGalore</a>
             </div>
             <button
               class="navbar-toggler mb-4"
@@ -40,12 +40,13 @@
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="hamburger-nav">
-              <form class="d-flex w-50">
+              <form class="d-flex w-50" id="searchForm">
                 <input
                   class="form-control me-2"
                   type="search"
-                  placeholder="Search GavelGalore"
+                  placeholder="Search by title, tag or description"
                   aria-label="Search"
+                  name="query"
                 />
               </form>
               <ul class="navbar-nav">
@@ -57,33 +58,45 @@
                 <li class="nav-item">
                   <a
                     class="nav-link active"
-                    href="/src/html/buy-page/index.html"
+                    href="/src/html/buy-page/index.html#popular"
                     >BUY</a
                   >
                 </li>
                 <li class="nav-item">
-                  <a
-                    class="nav-link show-when-logged-in"
-                    href="/src/html/sell-page/index.html"
+                  <a class="nav-link" href="/src/html/sell-page/index.html"
                     >SELL</a
-                  >
-                </li>
-                <li class="nav-item">
-                  <a
-                    class="nav-link show-when-logged-in"
-                    aria-current="page"
-                    href="/src/html/profile/index.html"
-                    >| Profile |</a
                   >
                 </li>
               </ul>
               <ul class="navbar-nav ms-auto">
-                <li class="nav-item show-when-logged-in">
-                  <span class="me-5" id="userCredits"></span>
-                </li>
-                <li class="nav-item">
+                <!-- Dropdown Menu for profile and logout -->
+                <li class="nav-item dropdown show-when-logged-in">
                   <a
-                    class="nav-link show-when-logged-out"
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="navbarDropdown"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <span id="userDisplay"></span>
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li>
+                      <a
+                        class="dropdown-item"
+                        href="/src/html/profile/index.html"
+                        >My Profile</a
+                      >
+                    </li>
+                    <li>
+                      <a class="dropdown-item logoutLink" href="#">Logout</a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item show-when-logged-out">
+                  <a
+                    class="nav-link"
                     href="/src/html/login-register/index.html#login"
                   >
                     <span
@@ -92,23 +105,15 @@
                     >Login
                   </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item show-when-logged-out">
                   <a
-                    class="nav-link show-when-logged-out"
+                    class="nav-link"
                     href="/src/html/login-register/index.html#register"
                   >
                     <span
                       class="material-symbols-outlined align-middle fs-5 pe-1"
                       >how_to_reg</span
                     >Register
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="logoutLink show-when-logged-in" href="#">
-                    <span
-                      class="material-symbols-outlined align-middle fs-5 pe-1"
-                      >logout</span
-                    >Logout
                   </a>
                 </li>
               </ul>

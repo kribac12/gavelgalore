@@ -1,5 +1,5 @@
-import { createNewElement } from '../../create-html/createHTML.mjs';
-import { displayError } from '../../utilities/messages/error-handler.mjs';
+import { createNewElement } from '../utilities/createHTML.mjs';
+import { displayError } from '../utilities/messages/error-handler.mjs';
 
 export function setupCreateListingForm() {
   const container = document.getElementById('createListingContainer');

@@ -1,4 +1,4 @@
-import { createNewElement } from '../../create-html/createHTML.mjs';
+import { createNewElement } from '../utilities/createHTML.mjs';
 
 export function renderSectionHeader(containerId, headerText) {
   const container = document.getElementById(containerId);

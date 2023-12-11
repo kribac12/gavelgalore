@@ -1,4 +1,4 @@
-import { createNewElement } from '../create-html/createHTML.mjs';
+import { createNewElement } from './createHTML.mjs';
 export function createBootstrapCarousel(imageUrls, carouselId) {
   const carousel = createNewElement('div', {
     classNames: ['carousel', 'slide'],

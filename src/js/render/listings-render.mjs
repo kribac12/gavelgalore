@@ -3,11 +3,11 @@ import {
   getMostPopularListings,
   getNewestListings,
   getSoonEndingListings,
-} from './listings-service.mjs';
-import { getTimeRemainingFormatted } from '../../utilities/date-time.mjs';
-import { createNewElement } from '../../create-html/createHTML.mjs';
-import { selectDefaultImage } from '../../utilities/default-image-selector.mjs';
-import { limitTags, trimText } from '../../utilities/text-trimmer.mjs';
+} from '../api/listings/listings-service.mjs';
+import { getTimeRemainingFormatted } from '../utilities/date-time.mjs';
+import { createNewElement } from '../utilities/createHTML.mjs';
+import { selectDefaultImage } from '../utilities/default-image-selector.mjs';
+import { limitTags, trimText } from '../utilities/text-trimmer.mjs';
 
 export async function populateSections(
   limitCards = false,

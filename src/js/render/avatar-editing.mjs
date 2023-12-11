@@ -1,8 +1,8 @@
-import { createNewElement } from '../../create-html/createHTML.mjs';
-import { displayError } from '../../utilities/messages/error-handler.mjs';
-import { displaySuccess } from '../../utilities/messages/success.mjs';
+import { createNewElement } from '../utilities/createHTML.mjs';
+import { displayError } from '../utilities/messages/error-handler.mjs';
+import { displaySuccess } from '../utilities/messages/success.mjs';
 import { renderAvatar } from './profile-render.mjs';
-import { updateAvatar } from './update-avatar.mjs';
+import { updateAvatar } from '../api/profile/update-avatar.mjs';
 
 export function renderEditAvatarButton() {
   const editAvatarColumn = document.getElementById('editAvatarColumn');

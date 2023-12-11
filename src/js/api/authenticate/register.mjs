@@ -9,7 +9,7 @@ import {
   validateEmail,
   validatePassword,
 } from '../../utilities/auth-utils.mjs';
-import { switchToLogin } from '../../utilities/pills-login-register.mjs';
+import { switchToLogin } from '../../utilities/pills/pills-login-register.mjs';
 import { displaySuccess } from '../../utilities/messages/success.mjs';
 
 const registerForm = document.getElementById('registerForm');

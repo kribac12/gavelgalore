@@ -1,4 +1,4 @@
-import { populateSections } from '../api/listings/listings-render.mjs';
+import { populateSections } from '../../render/listings-render.mjs';
 
 export function setUpTabs() {
   const tabs = document.querySelectorAll('.nav-pills .nav-link');
