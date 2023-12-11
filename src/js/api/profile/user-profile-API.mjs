@@ -1,6 +1,17 @@
 import { displayError } from '../../utilities/messages/error-handler.mjs';
 import { makeApiRequest } from '../api-service.mjs';
 
+/**
+ * Fetches user profile for a given username. Includes wins, bids and listings for that specific user.
+ * If error occurs during fetch, it is logged and a default profile structure with empty arrays for wins,
+ * bids and listings are returned.
+ *
+ * @async
+ * @function getUserProfile
+ * @param {string} username - Username of the user's profile fetched.
+ * @returns {Promise<Object>} - Promise that resolves to the user's profile object.
+ */
+
 export async function getUserProfile(username) {
   try {
     const urlPath = `profiles/${username}`;
@@ -28,6 +39,15 @@ export async function getUserProfile(username) {
   }
 }
 
+/**
+ * Retrieves listings made by given username. In case of error, error is logged.
+ *
+ * @async
+ * @function getUserListings
+ * @param {string} username - Username of the user whose listings are fetched.
+ * @returns {Promise<Array>} - Promise that resolves to an array of listings.
+ */
+
 export async function getUserListings(username) {
   try {
     const urlPath = `profiles/${username}/listings`;
@@ -41,6 +61,17 @@ export async function getUserListings(username) {
     displayError();
   }
 }
+
+/**
+ * Fetches and returns auction wins for a given username.
+ * Processes each of the wins to make sure data is valid, sorts them
+ * in descending order by end date. Logs error if it occurs.
+ *
+ * @async
+ * @function getUserWins
+ * @param {string} username - Username of user whose wins are fetched.
+ * @returns {Promise<Array>} - Promise that resolves to an array of user's wins.
+ */
 
 export async function getUserWins(username) {
   try {
@@ -76,6 +107,15 @@ export async function getUserWins(username) {
     displayError();
   }
 }
+
+/**
+ * Retrieves bids made by given username. If error, logs the error.
+ *
+ * @async
+ * @function getUserBids
+ * @param {string} username - Username of the user whose bids are fetched.
+ * @returns {Promise<Array>} - Promise that resolves to an array of bids.
+ */
 
 export async function getUserBids(username) {
   try {
