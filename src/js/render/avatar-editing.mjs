@@ -4,6 +4,13 @@ import { displaySuccess } from '../utilities/messages/success.mjs';
 import { renderAvatar } from './profile-render.mjs';
 import { updateAvatar } from '../api/profile/update-avatar.mjs';
 
+/**
+ * Renders edit button for updating avatar. Upon clicked, button reveals input field
+ * for entering avatar URL, and update button.
+ * Clicking update button triggers an asynchronous operation to update
+ * avatar. It manipulates the DOM by appending the input field and buttons, and shows
+ * or hides these elements based on user interaction.
+ */
 export function renderEditAvatarButton() {
   const editAvatarColumn = document.getElementById('editAvatarColumn');
   const input = createNewElement('input', {
