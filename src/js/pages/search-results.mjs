@@ -5,11 +5,22 @@ import {
   fetchAndFilterListings,
   renderListings,
 } from '../utilities/search-utils.mjs';
+import { handleActionForLoggedOutUsers } from '../utilities/modal-prompt.mjs';
 
 document.addEventListener('DOMContentLoaded', async () => {
   setUpLogoutLink();
   updateUserCredits();
 
+  // Handle modal if user clicks sell link
+  const sellLink = document.getElementById('sellLink');
+  if (sellLink) {
+    sellLink.addEventListener('click', (event) => {
+      event.preventDefault();
+      handleActionForLoggedOutUsers('sell your items');
+    });
+  }
+
+  // handle search query
   const searchQuery = localStorage.getItem('searchQuery');
   localStorage.removeItem('searchQuery');
 

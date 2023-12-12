@@ -6,7 +6,8 @@ import { getListingById } from '../../api/listings/listings-service.mjs';
 import { populateBidHistory } from './bid-history.mjs';
 import { displayError } from '../../utilities/messages/error-handler.mjs';
 import { updateUserCredits } from '../../utilities/update-credit.mjs';
-
+import { handleActionForLoggedOutUsers } from '../../utilities/modal-prompt.mjs';
+import { getUserInfo } from '../../storage/storage.mjs';
 /**
  * Populates the details column of a listing with information such as title, description, tags, highest bid, and time remaining.
  *
@@ -104,6 +105,11 @@ export function setupBidForm(
 
   bidForm.addEventListener('submit', async (event) => {
     event.preventDefault();
+    if (!getUserInfo()) {
+      //Show modal if user is not logged in
+      handleActionForLoggedOutUsers('place a bid');
+      return;
+    }
     const bidAmount = Number(bidInput.value);
 
     try {
