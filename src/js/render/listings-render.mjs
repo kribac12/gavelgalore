@@ -15,7 +15,6 @@ export async function populateSections(
   containerId = null
 ) {
   const allListings = await getAllListings();
-  console.log('All listings:', allListings);
 
   if (category) {
     let listingsToUse;

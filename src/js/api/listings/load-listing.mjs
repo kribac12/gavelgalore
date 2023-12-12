@@ -16,14 +16,20 @@ import { displayError } from '../../utilities/messages/error-handler.mjs';
 export async function loadListing() {
   const urlParams = new URLSearchParams(window.location.search);
   const listingId = urlParams.get('id');
-  if (listingId) {
-    try {
-      const listing = await getListingById(listingId);
 
-      renderListingDetail(listing);
-    } catch (error) {
-      console.error('Error loading listing:', error);
-      displayError();
+  if (!listingId) {
+    displayError('No listing ID provided.');
+    return;
+  }
+  try {
+    const listing = await getListingById(listingId);
+    renderListingDetail(listing);
+  } catch (error) {
+    console.error('Error loading listing:', error);
+    if (error.status === 404) {
+      displayError('Listing not found.');
+    } else {
+      displayError('An error occurred while loading listing');
     }
   }
 }
