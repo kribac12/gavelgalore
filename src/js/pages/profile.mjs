@@ -5,7 +5,7 @@ import { displayError } from '../utilities/messages/error-handler.mjs';
 import { updateUserCredits } from '../utilities/update-credit.mjs';
 import { setUpSearchForm } from '../setup/set-up-search.mjs';
 import { fetchUserData } from '../api/profile/fetch-complete-user-profile.mjs';
-import { renderUserProfile } from '../render/render-user-profile.mjs';
+import { renderUserProfile } from '../render/profile/render-user-profile.mjs';
 
 document.addEventListener('DOMContentLoaded', async () => {
   setUpLogoutLink();

@@ -1,7 +1,7 @@
-import { createNewElement } from '../utilities/createHTML.mjs';
-import { selectDefaultImage } from '../utilities/default-image-selector.mjs';
-import { getTimeRemainingFormatted } from '../utilities/date-time.mjs';
-import { limitTags, trimText } from '../utilities/text-trimmer.mjs';
+import { createNewElement } from '../../utilities/createHTML.mjs';
+import { selectDefaultImage } from '../../utilities/default-image-selector.mjs';
+import { getTimeRemainingFormatted } from '../../utilities/date-time.mjs';
+import { limitTags, trimText } from '../../utilities/text-trimmer.mjs';
 
 export function createBidCard(bid) {
   const listing = bid.listing;

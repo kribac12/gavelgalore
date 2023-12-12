@@ -9,7 +9,7 @@ import {
   populateWins,
   populateBids,
 } from './profile-render.mjs';
-import { createListingCard } from './listings-render.mjs';
+import { createListingCard } from '../create-listing-card.mjs';
 import { createBidCard } from './profile-bid-card.mjs';
 
 export function renderUserProfile(

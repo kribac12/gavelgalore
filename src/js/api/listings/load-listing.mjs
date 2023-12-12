@@ -1,5 +1,5 @@
 import { getListingById } from './listings-service.mjs';
-import { renderListingDetail } from '../../render/listing-detail-render.mjs';
+import { renderListingDetail } from '../../render/specific-listing/listing-detail-render.mjs';
 import { displayError } from '../../utilities/messages/error-handler.mjs';
 
 /**

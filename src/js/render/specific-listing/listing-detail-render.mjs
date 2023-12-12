@@ -1,13 +1,10 @@
-import { populateImageColumn } from './specific-listing/image-column.mjs';
-import {
-  populateDetailsColumn,
-  setupBidForm,
-} from './specific-listing/details-column.mjs';
-import { populateSellerDetails } from './specific-listing/seller-details.mjs';
-import { populateBidHistory } from './specific-listing/bid-history.mjs';
-import { getListingById } from '../api/listings/listings-service.mjs';
-import { updateHighestBidDetails } from './update-highest-bid-details.mjs';
-import { updateUserCredits } from '../utilities/update-credit.mjs';
+import { populateImageColumn } from './image-column.mjs';
+import { populateDetailsColumn, setupBidForm } from './details-column.mjs';
+import { populateSellerDetails } from './seller-details.mjs';
+import { populateBidHistory } from './bid-history.mjs';
+import { getListingById } from '../../api/listings/listings-service.mjs';
+import { updateHighestBidDetails } from '../update-highest-bid-details.mjs';
+import { updateUserCredits } from '../../utilities/update-credit.mjs';
 
 export async function renderListingDetail(listing) {
   const imageColumn = document.getElementById('imageColumn');

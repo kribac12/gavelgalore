@@ -1,5 +1,5 @@
 import { getAllListings } from '../api/listings/listings-service.mjs';
-import { createListingCard } from '../render/listings-render.mjs';
+import { createListingCard } from '../render/create-listing-card.mjs';
 
 export async function fetchAndFilterListings(query) {
   try {
