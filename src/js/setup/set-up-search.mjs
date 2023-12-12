@@ -1,3 +1,7 @@
+/**
+ * Sets up search form's submit event listener. On submitting, it stores the search query in localStorage and redirects to search results page.
+ *
+ */
 export function setUpSearchForm() {
   const searchForm = document.getElementById('searchForm');
   if (searchForm) {

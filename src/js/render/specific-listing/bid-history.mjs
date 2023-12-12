@@ -1,5 +1,11 @@
 import { createNewElement } from '../../utilities/createHTML.mjs';
 
+/**
+ * Populates the bid history section
+ *
+ * @param {Object} listing - listing object containing bid information.
+ * @param {HTMLElement} bidHistory - HTML element where bid history is shown.
+ */
 export function populateBidHistory(listing, bidHistory) {
   bidHistory.innerHTML = '';
 
@@ -38,16 +44,26 @@ export function populateBidHistory(listing, bidHistory) {
   });
 }
 
+/**
+ * Creates row for a single bid.
+ *
+ * @param {Object} bid - The bid object.
+ * @param {string} bid.bidderName - Name of bidder.
+ * @param {number} bid.amount - Amount of the bid.
+ * @returns {HTMLElement} - The HTML element for bid history row.
+ */
 export function createBidRow(bid) {
+  const { bidderName, amount } = bid;
   const bidRow = createNewElement('div', { classNames: ['row', 'mb-2'] });
   const bidderNameElement = createNewElement('span', {
-    text: bid.bidderName,
+    text: bidderName,
     classNames: ['col-6', 'bidder-name'],
   });
   const bidAmountElement = createNewElement('span', {
-    text: `${bid.amount}`,
+    text: `${amount}`,
     classNames: ['col-6', 'bid-amount'],
   });
+
   bidRow.appendChild(bidderNameElement);
   bidRow.appendChild(bidAmountElement);
   return bidRow;

@@ -1,5 +1,12 @@
 import { createNewElement } from '../../utilities/createHTML.mjs';
 
+/**
+ * Populates the seller details section with information such as the seller's avatar, name, and email.
+ *
+ * @param {Object} listing - The listing object containing seller information.
+ * @param {HTMLElement} sellerDetails - The HTML element where seller details will be displayed.
+ */
+
 export function populateSellerDetails(listing, sellerDetails) {
   const sellerAvatar = listing.seller?.avatar || '/assets/images/flower.jpg';
   const sellerName = listing.seller?.name || 'No seller name';

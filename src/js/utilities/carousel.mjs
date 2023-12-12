@@ -1,4 +1,13 @@
 import { createNewElement } from './createHTML.mjs';
+
+/**
+ * Creates a Bootstrap carousel component with given images.
+ *
+ * @param {string[]} imageUrls - Array of URLs for the images to be included in the carousel.
+ * @param {string} carouselId - Unique identifier for the carousel element.
+ * @returns {HTMLElement} - A Bootstrap carousel element populated with images.
+ */
+
 export function createBootstrapCarousel(imageUrls, carouselId) {
   const carousel = createNewElement('div', {
     classNames: ['carousel', 'slide'],

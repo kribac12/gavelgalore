@@ -7,6 +7,13 @@ import { populateBidHistory } from './bid-history.mjs';
 import { displayError } from '../../utilities/messages/error-handler.mjs';
 import { updateUserCredits } from '../../utilities/update-credit.mjs';
 
+/**
+ * Populates the details column of a listing with information such as title, description, tags, highest bid, and time remaining.
+ *
+ * @param {Object} listing - The listing object containing information to be displayed.
+ * @param {HTMLElement} detailsColumn - The HTML element where listing details will be displayed.
+ */
+
 export function populateDetailsColumn(listing, detailsColumn) {
   // Title, Description, Tags, Highest bid, Time Remaining
   detailsColumn.appendChild(
@@ -52,6 +59,15 @@ export function populateDetailsColumn(listing, detailsColumn) {
   timeRemainingElement.appendChild(document.createTextNode(`${timeRemaining}`));
   detailsColumn.appendChild(timeRemainingElement);
 }
+
+/**
+ * Sets up bid form within the details column of a listing, handling bid submission and updating relevant information upon successful bids.
+ *
+ * @param {HTMLElement} detailsColumn - The HTML element where the bid form will be added.
+ * @param {Object} listing - The listing object to place a bid on.
+ * @param {HTMLElement} bidHistory - The HTML element where bid history will be updated.
+ * @param {Function} onSuccessfulBid - Callback function to execute after a successful bid.
+ */
 
 export function setupBidForm(
   detailsColumn,

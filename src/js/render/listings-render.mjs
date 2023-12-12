@@ -6,6 +6,14 @@ import {
 } from '../api/listings/listings-service.mjs';
 import { createListingCard } from './create-listing-card.mjs';
 
+/**
+ * Populates various sections with listings based on the category provided.
+ *
+ * @param {boolean} [limitCards=false] - Whether to limit the number of cards shown in each section.
+ * @param {string|null} [category=null] - The category of listings to display. If null, populates all sections.
+ * @param {string|null} [containerId=null] - The container ID where the listings should be populated.
+ */
+
 export async function populateSections(
   limitCards = false,
   category,
@@ -57,6 +65,15 @@ export async function populateSections(
     );
   }
 }
+
+/**
+ * Populates a specific section with listing cards.
+ *
+ * @param {string} sectionId - The ID of the section to populate.
+ * @param {Array} listings - An array of listing objects to be used for creating cards.
+ * @param {boolean} [limitCards=false] - Whether to limit the number of cards shown.
+ * @param {string|null} [containerId=null] - The container ID to use if different from the section ID.
+ */
 
 export function populateSection(sectionId, listings, limitCards, containerId) {
   const targetId = containerId || sectionId;

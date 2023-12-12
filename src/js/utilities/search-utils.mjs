@@ -1,6 +1,13 @@
 import { getAllListings } from '../api/listings/listings-service.mjs';
 import { createListingCard } from '../render/create-listing-card.mjs';
 
+/**
+ * Fetches all listings and filters them based on a search query.
+ *
+ * @param {string} query - The search query used to filter listings.
+ * @returns {Promise<Object[]>} A promise that resolves to an array of listings matching the query.
+ */
+
 export async function fetchAndFilterListings(query) {
   try {
     const allListings = await getAllListings();
@@ -27,6 +34,13 @@ export async function fetchAndFilterListings(query) {
     return [];
   }
 }
+
+/**
+ * Renders a list of listings matching search into a specified container.
+ *
+ * @param {Object[]} listings - An array of listing objects to be rendered.
+ * @param {string} containerId - The ID of the container where listings will be rendered.
+ */
 
 export function renderListings(listings, containerId) {
   const container = document.getElementById(containerId)?.querySelector('.row');

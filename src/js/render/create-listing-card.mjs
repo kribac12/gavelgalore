@@ -2,6 +2,7 @@ import { getTimeRemainingFormatted } from '../utilities/date-time.mjs';
 import { createNewElement } from '../utilities/createHTML.mjs';
 import { selectDefaultImage } from '../utilities/default-image-selector.mjs';
 import { limitTags, trimText } from '../utilities/text-trimmer.mjs';
+import { isValidUrl } from '../utilities/valid-url.mjs';
 
 /**
  * Creates and returns listing cards.
@@ -9,6 +10,7 @@ import { limitTags, trimText } from '../utilities/text-trimmer.mjs';
  * @param {Object} listing - Listing object to create card for.
  * @returns {HTMLElement} - Card element for the listing.
  */
+
 export function createListingCard(listing) {
   const { media, bids, tags, title, description, created, endsAt } = listing;
 
@@ -123,14 +125,4 @@ export function createListingCard(listing) {
     window.location.href = `/src/html/listing-specific/index.html?id=${listing.id}`;
   });
   return card;
-}
-
-// Helper function to check if a string is a valid URL
-function isValidUrl(string) {
-  try {
-    new URL(string);
-    return true;
-  } catch (_) {
-    return false;
-  }
 }

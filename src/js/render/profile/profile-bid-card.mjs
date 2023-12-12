@@ -2,14 +2,32 @@ import { createNewElement } from '../../utilities/createHTML.mjs';
 import { selectDefaultImage } from '../../utilities/default-image-selector.mjs';
 import { getTimeRemainingFormatted } from '../../utilities/date-time.mjs';
 import { limitTags, trimText } from '../../utilities/text-trimmer.mjs';
+import { isValidUrl } from '../../utilities/valid-url.mjs';
+
+/**
+ * Creates and returns card element for listings bid on.
+ *
+ * @param {Object} bid - The bid object to create a card for.
+ * @param {Object} bid.listing - Listing associated with bid.
+ * @returns {HTMLElement|null} - Card element representing the listing with bid or null if data is missing.
+ */
 
 export function createBidCard(bid) {
-  const listing = bid.listing;
+  const { listing } = bid;
 
   if (!listing) {
     console.error('Listing data is missing in the bid:', bid);
     return null;
   }
+
+  const {
+    media,
+    title = '',
+    description = '',
+    tags = [],
+    created,
+    endsAt,
+  } = listing;
 
   const card = createNewElement('div', {
     classNames: ['col-sm-6', 'col-md-6', 'col-lg-3', 'listing-card'],
@@ -17,27 +35,22 @@ export function createBidCard(bid) {
   const cardInner = createNewElement('div', { classNames: ['card', 'w-70'] });
   card.appendChild(cardInner);
 
-  const title = listing.title || '';
-  const description = listing.description || '';
-  // If listing doesn't have tags or tags are undefined, use an empty array
-  const tags = listing.tags || [];
+  const imageUrl =
+    media && media.length > 0 && isValidUrl(media[0])
+      ? media[0]
+      : selectDefaultImage(tags, title, description);
 
-  // Select a default image
-  const defaultImage = selectDefaultImage(tags, title, description);
-  let imageUrl =
-    listing.media && listing.media.length > 0 ? listing.media[0] : defaultImage;
   const img = createNewElement('img', {
     className: 'card-img-top',
-    attributes: { src: imageUrl, alt: listing.title },
+    attributes: { src: imageUrl, alt: title },
   });
-  img.onerror = () => {
-    img.src = defaultImage;
-  };
 
+  img.onerror = () => {
+    img.src = selectDefaultImage([], title, '');
+  };
   cardInner.appendChild(img);
 
   // Add card-img-overlay with bid count
-
   const overlay = createNewElement('div', {
     classNames: ['card-img-overlay'],
   });
@@ -62,53 +75,50 @@ export function createBidCard(bid) {
   cardBody.appendChild(
     createNewElement('h3', {
       classNames: ['card-title'],
-      text: trimText(listing.title, 40),
+      text: trimText(title, 40),
     })
   );
   cardBody.appendChild(
     createNewElement('p', {
       classNames: ['card-text'],
-      text: trimText(listing.description, 100),
+      text: trimText(description, 100),
     })
   );
 
   //Format creation date
-  const creationDateText = `Created: ${new Date(
-    listing.created
-  ).toLocaleDateString()}`;
+  const creationDateText = `Created: ${new Date(created).toLocaleDateString()}`;
   const creationDateElement = createNewElement('p', {
     classNames: ['card-text', 'creation-date'],
     text: creationDateText,
   });
+
   cardBody.appendChild(creationDateElement);
 
-  // Create a container for tags
+  // Create container for tags
   const tagsContainer = createNewElement('div', {
     classNames: ['tags-container', 'mb-2'],
   });
 
-  // Limit the number of tags to display
-  const displayedTags = limitTags(listing.tags, 3); // Show up to 3 tags
-
-  // Add tags as badges
-  displayedTags.forEach((tag) => {
-    const tagBadge = createNewElement('span', {
-      classNames: ['badge', 'bg-secondary', 'me-1'],
-      text: tag,
-    });
-    tagsContainer.appendChild(tagBadge);
+  limitTags(tags, 3).forEach((tag) => {
+    tagsContainer.appendChild(
+      createNewElement('span', {
+        classNames: ['badge', 'bg-secondary', 'me-1'],
+        text: tag,
+      })
+    );
   });
 
   cardBody.appendChild(tagsContainer);
 
   // Hourglass icon and time remaining
-  const timeRemaining = getTimeRemainingFormatted(listing.endsAt);
+  const timeRemaining = getTimeRemainingFormatted(endsAt);
   const timeText = createNewElement('p', { classNames: ['card-text'] });
-  const hourglassIcon = createNewElement('span', {
-    classNames: ['material-symbols-outlined', 'align-middle', 'fs-5', 'pe-1'],
-    text: 'hourglass_top',
-  });
-  timeText.appendChild(hourglassIcon);
+  timeText.appendChild(
+    createNewElement('span', {
+      classNames: ['material-symbols-outlined', 'align-middle', 'fs-5', 'pe-1'],
+      text: 'hourglass_top',
+    })
+  );
   timeText.appendChild(document.createTextNode(timeRemaining));
   cardBody.appendChild(timeText);
 

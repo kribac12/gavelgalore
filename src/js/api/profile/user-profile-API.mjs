@@ -76,7 +76,7 @@ export async function getUserListings(username) {
 export async function getUserWins(username) {
   try {
     const userProfile = await getUserProfile(username);
-    console.log('User profile wins:', userProfile.wins);
+
     let wins = await Promise.all(
       userProfile.wins.map(async (winId) => {
         try {

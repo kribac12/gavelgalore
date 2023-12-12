@@ -46,15 +46,12 @@ export async function handleCreateListingForm(event) {
     displaySuccess('Listing created successfully!', listingUrl, () => {
       const link = document.querySelector('#successMessage .alert-link');
       if (link) {
-        link.addEventListener('click', () => {
-          console.log('Link clicked');
-        });
+        link.addEventListener('click', () => {});
       }
     });
 
     // Resetting form
     document.getElementById('createListingForm').reset();
-    console.log('Listing created:', response);
   } catch (error) {
     displayError();
   }

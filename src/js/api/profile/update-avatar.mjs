@@ -27,12 +27,10 @@ export async function updateAvatar(newAvatarUrl) {
   const path = `profiles/${username}/media`;
   const method = 'PUT';
   const body = { avatar: newAvatarUrl };
-  console.log('Updating avatar for:', username);
-  console.log('New avatar URL:', newAvatarUrl);
 
   try {
     const response = await makeApiRequest(path, method, body);
-    console.log('Api response:', response);
+
     return response;
   } catch (error) {
     console.error('Error updating avatar:', error);
