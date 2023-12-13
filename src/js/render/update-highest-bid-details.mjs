@@ -1,4 +1,11 @@
-import { createNewElement } from '../../create-html/createHTML.mjs';
+import { createNewElement } from '../utilities/createHTML.mjs';
+
+/**
+ * Updates or creates elements in the details column to display the highest bid and the highest bidder's name for a listing.
+ *
+ * @param {Object} listing - The listing object with bid information.
+ * @param {HTMLElement} detailsColumn - The HTML element where the highest bid details will be displayed.
+ */
 
 export function updateHighestBidDetails(listing, detailsColumn) {
   // Determine highest bid

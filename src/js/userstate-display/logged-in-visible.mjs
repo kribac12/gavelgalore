@@ -1,5 +1,11 @@
 import { getAccessToken } from '../storage/storage.mjs';
 
+/**
+ * Updates the user interface based on the login status of the user. It shows or hides elements depending on whether the user is logged in or not.
+ * Elements meant to be visible when logged in should have the class 'show-when-logged-in'.
+ * Elements meant to be visible when logged out should have the class 'show-when-logged-out'.
+ */
+
 export function updateUIOnLogin() {
   const token = getAccessToken();
   const isLoggedIn = Boolean(token);

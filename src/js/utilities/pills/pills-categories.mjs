@@ -1,4 +1,8 @@
-import { populateSections } from '../api/listings/listings-render.mjs';
+import { populateSections } from '../../render/listings-render.mjs';
+
+/**
+ * Sets up event listeners on navigation tabs. Clicking a tab triggers the switchTab function.
+ */
 
 export function setUpTabs() {
   const tabs = document.querySelectorAll('.nav-pills .nav-link');
@@ -9,6 +13,13 @@ export function setUpTabs() {
     });
   });
 }
+
+/**
+ * Switches the active tab and updates the content displayed based on the selected tab.
+ *
+ * @param {string} selectedTabId - The ID of the tab that has been selected.
+ */
+
 export function switchTab(selectedTabId) {
   const tabMapping = {
     popularTab: 'popular',
@@ -42,7 +53,11 @@ export function switchTab(selectedTabId) {
   }
 }
 
-//Function to update active state of tabs
+/**
+ * Updates the active state of tabs in the navigation.
+ *
+ * @param {string} activeTabId - The ID of the tab to be shown as active.
+ */
 
 function updateActiveTabState(activeTabId) {
   const tabs = document.querySelectorAll('.nav-pills .nav-link');

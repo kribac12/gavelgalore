@@ -1,9 +1,16 @@
-import { createNewElement } from '../../create-html/createHTML.mjs';
+import { createNewElement } from '../../utilities/createHTML.mjs';
 import { displayError } from '../../utilities/messages/error-handler.mjs';
 import { displaySuccess } from '../../utilities/messages/success.mjs';
 import { renderAvatar } from './profile-render.mjs';
-import { updateAvatar } from './update-avatar.mjs';
+import { updateAvatar } from '../../api/profile/update-avatar.mjs';
 
+/**
+ * Renders edit button for updating avatar. Upon clicked, button reveals input field
+ * for entering avatar URL, and update button.
+ * Clicking update button triggers an asynchronous operation to update
+ * avatar. It manipulates the DOM by appending the input field and buttons, and shows
+ * or hides these elements based on user interaction.
+ */
 export function renderEditAvatarButton() {
   const editAvatarColumn = document.getElementById('editAvatarColumn');
   const input = createNewElement('input', {
@@ -20,8 +27,6 @@ export function renderEditAvatarButton() {
     classNames: ['btn', 'btn-primary'],
   });
 
-  console.log('Edit button', editButton);
-  console.log('Edit avatar column:', editAvatarColumn);
   //create update button (hidden initially)
   const updateButton = createNewElement('button', {
     text: 'Update avatar',
@@ -34,7 +39,6 @@ export function renderEditAvatarButton() {
   editAvatarColumn.appendChild(editButton);
 
   editButton.addEventListener('click', () => {
-    console.log('editbutton clicked');
     input.style.display = '';
     updateButton.style.display = '';
     editButton.style.display = 'none';
@@ -42,10 +46,10 @@ export function renderEditAvatarButton() {
 
   updateButton.addEventListener('click', async () => {
     const newAvatarUrl = input.value;
-    console.log(newAvatarUrl);
+
     if (newAvatarUrl) {
       const result = await updateAvatar(newAvatarUrl);
-      console.log(result);
+
       if (result && result.avatar) {
         // Clear existing avatar
         const avatarColumn = document.getElementById('avatarColumn');
@@ -53,7 +57,6 @@ export function renderEditAvatarButton() {
 
         // Render new avatar
         renderAvatar(result.avatar);
-        console.log(result.avatar);
 
         displaySuccess('Avatar updated successfully');
 

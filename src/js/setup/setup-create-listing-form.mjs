@@ -1,6 +1,9 @@
-import { createNewElement } from '../../create-html/createHTML.mjs';
-import { displayError } from '../../utilities/messages/error-handler.mjs';
+import { createNewElement } from '../utilities/createHTML.mjs';
+import { displayError } from '../utilities/messages/error-handler.mjs';
 
+/**
+ * Sets up form for creating listing. Includes inputs for title, description, tags, media, and ending time.
+ */
 export function setupCreateListingForm() {
   const container = document.getElementById('createListingContainer');
 
@@ -78,12 +81,21 @@ export function setupCreateListingForm() {
   }
 }
 
+/**
+ * Creates new media input field for input form.
+ * @returns {HTMLElement} - The created input field for media URLs.
+ */
 function createMediaInput() {
   return createNewElement('input', {
     classNames: ['form-control', 'mt-2'],
     attributes: { type: 'text', placeholder: 'Media URL', name: 'mediaUrls[]' },
   });
 }
+
+/**
+ * Adds new media input field to media container for the listing form.
+ * @param {HTMLElement} container - Container where new media input field is added.
+ */
 
 function addMediaInput(container) {
   const newMediaInput = createMediaInput();

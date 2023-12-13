@@ -24,10 +24,20 @@
       <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
           <div class="container-fluid">
-            <div class="gavelgalore-logo">
-              <span class="material-symbols-outlined">gavel</span>
-              <a class="navbar-brand fs-2" href="/index.html"> GavelGalore</a>
+            <!--Logo and user credits for small screens-->
+            <div class="d-flex align-items-center">
+              <div class="gavelgalore-logo">
+                <span class="material-symbols-outlined">gavel</span>
+                <a class="navbar-brand fs-2" href="/index.html">GavelGalore</a>
+              </div>
+              <div class="d-lg-none ms-3">
+                <a class="nav-link" href="#" id="navbarDropdown">
+                  <span id="userDisplaySmall"></span>
+                  <!-- Small Screen Username -->
+                </a>
+              </div>
             </div>
+
             <button
               class="navbar-toggler mb-4"
               type="button"
@@ -40,12 +50,13 @@
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="hamburger-nav">
-              <form class="d-flex w-50">
+              <form class="d-flex col-12 col-lg-6" id="searchForm">
                 <input
                   class="form-control me-2"
                   type="search"
-                  placeholder="Search GavelGalore"
+                  placeholder="Search by title, tag or description"
                   aria-label="Search"
+                  name="query"
                 />
               </form>
               <ul class="navbar-nav">
@@ -57,30 +68,67 @@
                 <li class="nav-item">
                   <a
                     class="nav-link active"
-                    href="/src/html/buy-page/index.html"
+                    href="/src/html/buy-page/index.html#popular"
                     >BUY</a
                   >
                 </li>
                 <li class="nav-item">
                   <a
-                    class="nav-link show-when-logged-in"
+                    class="nav-link"
+                    id="sellLink"
                     href="/src/html/sell-page/index.html"
                     >SELL</a
                   >
                 </li>
+              </ul>
+
+              <!-- Duplicated dropdown items for small screens -->
+              <ul class="navbar-nav d-lg-none show-when-logged-in">
                 <li class="nav-item">
-                  <a
-                    class="nav-link show-when-logged-in"
-                    aria-current="page"
-                    href="/src/html/profile/index.html"
-                    >| Profile |</a
+                  <a class="nav-link" href="/src/html/profile/index.html"
+                    >My Profile</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link logoutLink show-when-logged-in" href="#"
+                    >Logout</a
                   >
                 </li>
               </ul>
-              <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
+              <!-- Dropdown menu for profile and logout -->
+              <ul class="navbar-nav ms-auto d-none d-lg-flex">
+                <li class="nav-item dropdown show-when-logged-in">
                   <a
-                    class="nav-link show-when-logged-out"
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="navbarDropdownLargeScreen"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <span id="userDisplayLarge"></span>
+                    <!-- Username and Credits -->
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li class="nav-item">
+                      <a
+                        class="dropdown-item"
+                        href="/src/html/profile/index.html"
+                        >My Profile</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a
+                        class="dropdown-item logoutLink show-when-logged-in"
+                        href="#"
+                        >Logout</a
+                      >
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item show-when-logged-out">
+                  <a
+                    class="nav-link"
                     href="/src/html/login-register/index.html#login"
                   >
                     <span
@@ -89,23 +137,15 @@
                     >Login
                   </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item show-when-logged-out">
                   <a
-                    class="nav-link show-when-logged-out"
+                    class="nav-link"
                     href="/src/html/login-register/index.html#register"
                   >
                     <span
                       class="material-symbols-outlined align-middle fs-5 pe-1"
                       >how_to_reg</span
                     >Register
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="logoutLink show-when-logged-in" href="#">
-                    <span
-                      class="material-symbols-outlined align-middle fs-5 pe-1"
-                      >logout</span
-                    >Logout
                   </a>
                 </li>
               </ul>
@@ -121,7 +161,7 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" id="endsSoonTab" href="#endsSoon"
+            <a class="nav-link pe-auto" id="endsSoonTab" href="#endsSoon"
               >Ending soon</a
             >
           </li>
@@ -131,6 +171,7 @@
             >
           </li>
         </ul>
+
         <div class="container my-5" id="popularContent" style="display: none">
           <div class="row">
             <div class="col-md-3">
@@ -533,6 +574,38 @@
             </div>
           </div>
         </footer>
+      </div>
+    </div>
+    <!-- Universal Login Prompt Modal -->
+    <div
+      class="modal fade"
+      id="universalLoginPromptModal"
+      tabindex="-1"
+      aria-labelledby="modalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalLabel">Wonderful to see you!</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body" id="modalBody">
+            <!-- Dynamic content will be loaded here -->
+          </div>
+          <div class="modal-footer">
+            <a
+              href="/src/html/login-register/index.html#login"
+              class="btn btn-primary"
+              >Login/Register</a
+            >
+          </div>
+        </div>
       </div>
     </div>
   </body>

@@ -2,13 +2,16 @@ h1,
 h2,
 h3,
 .navbar-brand {
-  font-family: 'playfair display';
+  font-family: 'playfair display', Georgia;
 }
 
 body,
 .nav-link,
-.navbar form {
-  font-family: 'lato';
+.navbar form,
+p,
+span,
+button {
+  font-family: 'lato', sans-serif, Helvetica;
 }
 
 .navbar a,

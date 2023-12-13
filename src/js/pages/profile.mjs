@@ -1,27 +1,16 @@
 import '../userstate-display/logged-in-visible.mjs';
 import { setUpLogoutLink } from '../api/authenticate/logout.mjs';
-import {
-  getUserBids,
-  getUserListings,
-  getUserProfile,
-  getUserWins,
-} from '../api/profile/profile-fetch.mjs';
 import { getUserInfo } from '../storage/storage.mjs';
-import {
-  populateListings,
-  populateWins,
-  renderProfileDetails,
-  renderAvatar,
-  renderSectionHeader,
-  populateBids,
-} from '../api/profile/profile-render.mjs';
-import { createListingCard } from '../api/listings/listings-render.mjs';
 import { displayError } from '../utilities/messages/error-handler.mjs';
-import { createBidCard } from '../api/profile/profile-bid-card.mjs';
-import { renderEditAvatarButton } from '../api/profile/avatar-editing.mjs';
+import { updateUserCredits } from '../utilities/update-credit.mjs';
+import { setUpSearchForm } from '../setup/set-up-search.mjs';
+import { fetchUserData } from '../api/profile/fetch-complete-user-profile.mjs';
+import { renderUserProfile } from '../render/profile/render-user-profile.mjs';
 
 document.addEventListener('DOMContentLoaded', async () => {
   setUpLogoutLink();
+  updateUserCredits();
+  setUpSearchForm();
   try {
     // Retrieve the logged-in user's info
     const userInfo = getUserInfo();
@@ -30,34 +19,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       return;
     }
 
-    // Fetch user profile and related data
-    const userProfile = await getUserProfile(userInfo.name);
-    const userListings = await getUserListings(userInfo.name);
-    const userWins = await getUserWins(userInfo.name);
-    const userBids = await getUserBids(userInfo.name);
-
-    // Render user profile details
-    renderAvatar(userProfile.avatar);
-    renderProfileDetails(userProfile);
-    renderEditAvatarButton();
-    console.log(renderEditAvatarButton);
-
-    //Render section headers
-
-    renderSectionHeader('listingsContainer', 'My listings');
-    renderSectionHeader('bidsContainer', 'My bids');
-    renderSectionHeader('winsContainer', 'My wins');
-
-    // Populate user's listings
-    console.log('User listings for populateListings:', userListings);
-    populateListings(userListings, 'listingsContent', createListingCard, false);
-
-    // Populate user's wins
-    console.log(document.getElementById('winsContent'));
-    populateWins(userWins, 'winsContent', createListingCard, false);
-
-    // populate user's bids
-    populateBids(userBids, 'bidsContent', createBidCard, false);
+    const { userProfile, userListings, userWins, userBids } =
+      await fetchUserData(userInfo.name);
+    renderUserProfile(userProfile, userListings, userWins, userBids);
   } catch (error) {
     console.error('Error loading profile page:', error);
     displayError();
