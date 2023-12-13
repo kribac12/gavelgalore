@@ -8,6 +8,7 @@ import { displayError } from '../../utilities/messages/error-handler.mjs';
 import { updateUserCredits } from '../../utilities/update-credit.mjs';
 import { handleActionForLoggedOutUsers } from '../../utilities/modal-prompt.mjs';
 import { getUserInfo } from '../../storage/storage.mjs';
+import { updateUIOnLogin } from '../../userstate-display/logged-in-visible.mjs';
 /**
  * Populates the details column of a listing with information such as title, description, tags, highest bid, and time remaining.
  *
@@ -83,7 +84,7 @@ export function setupBidForm(
   });
 
   const bidInput = createNewElement('input', {
-    classNames: ['form-control', 'mb-3'],
+    classNames: ['form-control', 'mb-3', 'show-when-logged-in'],
     attributes: {
       type: 'number',
       id: 'bidAmount',
@@ -94,7 +95,7 @@ export function setupBidForm(
   });
 
   const bidButton = createNewElement('button', {
-    classNames: ['btn', 'btn-primary', 'btn-lg'],
+    classNames: ['btn', 'btn-primary', 'btn-lg', 'show-when-logged-in'],
     text: 'Place bid',
     attributes: { type: 'submit' },
   });
@@ -102,6 +103,29 @@ export function setupBidForm(
   bidForm.appendChild(bidInput);
   bidForm.appendChild(bidButton);
   detailsColumn.appendChild(bidForm);
+
+  // Login/register prompt for logged-out users
+  const loginRegisterPrompt = createNewElement('div', {
+    classNames: ['login-register-prompt', 'show-when-logged-out', 'mt-3'],
+  });
+  const loginRegisterText = createNewElement('p', {
+    classNames: ['login-register-text', 'show-when-logged-out', 'my-3', 'fs-4'],
+    text: 'To place a bid, login or register:',
+  });
+
+  const loginLink = createNewElement('a', {
+    attributes: { href: '/src/html/login-register/index.html#login' },
+    classNames: ['btn', 'btn-primary', 'me-3'],
+    text: 'Login',
+  });
+  const registerLink = createNewElement('a', {
+    attributes: { href: '/src/html/login-register/index.html#register' },
+    classNames: ['btn', 'btn-primary'],
+    text: 'Register',
+  });
+
+  loginRegisterPrompt.append(loginRegisterText, loginLink, registerLink);
+  detailsColumn.appendChild(loginRegisterPrompt);
 
   bidForm.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -123,6 +147,7 @@ export function setupBidForm(
         }
 
         await updateUserCredits();
+        updateUIOnLogin();
 
         if (typeof onSuccessfulBid === 'function') {
           onSuccessfulBid();

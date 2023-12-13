@@ -4,6 +4,7 @@ import { updateUserCredits } from '../utilities/update-credit.mjs';
 import { loadListing } from '../api/listings/load-listing.mjs';
 import { setUpSearchForm } from '../setup/set-up-search.mjs';
 import { handleActionForLoggedOutUsers } from '../utilities/modal-prompt.mjs';
+
 document.addEventListener('DOMContentLoaded', () => {
   setUpLogoutLink();
   loadListing();

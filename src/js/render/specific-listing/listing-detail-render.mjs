@@ -5,6 +5,7 @@ import { populateBidHistory } from './bid-history.mjs';
 import { getListingById } from '../../api/listings/listings-service.mjs';
 import { updateHighestBidDetails } from '../update-highest-bid-details.mjs';
 import { updateUserCredits } from '../../utilities/update-credit.mjs';
+import { updateUIOnLogin } from '../../userstate-display/logged-in-visible.mjs';
 
 export async function renderListingDetail(listing) {
   const imageColumn = document.getElementById('imageColumn');
@@ -32,4 +33,8 @@ export async function renderListingDetail(listing) {
     }
     await updateUserCredits();
   });
+
+  //Update UI based on login status
+
+  updateUIOnLogin();
 }
