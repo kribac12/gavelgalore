@@ -6,8 +6,6 @@ import { getListingById } from '../../api/listings/listings-service.mjs';
 import { populateBidHistory } from './bid-history.mjs';
 import { displayError } from '../../utilities/messages/error-handler.mjs';
 import { updateUserCredits } from '../../utilities/update-credit.mjs';
-import { handleActionForLoggedOutUsers } from '../../utilities/modal-prompt.mjs';
-import { getUserInfo } from '../../storage/storage.mjs';
 import { updateUIOnLogin } from '../../userstate-display/logged-in-visible.mjs';
 /**
  * Populates the details column of a listing with information such as title, description, tags, highest bid, and time remaining.
@@ -115,7 +113,7 @@ export function setupBidForm(
 
   const loginLink = createNewElement('a', {
     attributes: { href: '/src/html/login-register/index.html#login' },
-    classNames: ['btn', 'btn-primary', 'me-3'],
+    classNames: ['btn', 'btn-primary', 'me-4'],
     text: 'Login',
   });
   const registerLink = createNewElement('a', {
@@ -127,13 +125,9 @@ export function setupBidForm(
   loginRegisterPrompt.append(loginRegisterText, loginLink, registerLink);
   detailsColumn.appendChild(loginRegisterPrompt);
 
+  //Bid form eventlistener
   bidForm.addEventListener('submit', async (event) => {
     event.preventDefault();
-    if (!getUserInfo()) {
-      //Show modal if user is not logged in
-      handleActionForLoggedOutUsers('place a bid');
-      return;
-    }
     const bidAmount = Number(bidInput.value);
 
     try {

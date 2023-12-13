@@ -12,13 +12,12 @@ document.addEventListener('DOMContentLoaded', async () => {
   updateUserCredits();
 
   // Handle modal if user clicks sell link
-  const sellLink = document.getElementById('sellLink');
-  if (sellLink) {
-    sellLink.addEventListener('click', (event) => {
-      event.preventDefault();
-      handleActionForLoggedOutUsers('sell your items');
+  const sellLinks = document.querySelectorAll('.sell-action');
+  sellLinks.forEach((link) => {
+    link.addEventListener('click', (event) => {
+      handleActionForLoggedOutUsers('sell your items', event);
     });
-  }
+  });
 
   // handle search query
   const searchQuery = localStorage.getItem('searchQuery');

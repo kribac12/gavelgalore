@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../../../dist/css/styles.css" />
+    <meta name="description" content="Specific item" />
+    <title>Bid on this item</title>
+
     <link
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
       rel="stylesheet"
@@ -14,9 +16,10 @@
       href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&display=swap"
       rel="stylesheet"
     />
-    <script type="module" src="/src/js/pages/listing-specific.mjs"></script>
+
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <title>Gavel Galore Homepage</title>
+    <link rel="stylesheet" href="../../../dist/css/styles.css" />
+    <script type="module" src="/src/js/pages/listing-specific.mjs"></script>
   </head>
   <body cz-shortcut-listen="true">
     <div class="container">
@@ -73,8 +76,7 @@
                 </li>
                 <li class="nav-item">
                   <a
-                    class="nav-link"
-                    id="sellLink"
+                    class="nav-link sell-action"
                     href="/src/html/sell-page/index.html"
                     >SELL</a
                   >
@@ -164,7 +166,7 @@
           </div>
         </div>
       </main>
-      <div class="container my-5">
+      <div class="container">
         <footer class="bg-light text-center text-lg-start text-dark">
           <div class="container pt-4">
             <div class="row mt-3">
