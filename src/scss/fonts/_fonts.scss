@@ -19,7 +19,7 @@ footer a {
 }
 
 .navbar .nav-item a {
-  font-weight: 600;
+  font-weight: 400;
   display: block;
   font-size: var(--bs-nav-link-font-size);
   font-weight: 400; // Lighter font weight for non-active links
@@ -34,7 +34,7 @@ footer a {
 }
 
 .navbar .nav-item .active {
-  font-weight: 600; // Heavier font weight for active links
+  font-weight: 700; // Heavier font weight for active links
 }
 
 .listing-pills-h2 {
