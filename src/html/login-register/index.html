@@ -130,10 +130,13 @@
                   aria-labelledby="tab-login"
                 >
                   <form id="loginForm">
-                    <div class="my-3 py-5" id="successMessage"></div>
+                    <div class="my-3 p-4" id="successMessage"></div>
                     <!-- Email input -->
                     <div class="form-outline mb-4">
                       <label class="form-label" for="loginEmail">Email</label>
+                      <div class="invalid-feedback" id="loginEmailError">
+                        The email-address is not registered.
+                      </div>
                       <input
                         class="form-control"
                         type="email"
@@ -141,15 +144,15 @@
                         name="loginEmail"
                         required
                       />
-                      <div class="invalid-feedback" id="loginEmailError">
-                        The email-address is not registered.
-                      </div>
                     </div>
                     <!-- Password input -->
                     <div class="form-outline mb-4">
                       <label class="form-label" for="loginPassword"
                         >Password</label
                       >
+                      <div class="invalid-feedback" id="loginPasswordError">
+                        Wrong password or email.
+                      </div>
                       <input
                         class="form-control"
                         type="password"
@@ -157,9 +160,6 @@
                         name="loginPassword"
                         required
                       />
-                      <div class="invalid-feedback" id="loginPasswordError">
-                        Wrong password or email.
-                      </div>
                     </div>
                     <!--Sign in button-->
                     <button
@@ -178,7 +178,7 @@
                   aria-labelledby="tab-register"
                 >
                   <form id="registerForm">
-                    <div class="my-3 py-5" id="successMessage"></div>
+                    <div class="my-3 p-4" id="successMessage"></div>
                     <!-- Name input -->
                     <div class="form-outline mb-4">
                       <label class="form-label" for="registerName">Name</label>
@@ -196,6 +196,10 @@
                         >Email (must end with 'noroff.no' or
                         'stud.noroff.no')</label
                       >
+                      <div class="invalid-feedback" id="registerEmailError">
+                        Email address must end with 'stud.noroff.no' or
+                        'noroff.no'.
+                      </div>
                       <input
                         type="email"
                         id="registerEmail"
@@ -203,16 +207,15 @@
                         class="form-control"
                         required
                       />
-                      <div class="invalid-feedback" id="registerEmailError">
-                        Email address must end with 'stud.noroff.no' or
-                        'noroff.no'.
-                      </div>
                     </div>
                     <!-- Password input -->
                     <div class="form-outline mb-4">
                       <label class="form-label" for="registerPassword"
                         >Password (must be at least 8 characters)</label
                       >
+                      <div class="invalid-feedback" id="registerPasswordError">
+                        Password must be 8 characters or longer.
+                      </div>
                       <input
                         type="password"
                         id="registerPassword"
@@ -221,14 +224,15 @@
                         required
                       />
                     </div>
-                    <div class="invalid-feedback" id="registerPasswordError">
-                      Password must be 8 characters or longer.
-                    </div>
+
                     <!-- Avatar input -->
                     <div class="form-outline mb-4">
                       <label class="form-label" for="registerAvatar"
                         >Avatar (must be a valid image URL)</label
                       >
+                      <div class="invalid-feedback" id="registerAvatarError">
+                        Avatar must be a valid image URL.
+                      </div>
                       <input
                         type="url"
                         id="registerAvatar"
@@ -237,9 +241,7 @@
                         required
                       />
                     </div>
-                    <div class="invalid-feedback" id="registerAvatarError">
-                      Avatar must be a valid image URL.
-                    </div>
+
                     <!-- Submit button -->
                     <button
                       type="submit"

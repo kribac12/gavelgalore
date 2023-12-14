@@ -20,5 +20,6 @@ export function showValidationError(inputElement, errorMessage) {
   const errorElement = document.getElementById(inputElement.id + 'Error');
   if (errorElement) {
     errorElement.textContent = errorMessage;
+    errorElement.style.display = 'block'; // Directly show the error message
   }
 }

@@ -1,17 +1,24 @@
-import {
-  displayError,
-  showValidationError,
-} from '../../utilities/messages/error-handler.mjs';
+import { showValidationError } from '../../utilities/messages/error-handler.mjs';
 import { makeApiRequest } from '../api-service.mjs';
 import { saveUserInfo, getUserInfo } from '../../storage/storage.mjs';
 import {
   validateEmail,
   validatePassword,
+  validateField,
 } from '../../utilities/auth-utils.mjs';
 
 const loginForm = document.getElementById('loginForm');
 const loginEmail = document.getElementById('loginEmail');
 const loginPassword = document.getElementById('loginPassword');
+
+export function setupLoginFormValidation() {
+  loginEmail.addEventListener('input', () =>
+    validateField(loginEmail, validateEmail)
+  );
+  loginPassword.addEventListener('input', () =>
+    validateField(loginPassword, validatePassword)
+  );
+}
 
 export async function loginUser() {
   const email = loginEmail.value;
@@ -49,9 +56,10 @@ export async function loginUser() {
     saveUserInfo(userInfo); // Save user info in localStorage
     window.location.href = '/src/html/profile/index.html';
   } else {
-    const errorMessage = message || 'Login failed. Please try again.';
-    console.error('Login failed', errorMessage);
-    displayError(errorMessage);
+    const loginMessageElement = document.getElementById('loginMessage');
+    loginMessageElement.textContent =
+      message || 'Login failed. Please try again.';
+    loginMessageElement.style.display = 'block'; // Show login error message
   }
 }
 
