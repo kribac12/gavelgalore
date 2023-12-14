@@ -30,7 +30,7 @@ export function populateDetailsColumn(listing, detailsColumn) {
   );
 
   const tagsContainer = createNewElement('div', {
-    classNames: ['tags-container', 'mb-2'],
+    classNames: ['tags-container', 'mb-2', 'py-2'],
   });
   listing.tags.forEach((tag) => {
     const tagBadge = createNewElement('span', {

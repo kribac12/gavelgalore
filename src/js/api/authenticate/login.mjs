@@ -21,6 +21,7 @@ export function setupLoginFormValidation() {
 }
 
 export async function loginUser() {
+  clearFormErrors();
   const email = loginEmail.value;
   const password = loginPassword.value;
 
@@ -60,6 +61,26 @@ export async function loginUser() {
     loginMessageElement.textContent =
       message || 'Login failed. Please try again.';
     loginMessageElement.style.display = 'block'; // Show login error message
+  }
+}
+
+function clearFormErrors() {
+  // Reset the classes for input elements
+  [loginEmail, loginPassword].forEach((input) => {
+    input.classList.remove('is-invalid');
+  });
+
+  // Clear the text content of error message elements
+  const errorElements = loginForm.querySelectorAll('.invalid-feedback');
+  errorElements.forEach((element) => {
+    element.textContent = '';
+  });
+
+  // Optionally, hide the general error message element
+  const loginMessageElement = document.getElementById('loginMessage');
+  if (loginMessageElement) {
+    loginMessageElement.textContent = '';
+    loginMessageElement.style.display = 'none';
   }
 }
 
