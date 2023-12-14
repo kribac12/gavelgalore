@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setUpSearchForm();
   setupLoginFormValidation();
   setupRegisterFormValidation();
+  setUpSearchForm();
 
   const sellLinks = document.querySelectorAll('.sell-action');
   sellLinks.forEach((link) => {

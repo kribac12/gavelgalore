@@ -54,7 +54,7 @@ export async function getUserListings(username) {
 
     const query = { _seller: true, _bids: true };
     const listings = await makeApiRequest(urlPath, 'GET', null, {}, query);
-    console.log('getUserListings data:', listings);
+
     return listings;
   } catch (error) {
     console.error('Error fetching user listings:', error);

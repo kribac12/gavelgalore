@@ -49,29 +49,39 @@ export async function makeApiRequest(
 
     const response = await fetch(fullUrl, options);
 
-    if (response.status === 401 && !path.startsWith('auth/login')) {
-      handleTokenExpiration();
-      return { error: true, message: 'Session expired. Please log in again.' };
+    if (response.status === 401) {
+      if (path.startsWith('auth/login')) {
+        // Handle login specific 401 error
+        const errorResponse = await response.json();
+        return {
+          error: true,
+          message: errorResponse.message || 'Login failed.',
+        };
+      } else {
+        // Handle token expiration for other cases
+        handleTokenExpiration();
+        return;
+      }
     }
-
-    if (response.status === 404 && path.startsWith('listings/')) {
-      console.log(`Listing not found at path: ${path}`);
-      return null; // Specific handling for 404 errors related to listings
-    }
-
     if (!response.ok) {
       const errorResponse = await response.json();
-      const errorMessage =
-        errorResponse.message ||
-        errorResponse.errors?.[0]?.message ||
-        'An error occurred';
-      return { error: true, message: errorMessage }; // Return structured error object
+
+      // Handle 404 errors specifically for listings in case listing is deleted
+      if (response.status === 404 && path.startsWith('listings/')) {
+        return null;
+      }
+      console.error('Api error response:', errorResponse);
+      throw new Error(
+        `${response.status}: ${
+          errorResponse.errors?.[0]?.message || 'An error occurred'
+        }`
+      );
     }
 
     return await response.json();
   } catch (error) {
     console.error(`${method} request to ${path} failed:`, error);
-    return { error: true, message: error.message || 'Request failed.' };
+    return { error: true, message: error.message };
   }
 }
 

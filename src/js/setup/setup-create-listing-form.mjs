@@ -71,7 +71,7 @@ export function setupCreateListingForm() {
       id: 'endsAt',
       required: true,
     },
-    'Ends At'
+    'Ends at'
   );
   const endsAtInputElement = endsAtInputContainer.querySelector('input');
 

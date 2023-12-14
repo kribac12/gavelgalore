@@ -6,10 +6,12 @@ import {
   renderListings,
 } from '../utilities/search-utils.mjs';
 import { handleActionForLoggedOutUsers } from '../utilities/modal-prompt.mjs';
+import { setUpSearchForm } from '../setup/set-up-search.mjs';
 
 document.addEventListener('DOMContentLoaded', async () => {
   setUpLogoutLink();
   updateUserCredits();
+  setUpSearchForm();
 
   // Handle modal if user clicks sell link
   const sellLinks = document.querySelectorAll('.sell-action');

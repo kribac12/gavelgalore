@@ -47,31 +47,32 @@ export function renderEditAvatarButton() {
   updateButton.addEventListener('click', async () => {
     const newAvatarUrl = input.value;
 
-    if (newAvatarUrl) {
-      const result = await updateAvatar(newAvatarUrl);
+    if (!newAvatarUrl) {
+      displayError('Please enter a URL');
+      return;
+    }
 
-      if (result && result.avatar) {
-        // Clear existing avatar
-        const avatarColumn = document.getElementById('avatarColumn');
-        avatarColumn.innerHTML = '';
+    const result = await updateAvatar(newAvatarUrl);
 
-        // Render new avatar
-        renderAvatar(result.avatar);
+    if (result && result.avatar) {
+      // Clear existing avatar
+      const avatarColumn = document.getElementById('avatarColumn');
+      avatarColumn.innerHTML = '';
 
-        displaySuccess('Avatar updated successfully');
+      // Render new avatar
+      renderAvatar(result.avatar);
 
-        // Let UI elements back to initial state
-        input.style.display = 'none';
-        updateButton.style.display = 'none';
-        editButton.style.display = '';
-        input.value = '';
-      } else {
-        displayError(
-          'Failed to update avatar. Please make sure the URL is correct.'
-        );
-      }
+      displaySuccess('Avatar updated successfully');
+
+      // Let UI elements back to initial state
+      input.style.display = 'none';
+      updateButton.style.display = 'none';
+      editButton.style.display = '';
+      input.value = '';
     } else {
-      displayError('Please enter valid URL');
+      displayError(
+        'Failed to update avatar. Please make sure the URL is correct.'
+      );
     }
   });
 }
