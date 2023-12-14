@@ -1,8 +1,16 @@
 import { createNewElement } from './createHTML.mjs';
 
-export function createFormFieldWithLabel(fieldType, attributes, label) {
+export function createFormFieldWithLabel(
+  fieldType,
+  attributes,
+  label,
+  containerClassNames = [],
+  inputClassNames = []
+) {
   // Create container for the input and label
-  const container = createNewElement('div', { classNames: ['form-group'] });
+  const container = createNewElement('div', {
+    classNames: ['form-group'].concat(containerClassNames),
+  });
 
   // Create the label element
   const labelElement = createNewElement('label', {
@@ -13,7 +21,7 @@ export function createFormFieldWithLabel(fieldType, attributes, label) {
   // Create the input element
   const inputElement = createNewElement(fieldType, {
     attributes: attributes,
-    classNames: ['form-control'],
+    classNames: ['form-control'].concat(inputClassNames),
   });
 
   // Append the label and input to the container

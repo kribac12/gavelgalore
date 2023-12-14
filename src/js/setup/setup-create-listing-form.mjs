@@ -4,41 +4,50 @@ import { displayError } from '../utilities/messages/error-handler.mjs';
 import { getTimeRemainingFormatted } from '../utilities/date-time.mjs';
 import { isValidUrl } from '../utilities/valid-url.mjs';
 import { createBootstrapCarousel } from '../utilities/carousel.mjs';
-
+import { createFormFieldWithLabel } from '../utilities/formfield-label.mjs';
 /**
  * Sets up form for creating listing. Includes inputs for title, description, tags, media, and ending time.
  */
 export function setupCreateListingForm() {
   const container = document.getElementById('createListingContainer');
-
   const form = createNewElement('form', {
     attributes: { id: 'createListingForm' },
     classNames: ['row', 'g-3'],
   });
 
-  const titleInput = createNewElement('input', {
-    attributes: {
+  const titleInputContainer = createFormFieldWithLabel(
+    'input',
+    {
       type: 'text',
       id: 'title',
       placeholder: 'Title',
       required: true,
     },
-    classNames: ['form-control'],
-  });
+    'Title'
+  );
+  const titleInputElement = titleInputContainer.querySelector('input');
 
-  const descriptionInput = createNewElement('textarea', {
-    attributes: { id: 'description', placeholder: 'Description' },
-    classNames: ['form-control'],
-  });
+  const descriptionInputContainer = createFormFieldWithLabel(
+    'textarea',
+    {
+      id: 'description',
+      placeholder: 'Description',
+    },
+    'Description'
+  );
+  const descriptionInputElement =
+    descriptionInputContainer.querySelector('textarea');
 
-  const tagsInput = createNewElement('input', {
-    attributes: {
+  const tagsInputContainer = createFormFieldWithLabel(
+    'input',
+    {
       type: 'text',
       id: 'tags',
       placeholder: 'Tags(separated by comma)',
     },
-    classNames: ['form-control'],
-  });
+    'Tags'
+  );
+  const tagsInputElement = tagsInputContainer.querySelector('input');
 
   const mediaContainer = createNewElement('div', {
     attributes: { id: 'mediaContainer' },
@@ -55,10 +64,16 @@ export function setupCreateListingForm() {
   addMoreButton.addEventListener('click', () => addMediaInput(mediaContainer));
   mediaContainer.appendChild(addMoreButton);
 
-  const endsAtInput = createNewElement('input', {
-    attributes: { type: 'datetime-local', id: 'endsAt', required: true },
-    classNames: ['form-control'],
-  });
+  const endsAtInputContainer = createFormFieldWithLabel(
+    'input',
+    {
+      type: 'datetime-local',
+      id: 'endsAt',
+      required: true,
+    },
+    'Ends At'
+  );
+  const endsAtInputElement = endsAtInputContainer.querySelector('input');
 
   const submitButton = createNewElement('button', {
     text: 'Create listing',
@@ -66,21 +81,23 @@ export function setupCreateListingForm() {
     classNames: ['btn', 'btn-primary'],
   });
 
-  //Add event listeners for updating preview
-
-  titleInput.addEventListener('input', () => {
+  // Event listeners for updating preview
+  titleInputElement.addEventListener('input', () => {
     document.getElementById('previewTitle').innerText =
-      trimText(titleInput.value, 40) || 'Title Preview';
+      trimText(titleInputElement.value, 40) || 'Title Preview';
   });
-  descriptionInput.addEventListener('input', () => {
+
+  descriptionInputElement.addEventListener('input', () => {
     document.getElementById('previewDescription').innerText =
-      trimText(descriptionInput.value, 100) || 'Description preview';
+      trimText(descriptionInputElement.value, 100) || 'Description Preview';
   });
 
-  tagsInput.addEventListener('input', () => updateTagsPreview(tagsInput));
+  tagsInputElement.addEventListener('input', () =>
+    updateTagsPreview(tagsInputElement)
+  );
 
-  endsAtInput.addEventListener('input', () => {
-    const endDateValue = endsAtInput.value;
+  endsAtInputElement.addEventListener('input', () => {
+    const endDateValue = endsAtInputElement.value;
     let timeRemainingPreview = 'Time Remaining Preview';
 
     if (endDateValue) {
@@ -93,11 +110,11 @@ export function setupCreateListingForm() {
   });
 
   form.append(
-    titleInput,
-    descriptionInput,
-    tagsInput,
+    titleInputContainer,
+    descriptionInputContainer,
+    tagsInputContainer,
     mediaContainer,
-    endsAtInput,
+    endsAtInputContainer,
     submitButton
   );
 
@@ -108,15 +125,14 @@ export function setupCreateListingForm() {
     displayError();
   }
 
-  //Initialize preview carousel with default image
   initializePreviewCarousel();
 }
 
-function updateTagsPreview(tagsInput) {
+function updateTagsPreview(inputElement) {
   const previewTagsContainer = document.getElementById('previewTags');
   previewTagsContainer.innerHTML = ''; // Clear existing tags
 
-  const tags = tagsInput.value
+  const tags = inputElement.value
     .split(',')
     .map((tag) => tag.trim())
     .filter((tag) => tag);
