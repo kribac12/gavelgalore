@@ -1,12 +1,26 @@
 header {
   position: sticky;
   top: 0;
+  width: 100%;
   z-index: 1000; /* Ensures the header stays on top of other elements */
 }
 
 footer {
-  position: sticky;
-  bottom: 0;
   width: 100%; /* Ensure it spans the full width */
   z-index: 1000; /* Keeps the footer above other content */
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+.main-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
 }

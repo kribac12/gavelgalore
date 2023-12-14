@@ -20,9 +20,9 @@
     <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
   </head>
   <body cz-shortcut-listen="true">
-    <div class="container">
+    <div class="container main-container">
       <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
           <div class="container-fluid">
             <!--Logo and user credits for small screens-->
             <div class="d-flex align-items-center">
@@ -153,14 +153,47 @@
         </nav>
       </header>
       <main>
-        <div class="container py-3">
-          <h1>Create a listing</h1>
-          <div class="container" id="createListingContainer"></div>
-          <div
-            id="successMessage"
-            class="alert alert-success"
-            style="display: none"
-          ></div>
+        <div class="container">
+          <h1 class="mb-4">Create a listing</h1>
+          <div class="row">
+            <div class="col-lg-6 col-md-12 mb-5">
+              <div id="createListingContainer"></div>
+              <div
+                class="my-3"
+                id="successMessage"
+                class="alert alert-success"
+                style="display: none"
+              ></div>
+            </div>
+
+            <div class="col-lg-6 col-md-12 ps-3">
+              <div class="card listing-card-preview">
+                <div
+                  id="previewCarouselContainer"
+                  class="carousel-container"
+                ></div>
+                <div class="card-body">
+                  <h3 id="previewTitle" class="card-title">Title Preview</h3>
+                  <p id="previewDescription" class="card-text">
+                    Description Preview
+                  </p>
+                  <p class="card-text creation-date">
+                    Created: <span id="previewCreatedDate">Date Preview</span>
+                  </p>
+                  <div id="previewTags" class="tags-container mb-2"></div>
+                  <p class="card-text">
+                    <span
+                      class="material-symbols-outlined align-middle fs-5 pe-1"
+                      >hourglass_top</span
+                    >
+                    <span id="previewTimeRemaining"
+                      >Time Remaining Preview</span
+                    >
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
       <div class="container">
