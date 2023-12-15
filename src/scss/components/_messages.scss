@@ -1,7 +1,17 @@
 #successMessage {
-  background-color: $primary;
-  padding: 1.5rem;
-  margin-bottom: 1rem;
-  color: $white;
+  background-color: $secondary;
+  color: $black;
+  display: none;
+}
+
+.invalid-feedback {
+  min-height: 20px;
+  display: none;
+}
+
+#generalErrorContainer,
+#registerErrorContainer,
+#createErrorContainer,
+#bidErrorContainer {
   display: none;
 }

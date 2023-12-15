@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../../../dist/css/styles.css" />
+    <meta
+      name="description"
+      content="Gavel Galore extraordinary and ordinary items for sale"
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
       rel="stylesheet"
@@ -14,18 +17,27 @@
       href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="../../../dist/css/styles.css" />
     <script type="module" src="/src/js/pages/index.mjs"></script>
-    <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <title>Gavel Galore Homepage</title>
   </head>
   <body cz-shortcut-listen="true">
-    <div class="container">
+    <div class="container main-container">
       <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
           <div class="container-fluid">
-            <div class="gavelgalore-logo">
-              <span class="material-symbols-outlined">gavel</span>
-              <a class="navbar-brand fs-2" href="/index.html"> GavelGalore</a>
+            <!--Logo and user credits for small screens-->
+            <div class="d-flex align-items-center">
+              <div class="gavelgalore-logo">
+                <span class="material-symbols-outlined">gavel</span>
+                <a class="navbar-brand fs-2" href="/index.html">GavelGalore</a>
+              </div>
+              <div class="d-lg-none ms-3">
+                <a class="nav-link" href="#" id="navbarDropdown">
+                  <span id="userDisplaySmall"></span>
+                  <!-- Small Screen Username -->
+                </a>
+              </div>
             </div>
             <button
               class="navbar-toggler mb-4"
@@ -39,12 +51,13 @@
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="hamburger-nav">
-              <form class="d-flex w-50">
+              <form class="d-flex col-12 col-lg-6" id="searchForm">
                 <input
                   class="form-control me-2"
                   type="search"
-                  placeholder="Search GavelGalore"
+                  placeholder="Search by title, tag or description"
                   aria-label="Search"
+                  name="query"
                 />
               </form>
               <ul class="navbar-nav">
@@ -57,22 +70,43 @@
                   >
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/src/html/buy-page/index.html"
+                  <a
+                    class="nav-link"
+                    href="/src/html/buy-page/index.html#popular"
                     >BUY</a
                   >
                 </li>
                 <li class="nav-item">
                   <a
-                    class="nav-link show-when-logged-in"
+                    class="nav-link sell-action"
                     href="/src/html/sell-page/index.html"
                     >SELL</a
                   >
                 </li>
               </ul>
-              <ul class="navbar-nav ms-auto">
+              <!-- Duplicated dropdown items and login/register for small screens -->
+              <ul class="navbar-nav d-lg-none">
                 <li class="nav-item">
                   <a
-                    class="nav-link show-when-logged-out"
+                    class="nav-link show-when-logged-in"
+                    href="/src/html/profile/index.html"
+                    >My Profile</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="dropdown-item logoutLink show-when-logged-in"
+                    href="#"
+                  >
+                    <span
+                      class="material-symbols-outlined align-middle fs-5 pe-1"
+                      >logout</span
+                    >Logout
+                  </a>
+                </li>
+                <li class="nav-item show-when-logged-out">
+                  <a
+                    class="nav-link"
                     href="/src/html/login-register/index.html#login"
                   >
                     <span
@@ -81,9 +115,9 @@
                     >Login
                   </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item show-when-logged-out">
                   <a
-                    class="nav-link show-when-logged-out"
+                    class="nav-link"
                     href="/src/html/login-register/index.html#register"
                   >
                     <span
@@ -92,12 +126,62 @@
                     >Register
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a class="logoutLink show-when-logged-in" href="#">
+              </ul>
+              <!-- Dropdown menu for profile and logout -->
+              <ul class="navbar-nav ms-auto d-none d-lg-flex">
+                <li class="nav-item dropdown show-when-logged-in">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="navbarDropdownLargeScreen"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <span id="userDisplayLarge"></span>
+                    <!-- Username and Credits -->
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li class="nav-item">
+                      <a
+                        class="dropdown-item"
+                        href="/src/html/profile/index.html"
+                        >My Profile</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a
+                        class="dropdown-item logoutLink show-when-logged-in"
+                        href="#"
+                      >
+                        <span
+                          class="material-symbols-outlined align-middle fs-5 pe-1"
+                          >logout</span
+                        >Logout
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item show-when-logged-out">
+                  <a
+                    class="nav-link"
+                    href="/src/html/login-register/index.html#login"
+                  >
                     <span
                       class="material-symbols-outlined align-middle fs-5 pe-1"
-                      >logout</span
-                    >Logout
+                      >login</span
+                    >Login
+                  </a>
+                </li>
+                <li class="nav-item show-when-logged-out">
+                  <a
+                    class="nav-link"
+                    href="/src/html/login-register/index.html#register"
+                  >
+                    <span
+                      class="material-symbols-outlined align-middle fs-5 pe-1"
+                      >how_to_reg</span
+                    >Register
                   </a>
                 </li>
               </ul>
@@ -106,165 +190,435 @@
         </nav>
       </header>
       <main>
-        <section class="row">
-          <div class="col-md-6 d-flex align-items-center">
-            <h1>
-              Explore the endless ordinary and extraordinary items at Gavel
-              Galore.
-            </h1>
-          </div>
-          <div class="col-md-6">
-            <img
-              src="/assets/images/hero-illustration.png"
-              class="img-fluid"
-              alt="Hero image"
-            />
-          </div>
-        </section>
-        <section class="listings-popular">
-          <div class="container my-5" id="listing-container">
-            <div class="row">
-              <h2>Popular listings</h2>
-              <div class="col-md-3">
-                <div class="card w-70">
-                  <img
-                    src="/assets/images/hostaphoto-XFhny3yLA0c-unsplash.jpg"
-                    class="card-img-top"
-                    alt="..."
-                  />
-                  <div class="card-img-overlay">
-                    <p
-                      class="card-text btn btn-secondary position-absolute top-0 end-0"
-                    >
-                      Bids: 10
-                    </p>
-                  </div>
-                  <div class="card-body">
-                    <h3 class="card-title">Item</h3>
-                    <p class="card-text">Item description</p>
-                    <p class="card-text">Winning bid: 10</p>
-                    <p class="card-text">
-                      <span
-                        class="material-symbols-outlined align-middle fs-5 pe-1"
-                        >hourglass_top</span
+        <div id="generalErrorContainer"></div>
+        <div class="container pb-5 h-100">
+          <section class="row">
+            <div class="col-md-6 d-flex align-items-center">
+              <h1>
+                Explore the endless ordinary and extraordinary items at Gavel
+                Galore.
+              </h1>
+            </div>
+            <div class="col-md-6">
+              <img
+                src="/assets/images/hero-illustration.png"
+                class="img-fluid"
+                alt="Hero image"
+              />
+            </div>
+          </section>
+          <section id="listings-popular">
+            <div class="container my-5" id="listing-container">
+              <div class="flex d-flex justify-content-between mb-2">
+                <h2>Most popular</h2>
+                <a
+                  href="/src/html/buy-page/index.html#popular"
+                  class="btn btn-white btn-lg border border-dark"
+                  role="button"
+                  >View all</a
+                >
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="card w-70">
+                    <img
+                      src="/assets/images/hostaphoto-XFhny3yLA0c-unsplash.jpg"
+                      class="card-img-top"
+                      alt="..."
+                    />
+                    <div class="card-img-overlay">
+                      <p
+                        class="card-text btn btn-secondary position-absolute top-0 end-0"
                       >
-                      4 days, 3 hours
-                    </p>
+                        Bids: 10
+                      </p>
+                    </div>
+                    <div class="card-body">
+                      <h3 class="card-title">Item</h3>
+                      <p class="card-text">Item description</p>
+                      <p class="card-text">Winning bid: 10</p>
+                      <p class="card-text">
+                        <span
+                          class="material-symbols-outlined align-middle fs-5 pe-1"
+                          >hourglass_top</span
+                        >
+                        4 days, 3 hours
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-md-3">
-                <div class="card w-70">
-                  <img
-                    src="/assets/images/hostaphoto-XFhny3yLA0c-unsplash.jpg"
-                    class="card-img-top"
-                    alt="..."
-                  />
-                  <div class="card-img-overlay">
-                    <p
-                      class="card-text btn btn-secondary position-absolute top-0 end-0"
-                    >
-                      Bids: 10
-                    </p>
-                  </div>
-                  <div class="card-body">
-                    <h3 class="card-title">Item</h3>
-                    <p class="card-text">Item description</p>
-                    <p class="card-text">Winning bid: 10</p>
-                    <p class="card-text">
-                      <span
-                        class="material-symbols-outlined align-middle fs-5 pe-1"
-                        >hourglass_top</span
+                <div class="col-md-3">
+                  <div class="card w-70">
+                    <img
+                      src="/assets/images/hostaphoto-XFhny3yLA0c-unsplash.jpg"
+                      class="card-img-top"
+                      alt="..."
+                    />
+                    <div class="card-img-overlay">
+                      <p
+                        class="card-text btn btn-secondary position-absolute top-0 end-0"
                       >
-                      4 days, 3 hours
-                    </p>
+                        Bids: 10
+                      </p>
+                    </div>
+                    <div class="card-body">
+                      <h3 class="card-title">Item</h3>
+                      <p class="card-text">Item description</p>
+                      <p class="card-text">Winning bid: 10</p>
+                      <p class="card-text">
+                        <span
+                          class="material-symbols-outlined align-middle fs-5 pe-1"
+                          >hourglass_top</span
+                        >
+                        4 days, 3 hours
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-md-3">
-                <div class="card w-70">
-                  <img
-                    src="/assets/images/hostaphoto-XFhny3yLA0c-unsplash.jpg"
-                    class="card-img-top"
-                    alt="..."
-                  />
-                  <div class="card-img-overlay">
-                    <p
-                      class="card-text btn btn-secondary position-absolute top-0 end-0"
-                    >
-                      Bids: 10
-                    </p>
-                  </div>
-                  <div class="card-body">
-                    <h3 class="card-title">Item</h3>
-                    <p class="card-text">Item description</p>
-                    <p class="card-text">Winning bid: 10</p>
-                    <p class="card-text">
-                      <span
-                        class="material-symbols-outlined align-middle fs-5 pe-1"
-                        >hourglass_top</span
+                <div class="col-md-3">
+                  <div class="card w-70">
+                    <img
+                      src="/assets/images/hostaphoto-XFhny3yLA0c-unsplash.jpg"
+                      class="card-img-top"
+                      alt="..."
+                    />
+                    <div class="card-img-overlay">
+                      <p
+                        class="card-text btn btn-secondary position-absolute top-0 end-0"
                       >
-                      4 days, 3 hours
-                    </p>
+                        Bids: 10
+                      </p>
+                    </div>
+                    <div class="card-body">
+                      <h3 class="card-title">Item</h3>
+                      <p class="card-text">Item description</p>
+                      <p class="card-text">Winning bid: 10</p>
+                      <p class="card-text">
+                        <span
+                          class="material-symbols-outlined align-middle fs-5 pe-1"
+                          >hourglass_top</span
+                        >
+                        4 days, 3 hours
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div class="col-md-3">
-                <div class="card w-70">
-                  <img
-                    src="/assets/images/hostaphoto-XFhny3yLA0c-unsplash.jpg"
-                    class="card-img-top"
-                    alt="..."
-                  />
-                  <div class="card-img-overlay">
-                    <p
-                      class="card-text btn btn-secondary position-absolute top-0 end-0"
-                    >
-                      Bids: 10
-                    </p>
-                  </div>
-                  <div class="card-body">
-                    <h3 class="card-title">Item</h3>
-                    <p class="card-text">Item description</p>
-                    <p class="card-text">Winning bid: 10</p>
-                    <p class="card-text">
-                      <span
-                        class="material-symbols-outlined align-middle fs-5 pe-1"
-                        >hourglass_top</span
+
+                <div class="col-md-3">
+                  <div class="card w-70">
+                    <img
+                      src="/assets/images/hostaphoto-XFhny3yLA0c-unsplash.jpg"
+                      class="card-img-top"
+                      alt="..."
+                    />
+                    <div class="card-img-overlay">
+                      <p
+                        class="card-text btn btn-secondary position-absolute top-0 end-0"
                       >
-                      4 days, 3 hours
-                    </p>
+                        Bids: 10
+                      </p>
+                    </div>
+                    <div class="card-body">
+                      <h3 class="card-title">Item</h3>
+                      <p class="card-text">Item description</p>
+                      <p class="card-text">Winning bid: 10</p>
+                      <p class="card-text">
+                        <span
+                          class="material-symbols-outlined align-middle fs-5 pe-1"
+                          >hourglass_top</span
+                        >
+                        4 days, 3 hours
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-        <section class="row">
-          <div class="col-md-6 d-flex flex-column justify-content-center">
-            <h1>Sell your items with Gavel Galore</h1>
-            <p class="mt-4">
-              Looking for a simple and effective way to sell your art,
-              headphones, jewellery. furniture, clothes or anything else?
-            </p>
-            <p>
-              Look no further. Provide us with information and images, and we
-              will take care of the rest.
-            </p>
-            <button class="btn btn-primary mt-3">
-              Start your selling journey
-            </button>
-          </div>
-          <div class="col-md-6">
-            <img
-              src="/assets/images/sell-image.png"
-              class="img-fluid"
-              alt="Sell image"
-            />
-          </div>
-        </section>
+          </section>
+          <section id="listings-ends-soon">
+            <div class="container my-5" id="listing-container">
+              <div class="flex d-flex justify-content-between mb-2">
+                <h2>Ending soon</h2>
+                <a
+                  href="/src/html/buy-page/index.html#endsSoon"
+                  class="btn btn-white border border-dark btn-lg"
+                  role="button"
+                  >View all</a
+                >
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="card w-70">
+                    <img
+                      src="/assets/images/hostaphoto-XFhny3yLA0c-unsplash.jpg"
+                      class="card-img-top"
+                      alt="..."
+                    />
+                    <div class="card-img-overlay">
+                      <p
+                        class="card-text btn btn-secondary position-absolute top-0 end-0"
+                      >
+                        Bids: 10
+                      </p>
+                    </div>
+                    <div class="card-body">
+                      <h3 class="card-title">Item</h3>
+                      <p class="card-text">Item description</p>
+                      <p class="card-text">Winning bid: 10</p>
+                      <p class="card-text">
+                        <span
+                          class="material-symbols-outlined align-middle fs-5 pe-1"
+                          >hourglass_top</span
+                        >
+                        4 days, 3 hours
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="card w-70">
+                    <img
+                      src="/assets/images/hostaphoto-XFhny3yLA0c-unsplash.jpg"
+                      class="card-img-top"
+                      alt="..."
+                    />
+                    <div class="card-img-overlay">
+                      <p
+                        class="card-text btn btn-secondary position-absolute top-0 end-0"
+                      >
+                        Bids: 10
+                      </p>
+                    </div>
+                    <div class="card-body">
+                      <h3 class="card-title">Item</h3>
+                      <p class="card-text">Item description</p>
+                      <p class="card-text">Winning bid: 10</p>
+                      <p class="card-text">
+                        <span
+                          class="material-symbols-outlined align-middle fs-5 pe-1"
+                          >hourglass_top</span
+                        >
+                        4 days, 3 hours
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="card w-70">
+                    <img
+                      src="/assets/images/hostaphoto-XFhny3yLA0c-unsplash.jpg"
+                      class="card-img-top"
+                      alt="..."
+                    />
+                    <div class="card-img-overlay">
+                      <p
+                        class="card-text btn btn-secondary position-absolute top-0 end-0"
+                      >
+                        Bids: 10
+                      </p>
+                    </div>
+                    <div class="card-body">
+                      <h3 class="card-title">Item</h3>
+                      <p class="card-text">Item description</p>
+                      <p class="card-text">Winning bid: 10</p>
+                      <p class="card-text">
+                        <span
+                          class="material-symbols-outlined align-middle fs-5 pe-1"
+                          >hourglass_top</span
+                        >
+                        4 days, 3 hours
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="card w-70">
+                    <img
+                      src="/assets/images/hostaphoto-XFhny3yLA0c-unsplash.jpg"
+                      class="card-img-top"
+                      alt="..."
+                    />
+                    <div class="card-img-overlay">
+                      <p
+                        class="card-text btn btn-secondary position-absolute top-0 end-0"
+                      >
+                        Bids: 10
+                      </p>
+                    </div>
+                    <div class="card-body">
+                      <h3 class="card-title">Item</h3>
+                      <p class="card-text">Item description</p>
+                      <p class="card-text">Winning bid: 10</p>
+                      <p class="card-text">
+                        <span
+                          class="material-symbols-outlined align-middle fs-5 pe-1"
+                          >hourglass_top</span
+                        >
+                        4 days, 3 hours
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="row bg-secondary rounded m-2">
+            <div class="col-md-6 d-flex flex-column justify-content-center p-4">
+              <h1>Sell your items with Gavel Galore</h1>
+              <p class="mt-4">
+                Looking for a simple and effective way to sell your art,
+                headphones, jewellery. furniture, clothes or anything else?
+              </p>
+              <p>
+                Look no further. Provide us with information and images, and we
+                will take care of the rest.
+              </p>
+              <a
+                href="src/html/sell-page/index.html"
+                class="btn btn-primary sell-action mt-3"
+              >
+                Start your selling journey
+              </a>
+            </div>
+            <div class="col-md-6">
+              <img
+                src="/assets/images/sell-image.png"
+                class="img-fluid"
+                alt="Sell image"
+              />
+            </div>
+          </section>
+          <section id="listings-newest">
+            <div class="container my-5" id="listing-container">
+              <div class="flex d-flex justify-content-between mb-2">
+                <h2>Newest</h2>
+                <a
+                  href="/src/html/buy-page/index.html#newest"
+                  class="btn btn-white border border-dark btn-lg"
+                  role="button"
+                  >View all</a
+                >
+              </div>
+              <div class="row">
+                <div class="col-md-3">
+                  <div class="card w-70">
+                    <img
+                      src="/assets/images/hostaphoto-XFhny3yLA0c-unsplash.jpg"
+                      class="card-img-top"
+                      alt="..."
+                    />
+                    <div class="card-img-overlay">
+                      <p
+                        class="card-text btn btn-secondary position-absolute top-0 end-0"
+                      >
+                        Bids: 10
+                      </p>
+                    </div>
+                    <div class="card-body">
+                      <h3 class="card-title">Item</h3>
+                      <p class="card-text">Item description</p>
+                      <p class="card-text">Winning bid: 10</p>
+                      <p class="card-text">
+                        <span
+                          class="material-symbols-outlined align-middle fs-5 pe-1"
+                          >hourglass_top</span
+                        >
+                        4 days, 3 hours
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="card w-70">
+                    <img
+                      src="/assets/images/hostaphoto-XFhny3yLA0c-unsplash.jpg"
+                      class="card-img-top"
+                      alt="..."
+                    />
+                    <div class="card-img-overlay">
+                      <p
+                        class="card-text btn btn-secondary position-absolute top-0 end-0"
+                      >
+                        Bids: 10
+                      </p>
+                    </div>
+                    <div class="card-body">
+                      <h3 class="card-title">Item</h3>
+                      <p class="card-text">Item description</p>
+                      <p class="card-text">Winning bid: 10</p>
+                      <p class="card-text">
+                        <span
+                          class="material-symbols-outlined align-middle fs-5 pe-1"
+                          >hourglass_top</span
+                        >
+                        4 days, 3 hours
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="card w-70">
+                    <img
+                      src="/assets/images/hostaphoto-XFhny3yLA0c-unsplash.jpg"
+                      class="card-img-top"
+                      alt="..."
+                    />
+                    <div class="card-img-overlay">
+                      <p
+                        class="card-text btn btn-secondary position-absolute top-0 end-0"
+                      >
+                        Bids: 10
+                      </p>
+                    </div>
+                    <div class="card-body">
+                      <h3 class="card-title">Item</h3>
+                      <p class="card-text">Item description</p>
+                      <p class="card-text">Winning bid: 10</p>
+                      <p class="card-text">
+                        <span
+                          class="material-symbols-outlined align-middle fs-5 pe-1"
+                          >hourglass_top</span
+                        >
+                        4 days, 3 hours
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="card w-70">
+                    <img
+                      src="/assets/images/hostaphoto-XFhny3yLA0c-unsplash.jpg"
+                      class="card-img-top"
+                      alt="..."
+                    />
+                    <div class="card-img-overlay">
+                      <p
+                        class="card-text btn btn-secondary position-absolute top-0 end-0"
+                      >
+                        Bids: 10
+                      </p>
+                    </div>
+                    <div class="card-body">
+                      <h3 class="card-title">Item</h3>
+                      <p class="card-text">Item description</p>
+                      <p class="card-text">Winning bid: 10</p>
+                      <p class="card-text">
+                        <span
+                          class="material-symbols-outlined align-middle fs-5 pe-1"
+                          >hourglass_top</span
+                        >
+                        4 days, 3 hours
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
       </main>
-      <div class="container my-5">
+      <div class="container">
         <footer class="bg-light text-center text-lg-start text-dark">
           <div class="container pt-4">
             <div class="row mt-3">
@@ -291,6 +645,42 @@
         </footer>
       </div>
     </div>
+    <!-- Universal Login Prompt Modal -->
+    <div
+      class="modal fade"
+      id="universalLoginPromptModal"
+      tabindex="-1"
+      aria-labelledby="modalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalLabel">Wonderful to see you!</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body" id="modalBody">
+            <!-- Dynamic content will be loaded here -->
+          </div>
+          <div class="modal-footer">
+            <a
+              href="/src/html/login-register/index.html#login"
+              class="btn btn-primary"
+              >Login/Register</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      defer
+      src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+    ></script>
   </body>
   <!-- Apache License Notice for Icons -->
   <!--

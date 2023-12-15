@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Profile page" />
+    <title>Gavel Galore Profile</title>
     <link rel="stylesheet" href="../../../dist/css/styles.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
@@ -15,18 +17,26 @@
       rel="stylesheet"
     />
     <script type="module" src="/src/js/pages/profile.mjs"></script>
-    <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <title>Gavel Galore Homepage</title>
   </head>
   <body cz-shortcut-listen="true">
-    <div class="container">
+    <div class="container main-container">
       <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
           <div class="container-fluid">
-            <div class="gavelgalore-logo">
-              <span class="material-symbols-outlined">gavel</span>
-              <a class="navbar-brand fs-2" href="/index.html"> GavelGalore</a>
+            <!--Logo and user credits for small screens-->
+            <div class="d-flex align-items-center">
+              <div class="gavelgalore-logo">
+                <span class="material-symbols-outlined">gavel</span>
+                <a class="navbar-brand fs-2" href="/index.html">GavelGalore</a>
+              </div>
+              <div class="d-lg-none ms-3">
+                <a class="nav-link" href="#" id="navbarDropdown">
+                  <span id="userDisplaySmall"></span>
+                  <!-- Small Screen Username -->
+                </a>
+              </div>
             </div>
+
             <button
               class="navbar-toggler mb-4"
               type="button"
@@ -39,12 +49,13 @@
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="hamburger-nav">
-              <form class="d-flex w-50">
+              <form class="d-flex col-12 col-lg-6" id="searchForm">
                 <input
                   class="form-control me-2"
                   type="search"
-                  placeholder="Search GavelGalore"
+                  placeholder="Search by title, tag or description"
                   aria-label="Search"
+                  name="query"
                 />
               </form>
               <ul class="navbar-nav">
@@ -54,17 +65,31 @@
                   >
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/src/html/buy-page/index.html"
+                  <a
+                    class="nav-link"
+                    href="/src/html/buy-page/index.html#popular"
                     >BUY</a
                   >
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link show-when-logged-in" href="#">SELL</a>
+                  <a class="nav-link" href="/src/html/sell-page/index.html"
+                    >SELL</a
+                  >
                 </li>
               </ul>
-              <ul class="navbar-nav ms-auto">
+
+              <!-- Duplicated dropdown items for small screens -->
+              <ul class="navbar-nav d-lg-none show-when-logged-in">
                 <li class="nav-item">
-                  <a class="logoutLink" href="#">
+                  <a class="nav-link" href="/src/html/profile/index.html"
+                    >My Profile</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="dropdown-item logoutLink show-when-logged-in"
+                    href="#"
+                  >
                     <span
                       class="material-symbols-outlined align-middle fs-5 pe-1"
                       >logout</span
@@ -72,12 +97,92 @@
                   </a>
                 </li>
               </ul>
+              <!-- Dropdown menu for profile and logout -->
+              <ul class="navbar-nav ms-auto d-none d-lg-flex">
+                <li class="nav-item dropdown show-when-logged-in">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="navbarDropdownLargeScreen"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <span id="userDisplayLarge"></span>
+                    <!-- Username and Credits -->
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li class="nav-item">
+                      <a
+                        class="dropdown-item"
+                        href="/src/html/profile/index.html"
+                        >My Profile</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a
+                        class="dropdown-item logoutLink show-when-logged-in"
+                        href="#"
+                      >
+                        <span
+                          class="material-symbols-outlined align-middle fs-5 pe-1"
+                          >logout</span
+                        >Logout
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item show-when-logged-out">
+                  <a
+                    class="nav-link"
+                    href="/src/html/login-register/index.html#login"
+                  >
+                    <span
+                      class="material-symbols-outlined align-middle fs-5 pe-1"
+                      >login</span
+                    >Login
+                  </a>
+                </li>
+                <li class="nav-item show-when-logged-out">
+                  <a
+                    class="nav-link"
+                    href="/src/html/login-register/index.html#register"
+                  >
+                    <span
+                      class="material-symbols-outlined align-middle fs-5 pe-1"
+                      >how_to_reg</span
+                    >Register
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
         </nav>
       </header>
-      <main></main>
-      <div class="container my-5">
+      <main>
+        <div id="generalErrorContainer"></div>
+        <div class="container pb-5 h-100" id="profileContainer">
+          <section class="row" id="profileDetails">
+            <div class="col-md-3" id="avatarColumn"></div>
+
+            <div class="col-md-3" id="detailsColumn"></div>
+            <div class="col-md-6" id="editAvatarColumn">
+              <div id="avatarErrorContainer"></div>
+            </div>
+            <div class="col-md-3" id="avatarErrorContainer"></div>
+          </section>
+          <section id="listingsContainer">
+            <div class="row mt-4" id="listingsContent"></div>
+          </section>
+          <section id="bidsContainer">
+            <div class="row mt-4" id="bidsContent"></div>
+          </section>
+          <section id="winsContainer">
+            <div class="row mt-4" id="winsContent"></div>
+          </section>
+        </div>
+      </main>
+      <div class="container">
         <footer class="bg-light text-center text-lg-start text-dark">
           <div class="container pt-4">
             <div class="row mt-3">
@@ -104,6 +209,10 @@
         </footer>
       </div>
     </div>
+    <script
+      defer
+      src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+    ></script>
   </body>
   <!-- Apache License Notice for Icons -->
   <!--

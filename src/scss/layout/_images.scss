@@ -1,0 +1,17 @@
+.card-img-top {
+  height: 250px;
+  object-fit: cover;
+}
+
+.listing-image,
+.carousel-item img {
+  height: 400px !important;
+  object-fit: cover;
+  width: 100%;
+}
+
+.avatar-small {
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+}

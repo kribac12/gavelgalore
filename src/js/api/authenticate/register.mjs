@@ -8,8 +8,9 @@ import {
   validateAvatarUrl,
   validateEmail,
   validatePassword,
-} from '../../utilities/auth-utils.mjs';
-import { switchToLogin } from '../../utilities/pills-nav.mjs';
+  validateField,
+} from '../../utilities/val_auth/auth-utils.mjs';
+import { switchToLogin } from '../../utilities/pills/pills-login-register.mjs';
 import { displaySuccess } from '../../utilities/messages/success.mjs';
 
 const registerForm = document.getElementById('registerForm');
@@ -17,6 +18,20 @@ const registerName = document.getElementById('registerName');
 const registerEmail = document.getElementById('registerEmail');
 const registerPassword = document.getElementById('registerPassword');
 const registerAvatar = document.getElementById('registerAvatar');
+export function setupRegisterFormValidation() {
+  registerName.addEventListener('input', () =>
+    validateField(registerName, validateUsername)
+  );
+  registerEmail.addEventListener('input', () =>
+    validateField(registerEmail, validateEmail)
+  );
+  registerPassword.addEventListener('input', () =>
+    validateField(registerPassword, validatePassword)
+  );
+  registerAvatar.addEventListener('input', () =>
+    validateField(registerAvatar, validateAvatarUrl)
+  );
+}
 
 export async function registerUser() {
   try {
@@ -24,14 +39,12 @@ export async function registerUser() {
     const email = registerEmail.value;
     const password = registerPassword.value;
     const avatar = registerAvatar.value;
-
     // Clear any previous validation errors
     [registerEmail, registerPassword, registerName, registerAvatar].forEach(
       (input) => {
         input.classList.remove('is-invalid');
       }
     );
-
     // Validate inputs
     const emailError = validateEmail(email);
     const passwordError = validatePassword(password);
@@ -45,7 +58,6 @@ export async function registerUser() {
       showValidationError(registerAvatar, avatarError);
       return;
     }
-
     // Prepare user data for registration
     const newUser = {
       name,
@@ -53,21 +65,25 @@ export async function registerUser() {
       password,
       ...(avatar && { avatar }),
     };
-
     // API call for registration
     const response = await makeApiRequest('auth/register', 'POST', newUser);
 
     const { error, message } = response;
-
     if (!error) {
       displaySuccess('Registration successful! You can now login.');
       switchToLogin();
     } else {
-      displayError(message || 'Registration failed. Please try again.');
+      displayError(
+        message || 'Registration failed. Please try again.',
+        'registerErrorContainer'
+      );
     }
   } catch (error) {
     console.error('Registration failed', error);
-    displayError(error.message || 'Registration failed.');
+    displayError(
+      error.message || 'Unexpected error during registration.',
+      'registerErrorContainer'
+    );
   }
 }
 

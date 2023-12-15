@@ -1,0 +1,35 @@
+.btn.btn-white,
+.nav-item.btn,
+.btn.btn-primary {
+  &:hover {
+    background-color: $secondary;
+    color: $black;
+  }
+  &:focus {
+    background-color: $primary;
+    color: $white;
+  }
+}
+
+.btn.btn-secondary {
+  &:hover,
+  &:focus {
+    background-color: $primary;
+    color: $white;
+  }
+}
+
+.nav-item.btn.active {
+  background-color: $primary;
+  color: $white;
+}
+
+.card .bid-button {
+  border-top-right-radius: 0;
+  top: 0;
+  right: 0;
+}
+
+.carousel-indicators li::marker {
+  font-size: 0;
+}

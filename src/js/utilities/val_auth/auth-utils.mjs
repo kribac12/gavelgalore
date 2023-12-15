@@ -1,3 +1,5 @@
+import { showValidationError } from '../messages/error-handler.mjs';
+
 export function validateEmail(email) {
   if (!email) {
     return 'Email must not be empty.';
@@ -32,4 +34,18 @@ export function validateAvatarUrl(avatarUrl) {
     return 'Avatar URL must be a valid image URL.';
   }
   return '';
+}
+
+export function validateField(inputElement, validationFunction) {
+  const error = validationFunction(inputElement.value);
+  const errorElement = document.getElementById(inputElement.id + 'Error');
+
+  if (error) {
+    showValidationError(inputElement, error);
+  } else {
+    inputElement.classList.remove('is-invalid');
+    if (errorElement) {
+      errorElement.style.display = 'none'; // Directly hide the error message
+    }
+  }
 }
