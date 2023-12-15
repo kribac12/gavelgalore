@@ -1,6 +1,12 @@
 # gavelgalore
 
-Auction website
+GavelGalore is an auction website that allows users to bid on and list items for auction. The website utilizes a RESTful API to manage auctions and user interactions. Built with Bootstrap and SASS, GavelGalore offers a responsive and intuitive user interface.
+
+## Prerequisites
+Before you begin, ensure you have installed the latest version of Node.js: https://nodejs.org/en 
+
+## Installing GavelGalore
+
 
 ## License Information
 
