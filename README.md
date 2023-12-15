@@ -1,6 +1,6 @@
 # gavelgalore
 
-GavelGalore is an auction website that allows users to bid on and list items for auction. The website utilizes a RESTful API to manage auctions and user interactions. Built with Bootstrap and SASS, GavelGalore offers a responsive and intuitive user interface.
+GavelGalore is an auction website that allows users to bid on and list items for auction. Its target group is people between 22 and 45, from low-to middle class. The website utilizes a RESTful API to manage auctions and user interactions. Built with Bootstrap and SASS, GavelGalore offers a responsive and intuitive user interface.
 
 ## Prerequisites
 Before you begin, ensure you have installed the latest version of Node.js: https://nodejs.org/en 
@@ -9,28 +9,28 @@ Before you begin, ensure you have installed the latest version of Node.js: https
 To install GavelGalore, follow these steps:
 
 1. Clone the repository:
-git clone https://github.com/kribac12/gavelgalore.git
+`git clone https://github.com/kribac12/gavelgalore.git`
 
 2. Navigate to the cloned repositor:
-cd gavelgalore
+`cd gavelgalore`
 
 3. Install project dependencies:
-npm install
+`npm install`
 
 ## Using GavelGalore
 To use GavelGalore, start the development server:
-npm run watch
+`npm run watch`
 
 ## Formatting and Linting
 GavelGalore uses Prettier for code formatting and ESLint for linting.
 To format code, run:
-npm run format
+`npm run format`
 
 To lint your code, run:
-npm run lint
+`npm run lint`
 
 To automatically fix inting errors, run:
-npm run lint-fix
+`npm run lint-fix`
 
 ## Running tests
 Currently, GavelGalore does not include tests, but this will be developed further. 
