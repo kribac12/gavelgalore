@@ -3,6 +3,7 @@ import { displayError } from '../../utilities/messages/error-handler.mjs';
 import { displaySuccess } from '../../utilities/messages/success.mjs';
 import { renderAvatar } from './profile-render.mjs';
 import { updateAvatar } from '../../api/profile/update-avatar.mjs';
+import { validateAvatarUrl } from '../../utilities/auth-utils.mjs';
 
 /**
  * Renders edit button for updating avatar. Upon clicked, button reveals input field
@@ -47,32 +48,40 @@ export function renderEditAvatarButton() {
   updateButton.addEventListener('click', async () => {
     const newAvatarUrl = input.value;
 
-    if (!newAvatarUrl) {
-      displayError('Please enter a URL');
+    // Validate the new avatar URL
+    const avatarError = await validateAvatarUrl(newAvatarUrl);
+    if (avatarError) {
+      displayError(avatarError, 'avatarErrorContainer');
       return;
     }
 
-    const result = await updateAvatar(newAvatarUrl);
+    try {
+      const result = await updateAvatar(newAvatarUrl);
+      if (result && result.avatar) {
+        // Clear existing avatar and render new
+        const avatarColumn = document.getElementById('avatarColumn');
+        avatarColumn.innerHTML = '';
+        renderAvatar(result.avatar);
 
-    if (result && result.avatar) {
-      // Clear existing avatar
-      const avatarColumn = document.getElementById('avatarColumn');
-      avatarColumn.innerHTML = '';
+        displaySuccess('Avatar updated successfully');
 
-      // Render new avatar
-      renderAvatar(result.avatar);
-
-      displaySuccess('Avatar updated successfully');
-
-      // Let UI elements back to initial state
-      input.style.display = 'none';
-      updateButton.style.display = 'none';
-      editButton.style.display = '';
-      input.value = '';
-    } else {
+        // Let UI elements back to initial state
+        input.style.display = 'none';
+        updateButton.style.display = 'none';
+        editButton.style.display = '';
+        input.value = '';
+      } else {
+        displayError(
+          'Failed to update avatar. Please make sure the URL is correct.',
+          'avatarErrorContainer'
+        );
+      }
+    } catch (error) {
       displayError(
-        'Failed to update avatar. Please make sure the URL is correct.'
+        'An error occurred while updating the avatar.',
+        'avatarErrorContainer'
       );
+      console.error('Error updating avatar:', error);
     }
   });
 }

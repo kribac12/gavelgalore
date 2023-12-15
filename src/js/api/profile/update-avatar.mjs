@@ -20,6 +20,7 @@ export async function updateAvatar(newAvatarUrl) {
   const userInfo = getUserInfo();
   if (!userInfo || !userInfo.name) {
     console.error('User information not found.');
+    displayError('User information not found');
     return null;
   }
 
@@ -34,6 +35,7 @@ export async function updateAvatar(newAvatarUrl) {
     return response;
   } catch (error) {
     console.error('Error updating avatar:', error);
-    displayError();
+    displayError('Error updating avatar. ' + error.message); // Display specific error message
+    throw error;
   }
 }

@@ -73,13 +73,16 @@ export async function registerUser() {
     // API call for registration
     const response = await makeApiRequest('auth/register', 'POST', newUser);
 
-    const { error, message } = response;
+    const { error } = response;
 
     if (!error) {
       displaySuccess('Registration successful! You can now login.');
       switchToLogin();
     } else {
-      displayError(message || 'Registration failed. Please try again.');
+      displayError(
+        'Please correct the highlighted fields.',
+        'registerErrorContainer'
+      );
     }
   } catch (error) {
     console.error('Registration failed', error);
