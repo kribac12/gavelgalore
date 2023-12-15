@@ -1,4 +1,4 @@
-import { showValidationError } from './messages/error-handler.mjs';
+import { showValidationError } from '../messages/error-handler.mjs';
 
 export function validateEmail(email) {
   if (!email) {

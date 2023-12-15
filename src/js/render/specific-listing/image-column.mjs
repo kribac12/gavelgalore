@@ -8,7 +8,6 @@ import { createBootstrapCarousel } from '../../utilities/carousel.mjs';
  * @param {Object} listing - The listing object with media information.
  * @param {HTMLElement} imageColumn - The HTML element where the carousel will be displayed.
  */
-
 export function populateImageColumn(listing, imageColumn) {
   if (listing.media && listing.media.length > 0) {
     // Use the createBootstrapCarousel function

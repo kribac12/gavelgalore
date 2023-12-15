@@ -13,7 +13,6 @@ import { updateUIOnLogin } from '../../userstate-display/logged-in-visible.mjs';
  * @param {Object} listing - The listing object containing information to be displayed.
  * @param {HTMLElement} detailsColumn - The HTML element where listing details will be displayed.
  */
-
 export function populateDetailsColumn(listing, detailsColumn) {
   // Title, Description, Tags, Highest bid, Time Remaining
   detailsColumn.appendChild(
@@ -45,11 +44,9 @@ export function populateDetailsColumn(listing, detailsColumn) {
 
   // Time remaining
   const timeRemaining = getTimeRemainingFormatted(listing.endsAt);
-
   const timeRemainingElement = createNewElement('p', {
     classNames: ['time-remaining'],
   });
-
   const hourglassIcon = createNewElement('span', {
     classNames: ['material-symbols-outlined', 'align-middle', 'fs-5', 'pe-1'],
     text: 'hourglass_top',
@@ -68,7 +65,6 @@ export function populateDetailsColumn(listing, detailsColumn) {
  * @param {HTMLElement} bidHistory - The HTML element where bid history will be updated.
  * @param {Function} onSuccessfulBid - Callback function to execute after a successful bid.
  */
-
 export function setupBidForm(
   detailsColumn,
   listing,
@@ -129,11 +125,10 @@ export function setupBidForm(
   bidForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     const bidAmount = Number(bidInput.value);
-
     try {
       const bidResponse = await placeBid(listing.id, bidAmount);
 
-      if (bidResponse) {
+      if (bidResponse && !bidResponse.error) {
         const updatedListing = await getListingById(listing.id);
         if (updatedListing && Array.isArray(updatedListing.bids)) {
           populateBidHistory(updatedListing, bidHistory);
@@ -147,11 +142,20 @@ export function setupBidForm(
           onSuccessfulBid();
         }
       } else {
-        console.error('Bid placement unsuccessful:', bidResponse);
+        displayError(
+          bidResponse.message || 'An unexpected error occurred.',
+          'bidErrorContainer'
+        );
       }
     } catch (error) {
+      // Handle exceptions during bid placement
       console.error('Error placing bid:', error);
-      displayError('An error occurred while placing the bid.');
+      let errorMessage = 'An error occurred while placing the bid.';
+      // Check if the error message is about the bid being too low
+      if (error.message && error.message.includes('Your bid must be higher')) {
+        errorMessage = 'Your bid must be higher than the current bid.';
+      }
+      displayError(errorMessage, 'bidErrorContainer');
     }
   });
 }

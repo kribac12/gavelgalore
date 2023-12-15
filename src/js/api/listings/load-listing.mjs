@@ -12,7 +12,6 @@ import { displayError } from '../../utilities/messages/error-handler.mjs';
  * @function loadListing
  * @returns {Promise<void>} -  Promise that resolves when listing is loaded and rendered.
  */
-
 export async function loadListing() {
   const urlParams = new URLSearchParams(window.location.search);
   const listingId = urlParams.get('id');
@@ -27,9 +26,12 @@ export async function loadListing() {
   } catch (error) {
     console.error('Error loading listing:', error);
     if (error.status === 404) {
-      displayError('Listing not found.');
+      displayError('Listing not found.', 'generalErrorContainer');
     } else {
-      displayError('An error occurred while loading listing');
+      displayError(
+        'An error occurred while loading listing',
+        'generalErrorContainer'
+      );
     }
   }
 }

@@ -1,6 +1,7 @@
 import { makeApiRequest } from '../api-service.mjs';
 import { displayError } from '../../utilities/messages/error-handler.mjs';
 import { displaySuccess } from '../../utilities/messages/success.mjs';
+import { validateDate } from '../../utilities/val_auth/validate-date.mjs';
 
 /**
  * Handles the submission of the form for creating a listing.
@@ -13,14 +14,12 @@ export async function handleCreateListingForm(event) {
   // Destructuring values directly from DOM elements
   const title = document.getElementById('title').value.trim();
   const description = document.getElementById('description').value.trim();
-
   // Processing the tags
   const tags = document
     .getElementById('tags')
     .value.trim()
     .split(',')
     .map((tag) => tag.trim());
-
   // Processing the media inputs
   const mediaInputs = document.querySelectorAll('#mediaContainer input');
   const media = Array.from(mediaInputs)
@@ -28,6 +27,12 @@ export async function handleCreateListingForm(event) {
     .filter((url) => url);
 
   const endsAt = document.getElementById('endsAt').value;
+  const dateError = validateDate(endsAt);
+
+  if (dateError) {
+    displayError(dateError, 'createErrorContainer');
+    return; // Exit the function if there's a date error
+  }
 
   try {
     // API request to create new listing
@@ -38,7 +43,6 @@ export async function handleCreateListingForm(event) {
       media,
       endsAt,
     });
-
     // Handling the success response
     const listingUrl = `/src/html/listing-specific/index.html?id=${encodeURIComponent(
       response.id
@@ -49,10 +53,13 @@ export async function handleCreateListingForm(event) {
         link.addEventListener('click', () => {});
       }
     });
-
     // Resetting form
     document.getElementById('createListingForm').reset();
   } catch (error) {
-    displayError();
+    console.error('Error creating listing:', error);
+    displayError(
+      error.message || 'Failed to create listing. Please try again.',
+      'createErrorContainer'
+    );
   }
 }

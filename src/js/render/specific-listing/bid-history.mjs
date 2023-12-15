@@ -1,5 +1,4 @@
 import { createNewElement } from '../../utilities/createHTML.mjs';
-
 /**
  * Populates the bid history section
  *
@@ -33,11 +32,9 @@ export function populateBidHistory(listing, bidHistory) {
   bidHistory.appendChild(headerRow);
 
   // Reverse order
-
   const sortedBids = listing.bids
     .slice()
     .sort((a, b) => new Date(b.created) - new Date(a.created));
-
   sortedBids.slice(0, 10).forEach((bid) => {
     const bidRow = createBidRow(bid);
     bidHistory.appendChild(bidRow);

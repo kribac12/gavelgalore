@@ -5,7 +5,7 @@ import {
   validateEmail,
   validatePassword,
   validateField,
-} from '../../utilities/auth-utils.mjs';
+} from '../../utilities/val_auth/auth-utils.mjs';
 
 const loginForm = document.getElementById('loginForm');
 const loginEmail = document.getElementById('loginEmail');
@@ -48,13 +48,10 @@ export async function loginUser() {
       'POST',
       userCredentials
     );
-
     if (response.error) {
       throw new Error(response.message || 'Login failed. Please try again.');
     }
-
     const { accessToken, name, credits, avatar } = response;
-
     const userInfo = {
       name,
       email,
@@ -76,14 +73,12 @@ function clearFormErrors() {
   [loginEmail, loginPassword].forEach((input) => {
     input.classList.remove('is-invalid');
   });
-
   // Clear the text content of error message elements
   const errorElements = loginForm.querySelectorAll('.invalid-feedback');
   errorElements.forEach((element) => {
     element.textContent = '';
   });
-
-  // Optionally, hide the general error message element
+  // Hide the general error message element
   const loginMessageElement = document.getElementById('loginMessage');
   if (loginMessageElement) {
     loginMessageElement.textContent = '';

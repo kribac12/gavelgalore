@@ -7,7 +7,6 @@ import { createNewElement } from './createHTML.mjs';
  * @param {string} carouselId - Unique identifier for the carousel element.
  * @returns {HTMLElement} - A Bootstrap carousel element populated with images.
  */
-
 export function createBootstrapCarousel(imageUrls, carouselId) {
   const carousel = createNewElement('div', {
     classNames: ['carousel', 'slide'],

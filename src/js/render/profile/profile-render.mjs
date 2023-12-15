@@ -26,7 +26,6 @@ export function renderSectionHeader(containerId, headerText) {
  *
  * @param {string} avatarUrl - URL of avatar image.
  */
-
 export function renderAvatar(avatarUrl) {
   const avatarColumn = document.getElementById('avatarColumn');
   const avatarImage = createNewElement('img', {
@@ -44,7 +43,6 @@ export function renderAvatar(avatarUrl) {
  *
  * @param {Object} userProfile - User profile object.
  */
-
 export function renderProfileDetails(userProfile) {
   const detailsColumn = document.getElementById('detailsColumn');
   const userName = createNewElement('h1', {
@@ -76,7 +74,6 @@ export function renderProfileDetails(userProfile) {
  * @param {Function} createCardFunction - Function to create card elements.
  * @param {boolean} showAll - Flag to show all / show less listings.
  */
-
 export function populateListings(
   listings,
   contentContainerId,
@@ -92,7 +89,6 @@ export function populateListings(
   });
 
   //Check if show all or show less button is needed
-
   if (listings.length > 4) {
     const showButton = createNewElement('button', {
       text: showAll ? 'Show less' : 'Show all',
@@ -126,9 +122,7 @@ export function populateWins(
   showAll = false
 ) {
   const contentContainer = document.getElementById(contentContainerId);
-
   contentContainer.innerHTML = '';
-
   // Check if 'wins' is undefined or not an array, and handle accordingly
   if (!Array.isArray(wins)) {
     console.error('populateWins: wins is not an array', wins);
@@ -136,7 +130,6 @@ export function populateWins(
     contentContainer.innerHTML = '<p>No wins to display.</p>';
     return;
   }
-
   // Slice the wins array to display only a limited number of wins initially
   const winsToDisplay = showAll ? wins : wins.slice(0, 4);
   winsToDisplay.forEach((win) => {
@@ -167,7 +160,6 @@ export function populateWins(
  * @param {Function} createCardFunction - Function to create card elements.
  * @param {boolean} showAll - Flag to show more/ show less listings.
  */
-
 export function populateBids(
   bids,
   contentContainerId,
@@ -178,9 +170,7 @@ export function populateBids(
   contentContainer.innerHTML = '';
 
   // Filter out duplicates
-
   const uniqueListingIds = new Set();
-
   const uniqueBids = bids.filter((bid) => {
     if (!uniqueListingIds.has(bid.listing.id)) {
       uniqueListingIds.add(bid.listing.id);
@@ -190,7 +180,6 @@ export function populateBids(
   });
 
   const bidsToDisplay = showAll ? uniqueBids : uniqueBids.slice(0, 4);
-
   bidsToDisplay.forEach((bid) => {
     const card = createCardFunction(bid);
     contentContainer.appendChild(card);

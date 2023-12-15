@@ -37,7 +37,6 @@
                 </a>
               </div>
             </div>
-
             <button
               class="navbar-toggler mb-4"
               type="button"
@@ -80,11 +79,12 @@
                   >
                 </li>
               </ul>
-
-              <!-- Duplicated dropdown items for small screens -->
-              <ul class="navbar-nav d-lg-none show-when-logged-in">
+              <!-- Duplicated dropdown items and login/register for small screens -->
+              <ul class="navbar-nav d-lg-none">
                 <li class="nav-item">
-                  <a class="nav-link" href="/src/html/profile/index.html"
+                  <a
+                    class="nav-link show-when-logged-in"
+                    href="/src/html/profile/index.html"
                     >My Profile</a
                   >
                 </li>
@@ -97,6 +97,28 @@
                       class="material-symbols-outlined align-middle fs-5 pe-1"
                       >logout</span
                     >Logout
+                  </a>
+                </li>
+                <li class="nav-item show-when-logged-out">
+                  <a
+                    class="nav-link"
+                    href="/src/html/login-register/index.html#login"
+                  >
+                    <span
+                      class="material-symbols-outlined align-middle fs-5 pe-1"
+                      >login</span
+                    >Login
+                  </a>
+                </li>
+                <li class="nav-item show-when-logged-out">
+                  <a
+                    class="nav-link"
+                    href="/src/html/login-register/index.html#register"
+                  >
+                    <span
+                      class="material-symbols-outlined align-middle fs-5 pe-1"
+                      >how_to_reg</span
+                    >Register
                   </a>
                 </li>
               </ul>

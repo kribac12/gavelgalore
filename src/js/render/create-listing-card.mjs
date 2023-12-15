@@ -2,15 +2,13 @@ import { getTimeRemainingFormatted } from '../utilities/date-time.mjs';
 import { createNewElement } from '../utilities/createHTML.mjs';
 import { selectDefaultImage } from '../utilities/default-image-selector.mjs';
 import { limitTags, trimText } from '../utilities/text-trimmer.mjs';
-import { isValidUrl } from '../utilities/valid-url.mjs';
-
+import { isValidUrl } from '../utilities/val_auth/valid-url.mjs';
 /**
  * Creates and returns listing cards.
  *
  * @param {Object} listing - Listing object to create card for.
  * @returns {HTMLElement} - Card element for the listing.
  */
-
 export function createListingCard(listing) {
   const { media, bids, tags, title, description, created, endsAt } = listing;
 
@@ -80,7 +78,6 @@ export function createListingCard(listing) {
       text: trimText(description, 100),
     })
   );
-
   //Format creation date
   const creationDateText = `Created: ${new Date(created).toLocaleDateString()}`;
   cardBody.appendChild(
@@ -89,12 +86,10 @@ export function createListingCard(listing) {
       text: creationDateText,
     })
   );
-
   // Create container for tags
   const tagsContainer = createNewElement('div', {
     classNames: ['tags-container', 'mb-2'],
   });
-
   // Limit the number of tags to display
   limitTags(tags, 3).forEach((tag) => {
     tagsContainer.appendChild(
@@ -105,7 +100,6 @@ export function createListingCard(listing) {
     );
   });
   cardBody.appendChild(tagsContainer);
-
   //Add hourglass icon and time remaining
   const timeRemaining = getTimeRemainingFormatted(endsAt);
   const timeRemainingElement = createNewElement('p', {

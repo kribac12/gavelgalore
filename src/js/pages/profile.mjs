@@ -16,6 +16,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     const userInfo = getUserInfo();
     if (!userInfo) {
       console.error('No user info found');
+      displayError(
+        'User information could not be retrieved.',
+        'generalErrorContainer'
+      );
       return;
     }
 
@@ -24,6 +28,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderUserProfile(userProfile, userListings, userWins, userBids);
   } catch (error) {
     console.error('Error loading profile page:', error);
-    displayError();
+    displayError(
+      error.message || 'An error occurred while loading the profile page.',
+      'generalErrorContainer'
+    );
   }
 });

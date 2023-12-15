@@ -24,13 +24,10 @@ export function renderUserProfile(
   renderEditAvatarButton();
 
   //Render listings and headers with category
-
   renderSectionHeader('listingsContainer', 'My listings');
   populateListings(userListings, 'listingsContent', createListingCard, false);
-
   renderSectionHeader('bidsContainer', 'My bids');
   populateBids(userBids, 'bidsContent', createBidCard, false);
-
   renderSectionHeader('winsContainer', 'My wins');
   populateWins(userWins, 'winsContent', createListingCard, false);
 }

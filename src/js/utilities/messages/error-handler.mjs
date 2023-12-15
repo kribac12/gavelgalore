@@ -1,6 +1,5 @@
 export function displayError(message, containerId = null) {
   removeError(); // Clears any previous errors
-
   const errorHTML = `
       <div id="dynamicErrorAlert" class="alert alert-danger alert-dismissible fade show" role="alert">
           <strong>Error:</strong> <span>${message}</span>
@@ -30,7 +29,7 @@ function removeError() {
   );
   if (generalErrorContainer) {
     generalErrorContainer.innerHTML = '';
-    generalErrorContainer.style.display = 'none'; // Hide it again
+    generalErrorContainer.style.display = 'none';
   }
 }
 

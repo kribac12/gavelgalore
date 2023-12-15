@@ -35,6 +35,5 @@ export async function renderListingDetail(listing) {
   });
 
   //Update UI based on login status
-
   updateUIOnLogin();
 }

@@ -5,7 +5,6 @@ import { switchTab } from './pills-categories.mjs';
  * Maps URL hashes to matching tab IDs and activates the correct tab.
  * If no hash is found, defaults to activate the popularTab.
  */
-
 export function handleInitialTabBasedOnHash() {
   const hash = window.location.hash;
   const tabMapping = {

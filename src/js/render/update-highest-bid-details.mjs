@@ -6,7 +6,6 @@ import { createNewElement } from '../utilities/createHTML.mjs';
  * @param {Object} listing - The listing object with bid information.
  * @param {HTMLElement} detailsColumn - The HTML element where the highest bid details will be displayed.
  */
-
 export function updateHighestBidDetails(listing, detailsColumn) {
   // Determine highest bid
   let highestBid = {};

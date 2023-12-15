@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   setUpLogoutLink();
   updateUserCredits();
   setUpSearchForm();
-
   // Handle modal if user clicks sell link
   const sellLinks = document.querySelectorAll('.sell-action');
   sellLinks.forEach((link) => {
@@ -20,7 +19,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       handleActionForLoggedOutUsers('sell your items', event);
     });
   });
-
   // handle search query
   const searchQuery = localStorage.getItem('searchQuery');
   localStorage.removeItem('searchQuery');

@@ -13,7 +13,6 @@ import { createListingCard } from './create-listing-card.mjs';
  * @param {string|null} [category=null] - The category of listings to display. If null, populates all sections.
  * @param {string|null} [containerId=null] - The container ID where the listings should be populated.
  */
-
 export async function populateSections(
   limitCards = false,
   category,
@@ -74,7 +73,6 @@ export async function populateSections(
  * @param {boolean} [limitCards=false] - Whether to limit the number of cards shown.
  * @param {string|null} [containerId=null] - The container ID to use if different from the section ID.
  */
-
 export function populateSection(sectionId, listings, limitCards, containerId) {
   const targetId = containerId || sectionId;
   const section = document.getElementById(targetId);

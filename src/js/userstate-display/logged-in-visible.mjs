@@ -5,7 +5,6 @@ import { getAccessToken } from '../storage/storage.mjs';
  * Elements meant to be visible when logged in should have the class 'show-when-logged-in'.
  * Elements meant to be visible when logged out should have the class 'show-when-logged-out'.
  */
-
 export function updateUIOnLogin() {
   const token = getAccessToken();
   const isLoggedIn = Boolean(token);

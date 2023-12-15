@@ -53,7 +53,6 @@ export async function makeApiRequest(
       const errorResponse = await response.json();
       // Handle 404 errors for listings
       if (response.status === 404 && path.startsWith('listings/')) {
-        console.log(`Listing not found at path: ${path}`);
         return null;
       }
       console.error('Api error response:', errorResponse);

@@ -27,7 +27,7 @@ export function handleActionForLoggedOutUsers(action, event) {
       console.error('Bootstrap or modal element not found');
     }
 
-    // Prevent the default action (like link navigation) for logged-out users
+    // Prevent the default action for logged-out users
     event.preventDefault();
   }
   // If the user is logged in, the default action will proceed

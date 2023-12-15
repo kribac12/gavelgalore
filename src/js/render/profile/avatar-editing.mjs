@@ -3,7 +3,7 @@ import { displayError } from '../../utilities/messages/error-handler.mjs';
 import { displaySuccess } from '../../utilities/messages/success.mjs';
 import { renderAvatar } from './profile-render.mjs';
 import { updateAvatar } from '../../api/profile/update-avatar.mjs';
-import { validateAvatarUrl } from '../../utilities/auth-utils.mjs';
+import { validateAvatarUrl } from '../../utilities/val_auth/auth-utils.mjs';
 
 /**
  * Renders edit button for updating avatar. Upon clicked, button reveals input field
@@ -27,7 +27,6 @@ export function renderEditAvatarButton() {
     text: 'Edit avatar',
     classNames: ['btn', 'btn-primary'],
   });
-
   //create update button (hidden initially)
   const updateButton = createNewElement('button', {
     text: 'Update avatar',
@@ -47,7 +46,6 @@ export function renderEditAvatarButton() {
 
   updateButton.addEventListener('click', async () => {
     const newAvatarUrl = input.value;
-
     // Validate the new avatar URL
     const avatarError = await validateAvatarUrl(newAvatarUrl);
     if (avatarError) {
@@ -64,7 +62,6 @@ export function renderEditAvatarButton() {
         renderAvatar(result.avatar);
 
         displaySuccess('Avatar updated successfully');
-
         // Let UI elements back to initial state
         input.style.display = 'none';
         updateButton.style.display = 'none';

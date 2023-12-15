@@ -2,7 +2,7 @@ import { createNewElement } from '../utilities/createHTML.mjs';
 import { trimText, limitTags } from '../utilities/text-trimmer.mjs';
 import { displayError } from '../utilities/messages/error-handler.mjs';
 import { getTimeRemainingFormatted } from '../utilities/date-time.mjs';
-import { isValidUrl } from '../utilities/valid-url.mjs';
+import { isValidUrl } from '../utilities/val_auth/valid-url.mjs';
 import { createBootstrapCarousel } from '../utilities/carousel.mjs';
 import { createFormFieldWithLabel } from '../utilities/formfield-label.mjs';
 /**
@@ -86,16 +86,13 @@ export function setupCreateListingForm() {
     document.getElementById('previewTitle').innerText =
       trimText(titleInputElement.value, 40) || 'Title Preview';
   });
-
   descriptionInputElement.addEventListener('input', () => {
     document.getElementById('previewDescription').innerText =
       trimText(descriptionInputElement.value, 100) || 'Description Preview';
   });
-
   tagsInputElement.addEventListener('input', () =>
     updateTagsPreview(tagsInputElement)
   );
-
   endsAtInputElement.addEventListener('input', () => {
     const endDateValue = endsAtInputElement.value;
     let timeRemainingPreview = 'Time Remaining Preview';
@@ -124,7 +121,6 @@ export function setupCreateListingForm() {
     console.error('Create listing container not found');
     displayError();
   }
-
   initializePreviewCarousel();
 }
 

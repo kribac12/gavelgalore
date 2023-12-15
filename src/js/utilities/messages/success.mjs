@@ -8,7 +8,6 @@ export function displaySuccess(message, listingUrl = null, callback = null) {
       successMessageElement.innerHTML += ` ${viewListingLink}`;
     }
     successMessageElement.style.display = 'block'; // Show the message element
-
     if (callback) {
       callback();
     }

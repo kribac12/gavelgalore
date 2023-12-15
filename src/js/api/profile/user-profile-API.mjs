@@ -11,14 +11,11 @@ import { makeApiRequest } from '../api-service.mjs';
  * @param {string} username - Username of the user's profile fetched.
  * @returns {Promise<Object>} - Promise that resolves to the user's profile object.
  */
-
 export async function getUserProfile(username) {
   try {
     const urlPath = `profiles/${username}`;
     const query = { _listings: true };
-
     const profile = await makeApiRequest(urlPath, 'GET', null, {}, query);
-
     // Ensure that 'wins', 'bids', and 'listings' are always arrays
     profile.wins = Array.isArray(profile.wins) ? profile.wins : [];
     profile.bids = Array.isArray(profile.bids) ? profile.bids : [];
@@ -27,14 +24,15 @@ export async function getUserProfile(username) {
     return profile;
   } catch (error) {
     console.error('Error fetching user profile:', error);
-    displayError();
-
+    displayError(
+      error.message || 'Failed to fetch user profile.',
+      'generalErrorContainer'
+    );
     // Return a default profile structure in case of error
     return {
-      wins: [], // Empty array for wins
-      bids: [], // Empty array for bids
-      listings: [], // Empty array for listings
-      // Include any other default values for the user profile structure here
+      wins: [],
+      bids: [],
+      listings: [],
     };
   }
 }
@@ -47,7 +45,6 @@ export async function getUserProfile(username) {
  * @param {string} username - Username of the user whose listings are fetched.
  * @returns {Promise<Array>} - Promise that resolves to an array of listings.
  */
-
 export async function getUserListings(username) {
   try {
     const urlPath = `profiles/${username}/listings`;
@@ -58,7 +55,10 @@ export async function getUserListings(username) {
     return listings;
   } catch (error) {
     console.error('Error fetching user listings:', error);
-    displayError();
+    displayError(
+      error.message || 'Failed to fetch user listings.',
+      'generalErrorContainer'
+    );
   }
 }
 
@@ -72,7 +72,6 @@ export async function getUserListings(username) {
  * @param {string} username - Username of user whose wins are fetched.
  * @returns {Promise<Array>} - Promise that resolves to an array of user's wins.
  */
-
 export async function getUserWins(username) {
   try {
     const userProfile = await getUserProfile(username);
@@ -89,22 +88,22 @@ export async function getUserWins(username) {
           console.error(`Error fetching listing ${winId}:`, error);
           // Check if the error is a 404 (listing not found)
           if (error.message && error.message.includes('404')) {
-            console.log(`Listing ${winId} not found, skipping.`);
-            return null; // Return null for 404 errors
+            return null;
           }
           throw error;
         }
       })
     );
-
     // Filter out null values and sort wins in descending order
-    wins = wins
-      .filter((win) => win !== null)
-      .sort((a, b) => new Date(b.endsAt) - new Date(a.endsAt));
+    wins = wins.filter((win) => win !== null);
+    wins.sort((a, b) => new Date(b.endsAt) - new Date(a.endsAt));
     return wins;
   } catch (error) {
     console.error('Error fetching wins:', error);
-    displayError();
+    displayError(
+      error.message || 'Failed to fetch auction wins.',
+      'generalErrorContainer'
+    );
   }
 }
 
@@ -116,7 +115,6 @@ export async function getUserWins(username) {
  * @param {string} username - Username of the user whose bids are fetched.
  * @returns {Promise<Array>} - Promise that resolves to an array of bids.
  */
-
 export async function getUserBids(username) {
   try {
     const urlPath = `profiles/${username}/bids`;
@@ -126,6 +124,9 @@ export async function getUserBids(username) {
     return bids;
   } catch (error) {
     console.error('Error fetching user bids:', error);
-    displayError();
+    displayError(
+      error.message || 'Failed to fetch user bids.',
+      'generalErrorContainer'
+    );
   }
 }

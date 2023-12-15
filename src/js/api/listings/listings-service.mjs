@@ -49,7 +49,6 @@ export async function getListingById(id) {
  * @param {Array<Object>} listings - array of listing objects.
  * @returns {Array<Object>} - The sorted array of listings based on bid count.
  */
-
 export function getMostPopularListings(listings) {
   const now = new Date();
   return listings
@@ -63,7 +62,6 @@ export function getMostPopularListings(listings) {
  * @param {Array<Object>} listings - Array of listing objects.
  * @returns {Array<Object>} - Sorted array of listings by date created.
  */
-
 export function getNewestListings(listings) {
   const now = new Date();
   return listings
@@ -77,7 +75,6 @@ export function getNewestListings(listings) {
  * @param {Array<Object>} listings - Array of listing objects.
  * @returns {Array<Object>} - Sorted array of listings by date ending.
  */
-
 export function getSoonEndingListings(listings) {
   const now = new Date();
   return listings

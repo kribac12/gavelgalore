@@ -2,7 +2,7 @@ import { createNewElement } from '../../utilities/createHTML.mjs';
 import { selectDefaultImage } from '../../utilities/default-image-selector.mjs';
 import { getTimeRemainingFormatted } from '../../utilities/date-time.mjs';
 import { limitTags, trimText } from '../../utilities/text-trimmer.mjs';
-import { isValidUrl } from '../../utilities/valid-url.mjs';
+import { isValidUrl } from '../../utilities/val_auth/valid-url.mjs';
 
 /**
  * Creates and returns card element for listings bid on.
@@ -49,7 +49,6 @@ export function createBidCard(bid) {
     img.src = selectDefaultImage([], title, '');
   };
   cardInner.appendChild(img);
-
   // Add card-img-overlay with bid count
   const overlay = createNewElement('div', {
     classNames: ['card-img-overlay'],
@@ -84,7 +83,6 @@ export function createBidCard(bid) {
       text: trimText(description, 100),
     })
   );
-
   //Format creation date
   const creationDateText = `Created: ${new Date(created).toLocaleDateString()}`;
   const creationDateElement = createNewElement('p', {
@@ -93,7 +91,6 @@ export function createBidCard(bid) {
   });
 
   cardBody.appendChild(creationDateElement);
-
   // Create container for tags
   const tagsContainer = createNewElement('div', {
     classNames: ['tags-container', 'mb-2', 'py-2'],
@@ -109,7 +106,6 @@ export function createBidCard(bid) {
   });
 
   cardBody.appendChild(tagsContainer);
-
   // Hourglass icon and time remaining
   const timeRemaining = getTimeRemainingFormatted(endsAt);
   const timeText = createNewElement('p', { classNames: ['card-text'] });
