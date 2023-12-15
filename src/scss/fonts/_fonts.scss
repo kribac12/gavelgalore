@@ -1,17 +1,20 @@
 h1,
 h2,
 h3,
+h4,
 .navbar-brand {
-  font-family: 'playfair display', Georgia;
+  font-family: 'playfair display', serif;
 }
 
 body,
 .nav-link,
 .navbar form,
 p,
+a,
+input,
 span,
 button {
-  font-family: 'lato', sans-serif, Helvetica;
+  font-family: 'lato', sans-serif;
 }
 
 footer a {
@@ -21,7 +24,7 @@ footer a {
 .navbar .nav-item a {
   font-weight: 400;
   display: block;
-  font-size: var(--bs-nav-link-font-size);
+  font-size: 1rem;
   font-weight: 400; // Lighter font weight for non-active links
   color: black; // Set the color to black
   text-decoration: none;

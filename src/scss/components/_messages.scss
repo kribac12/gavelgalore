@@ -1,7 +1,22 @@
 #successMessage {
-  background-color: $secondary;
-  color: $black;
+  background-color: $primary;
+  color: $white;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.25rem;
+  font-weight: bold;
   display: none;
+  position: relative;
+  animation: fadeIn 0.5s ease-in-out;
+  text-align: center;
+}
+
+.close-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
 }
 
 .invalid-feedback {

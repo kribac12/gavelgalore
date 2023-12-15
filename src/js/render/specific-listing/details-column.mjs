@@ -7,6 +7,7 @@ import { populateBidHistory } from './bid-history.mjs';
 import { displayError } from '../../utilities/messages/error-handler.mjs';
 import { updateUserCredits } from '../../utilities/update-credit.mjs';
 import { updateUIOnLogin } from '../../userstate-display/logged-in-visible.mjs';
+import { displaySuccess } from '../../utilities/messages/success.mjs';
 /**
  * Populates the details column of a listing with information such as title, description, tags, highest bid, and time remaining.
  *
@@ -133,6 +134,8 @@ export function setupBidForm(
         if (updatedListing && Array.isArray(updatedListing.bids)) {
           populateBidHistory(updatedListing, bidHistory);
           updateHighestBidDetails(updatedListing, detailsColumn);
+
+          displaySuccess('Bid added!');
         }
 
         await updateUserCredits();
