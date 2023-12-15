@@ -23,7 +23,7 @@ export async function updateUserCredits() {
 
   if (userInfo) {
     const userProfile = await getUserProfile(userInfo.name);
-    displayContent = `${userInfo.name} <span class="material-symbols-outlined align-middle ps-2 pb-1">
+    displayContent = `${userInfo.name} <span class="material-symbols-outlined align-middle ps-2 pb-1 fs-4">
       universal_currency_alt
       </span> ${userProfile.credits}`;
   } else {

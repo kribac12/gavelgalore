@@ -60,8 +60,8 @@ export function renderEditAvatarButton() {
         const avatarColumn = document.getElementById('avatarColumn');
         avatarColumn.innerHTML = '';
         renderAvatar(result.avatar);
-
         displaySuccess('Avatar updated successfully');
+
         // Let UI elements back to initial state
         input.style.display = 'none';
         updateButton.style.display = 'none';
