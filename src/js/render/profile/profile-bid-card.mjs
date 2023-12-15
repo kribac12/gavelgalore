@@ -96,7 +96,7 @@ export function createBidCard(bid) {
 
   // Create container for tags
   const tagsContainer = createNewElement('div', {
-    classNames: ['tags-container', 'mb-2'],
+    classNames: ['tags-container', 'mb-2', 'py-2'],
   });
 
   limitTags(tags, 3).forEach((tag) => {

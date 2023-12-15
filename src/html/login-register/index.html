@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../../../dist/css/styles.css" />
+    <meta name="description" content="Register or login" />
+    <title>Register og login to title Galore</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
       rel="stylesheet"
@@ -14,14 +15,14 @@
       href="https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,700&display=swap"
       rel="stylesheet"
     />
+
+    <link rel="stylesheet" href="../../../dist/css/styles.css" />
     <script type="module" src="/src/js/pages/login-register.mjs"></script>
-    <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <title>Gavel Galore Homepage</title>
   </head>
   <body cz-shortcut-listen="true">
-    <div class="container">
+    <div class="container main-container">
       <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
           <div class="container-fluid">
             <div class="gavelgalore-logo">
               <span class="material-symbols-outlined">gavel</span>
@@ -60,8 +61,7 @@
                 </li>
                 <li class="nav-item">
                   <a
-                    class="nav-link"
-                    id="sellLink"
+                    class="nav-link sell-action"
                     href="/src/html/sell-page/index.html"
                     >SELL</a
                   >
@@ -135,10 +135,13 @@
                   aria-labelledby="tab-login"
                 >
                   <form id="loginForm">
-                    <div id="successMessage"></div>
+                    <div class="my-3 p-4" id="successMessage"></div>
                     <!-- Email input -->
                     <div class="form-outline mb-4">
                       <label class="form-label" for="loginEmail">Email</label>
+                      <div class="invalid-feedback" id="loginEmailError">
+                        The email-address is not registered.
+                      </div>
                       <input
                         class="form-control"
                         type="email"
@@ -146,15 +149,15 @@
                         name="loginEmail"
                         required
                       />
-                      <div class="invalid-feedback" id="loginEmailError">
-                        The email-address is not registered.
-                      </div>
                     </div>
                     <!-- Password input -->
                     <div class="form-outline mb-4">
                       <label class="form-label" for="loginPassword"
                         >Password</label
                       >
+                      <div class="invalid-feedback" id="loginPasswordError">
+                        Wrong password or email.
+                      </div>
                       <input
                         class="form-control"
                         type="password"
@@ -162,9 +165,6 @@
                         name="loginPassword"
                         required
                       />
-                      <div class="invalid-feedback" id="loginPasswordError">
-                        Wrong password or email.
-                      </div>
                     </div>
                     <!--Sign in button-->
                     <button
@@ -183,7 +183,7 @@
                   aria-labelledby="tab-register"
                 >
                   <form id="registerForm">
-                    <div id="successMessage"></div>
+                    <div class="my-3 p-4" id="successMessage"></div>
                     <!-- Name input -->
                     <div class="form-outline mb-4">
                       <label class="form-label" for="registerName">Name</label>
@@ -201,6 +201,10 @@
                         >Email (must end with 'noroff.no' or
                         'stud.noroff.no')</label
                       >
+                      <div class="invalid-feedback" id="registerEmailError">
+                        Email address must end with 'stud.noroff.no' or
+                        'noroff.no'.
+                      </div>
                       <input
                         type="email"
                         id="registerEmail"
@@ -208,16 +212,15 @@
                         class="form-control"
                         required
                       />
-                      <div class="invalid-feedback" id="registerEmailError">
-                        Email address must end with 'stud.noroff.no' or
-                        'noroff.no'.
-                      </div>
                     </div>
                     <!-- Password input -->
                     <div class="form-outline mb-4">
                       <label class="form-label" for="registerPassword"
                         >Password (must be at least 8 characters)</label
                       >
+                      <div class="invalid-feedback" id="registerPasswordError">
+                        Password must be 8 characters or longer.
+                      </div>
                       <input
                         type="password"
                         id="registerPassword"
@@ -226,14 +229,15 @@
                         required
                       />
                     </div>
-                    <div class="invalid-feedback" id="registerPasswordError">
-                      Password must be 8 characters or longer.
-                    </div>
+
                     <!-- Avatar input -->
                     <div class="form-outline mb-4">
                       <label class="form-label" for="registerAvatar"
                         >Avatar (must be a valid image URL)</label
                       >
+                      <div class="invalid-feedback" id="registerAvatarError">
+                        Avatar must be a valid image URL.
+                      </div>
                       <input
                         type="url"
                         id="registerAvatar"
@@ -242,9 +246,7 @@
                         required
                       />
                     </div>
-                    <div class="invalid-feedback" id="registerAvatarError">
-                      Avatar must be a valid image URL.
-                    </div>
+
                     <!-- Submit button -->
                     <button
                       type="submit"
@@ -260,7 +262,7 @@
           </div>
         </div>
       </main>
-      <div class="container my-5">
+      <div class="container">
         <footer class="bg-light text-center text-lg-start text-dark">
           <div class="container pt-4">
             <div class="row mt-3">
@@ -287,6 +289,42 @@
         </footer>
       </div>
     </div>
+    <!-- Universal Login Prompt Modal -->
+    <div
+      class="modal fade"
+      id="universalLoginPromptModal"
+      tabindex="-1"
+      aria-labelledby="modalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalLabel">Wonderful to see you!</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body" id="modalBody">
+            <!-- Dynamic content will be loaded here -->
+          </div>
+          <div class="modal-footer">
+            <a
+              href="/src/html/login-register/index.html#login"
+              class="btn btn-primary"
+              >Login/Register</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <script
+      defer
+      src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+    ></script>
   </body>
   <!-- Apache License Notice for Icons -->
   <!--
@@ -304,7 +342,4 @@
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   See the License for the specific language governing permissions and
   limitations under the License.
--->
-
-  <script type="module" src="/src/js/login-register.mjs"></script>
-</html>
+--></html>

@@ -14,7 +14,28 @@ button {
   font-family: 'lato', sans-serif, Helvetica;
 }
 
-.navbar a,
-span {
-  font-weight: 600;
+footer a {
+  color: $black;
+}
+
+.navbar .nav-item a {
+  font-weight: 400;
+  display: block;
+  font-size: var(--bs-nav-link-font-size);
+  font-weight: 400; // Lighter font weight for non-active links
+  color: black; // Set the color to black
+  text-decoration: none;
+  background: none;
+  border: 0;
+  &:hover {
+    background-color: $secondary;
+  }
+}
+
+.navbar .nav-item .active {
+  font-weight: 700; // Heavier font weight for active links
+}
+
+.listing-pills-h2 {
+  font-size: 1.2rem;
 }

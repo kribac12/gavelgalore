@@ -49,16 +49,9 @@ export async function makeApiRequest(
 
     const response = await fetch(fullUrl, options);
 
-    if (response.status === 401) {
-      //If token has expired or is invalid
-      handleTokenExpiration();
-      return;
-    }
-
     if (!response.ok) {
       const errorResponse = await response.json();
-
-      // Handle 404 errors specifically for listings in case listing is deleted
+      // Handle 404 errors for listings
       if (response.status === 404 && path.startsWith('listings/')) {
         console.log(`Listing not found at path: ${path}`);
         return null;
@@ -76,9 +69,4 @@ export async function makeApiRequest(
     console.error(`${method} request to ${path} failed:`, error);
     return { error: true, message: error.message };
   }
-}
-
-function handleTokenExpiration() {
-  alert('Your session has expired. Please log in again');
-  window.location.href = '/src/html/login-register';
 }

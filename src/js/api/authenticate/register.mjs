@@ -8,6 +8,7 @@ import {
   validateAvatarUrl,
   validateEmail,
   validatePassword,
+  validateField,
 } from '../../utilities/auth-utils.mjs';
 import { switchToLogin } from '../../utilities/pills/pills-login-register.mjs';
 import { displaySuccess } from '../../utilities/messages/success.mjs';
@@ -17,6 +18,21 @@ const registerName = document.getElementById('registerName');
 const registerEmail = document.getElementById('registerEmail');
 const registerPassword = document.getElementById('registerPassword');
 const registerAvatar = document.getElementById('registerAvatar');
+
+export function setupRegisterFormValidation() {
+  registerName.addEventListener('input', () =>
+    validateField(registerName, validateUsername)
+  );
+  registerEmail.addEventListener('input', () =>
+    validateField(registerEmail, validateEmail)
+  );
+  registerPassword.addEventListener('input', () =>
+    validateField(registerPassword, validatePassword)
+  );
+  registerAvatar.addEventListener('input', () =>
+    validateField(registerAvatar, validateAvatarUrl)
+  );
+}
 
 export async function registerUser() {
   try {

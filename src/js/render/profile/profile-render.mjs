@@ -14,7 +14,7 @@ export function renderSectionHeader(containerId, headerText) {
     console.error(`Container not found for: ${containerId}`);
     return;
   }
-  const header = createNewElement('h1', {
+  const header = createNewElement('h2', {
     text: headerText,
     classNames: ['section-header', 'mt-5'],
   });

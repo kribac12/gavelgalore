@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Sell your items" />
+    <title>Sell your items at Gavel Galore</title>
     <link rel="stylesheet" href="../../../dist/css/styles.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined"
@@ -15,13 +17,11 @@
       rel="stylesheet"
     />
     <script type="module" src="/src/js/pages/create-listing.mjs"></script>
-    <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <title>Gavel Galore Homepage</title>
   </head>
   <body cz-shortcut-listen="true">
-    <div class="container">
+    <div class="container main-container">
       <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-4">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
           <div class="container-fluid">
             <!--Logo and user credits for small screens-->
             <div class="d-flex align-items-center">
@@ -88,9 +88,15 @@
                   >
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link logoutLink show-when-logged-in" href="#"
-                    >Logout</a
+                  <a
+                    class="dropdown-item logoutLink show-when-logged-in"
+                    href="#"
                   >
+                    <span
+                      class="material-symbols-outlined align-middle fs-5 pe-1"
+                      >logout</span
+                    >Logout
+                  </a>
                 </li>
               </ul>
               <!-- Dropdown menu for profile and logout -->
@@ -119,8 +125,12 @@
                       <a
                         class="dropdown-item logoutLink show-when-logged-in"
                         href="#"
-                        >Logout</a
                       >
+                        <span
+                          class="material-symbols-outlined align-middle fs-5 pe-1"
+                          >logout</span
+                        >Logout
+                      </a>
                     </li>
                   </ul>
                 </li>
@@ -152,17 +162,52 @@
         </nav>
       </header>
       <main>
-        <div class="container py-3">
-          <h1>Create a listing</h1>
-          <div class="container" id="createListingContainer"></div>
-          <div
-            id="successMessage"
-            class="alert alert-success"
-            style="display: none"
-          ></div>
+        <div class="container">
+          <h1 class="mb-4">Create a listing</h1>
+          <div class="row">
+            <div class="col-lg-6 col-md-12 mb-5">
+              <div id="createListingContainer"></div>
+              <div
+                class="my-3 p-4"
+                id="successMessage"
+                class="alert alert-success"
+                style="display: none"
+              ></div>
+            </div>
+
+            <div class="col-lg-6 col-md-12 ps-3">
+              <h2>Listing preview</h2>
+              <div class="card listing-card-preview">
+                <div
+                  id="previewCarouselContainer"
+                  class="carousel-container"
+                ></div>
+                <div class="card-body">
+                  <h3 id="previewTitle" class="card-title">Title preview</h3>
+                  <p id="previewDescription" class="card-text">
+                    Description preview
+                  </p>
+                  <p class="card-text creation-date">
+                    Created:
+                    <span id="previewCreatedDate">Date will show here</span>
+                  </p>
+                  <div id="previewTags" class="tags-container mb-2"></div>
+                  <p class="card-text">
+                    <span
+                      class="material-symbols-outlined align-middle fs-5 pe-1"
+                      >hourglass_top</span
+                    >
+                    <span id="previewTimeRemaining"
+                      >Time remaining preview</span
+                    >
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </main>
-      <div class="container my-5">
+      <div class="container">
         <footer class="bg-light text-center text-lg-start text-dark">
           <div class="container pt-4">
             <div class="row mt-3">
@@ -189,6 +234,10 @@
         </footer>
       </div>
     </div>
+    <script
+      defer
+      src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+    ></script>
   </body>
   <!-- Apache License Notice for Icons -->
   <!--

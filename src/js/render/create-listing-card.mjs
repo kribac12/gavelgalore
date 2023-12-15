@@ -99,7 +99,7 @@ export function createListingCard(listing) {
   limitTags(tags, 3).forEach((tag) => {
     tagsContainer.appendChild(
       createNewElement('span', {
-        classNames: ['badge', 'bg-secondary', 'me-1'],
+        classNames: ['badge', 'bg-secondary', 'me-1', 'py-2'],
         text: tag,
       })
     );
