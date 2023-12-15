@@ -41,12 +41,20 @@ export async function loginUser() {
     return;
   }
 
-  const userCredentials = { email, password };
-  const response = await makeApiRequest('auth/login', 'POST', userCredentials);
+  try {
+    const userCredentials = { email, password };
+    const response = await makeApiRequest(
+      'auth/login',
+      'POST',
+      userCredentials
+    );
 
-  const { error, message, accessToken, name, credits, avatar } = response;
+    if (response.error) {
+      throw new Error(response.message || 'Login failed. Please try again.');
+    }
 
-  if (!error && accessToken) {
+    const { accessToken, name, credits, avatar } = response;
+
     const userInfo = {
       name,
       email,
@@ -56,10 +64,9 @@ export async function loginUser() {
     };
     saveUserInfo(userInfo); // Save user info in localStorage
     window.location.href = '/src/html/profile/index.html';
-  } else {
+  } catch (error) {
     const loginMessageElement = document.getElementById('loginMessage');
-    loginMessageElement.textContent =
-      message || 'Login failed. Please try again.';
+    loginMessageElement.textContent = error.message;
     loginMessageElement.style.display = 'block'; // Show login error message
   }
 }
