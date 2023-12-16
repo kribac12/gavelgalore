@@ -7,7 +7,7 @@ import {
 } from '../utilities/search-utils.mjs';
 import { handleActionForLoggedOutUsers } from '../utilities/modal-prompt.mjs';
 import { setUpSearchForm } from '../setup/set-up-search.mjs';
-
+import { setUpBackToTopButton } from '../setup/setup-back-to-top.mjs';
 document.addEventListener('DOMContentLoaded', async () => {
   setUpLogoutLink();
   updateUserCredits();
@@ -35,4 +35,5 @@ document.addEventListener('DOMContentLoaded', async () => {
   } else {
     searchQueryDisplay.textContent = 'No search query provided.';
   }
+  setUpBackToTopButton(); // Initialize the Back to Top button
 });
