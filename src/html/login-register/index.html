@@ -23,9 +23,18 @@
       <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
           <div class="container-fluid">
-            <div class="gavelgalore-logo">
-              <span class="material-symbols-outlined">gavel</span>
-              <a class="navbar-brand fs-2" href="/index.html"> GavelGalore</a>
+            <!--Logo and user credits for small screens-->
+            <div class="d-flex align-items-center">
+              <div class="gavelgalore-logo">
+                <span class="material-symbols-outlined">gavel</span>
+                <a class="navbar-brand fs-2" href="/index.html">GavelGalore</a>
+              </div>
+              <div class="d-lg-none ms-3">
+                <a class="nav-link" href="#" id="navbarDropdown">
+                  <span id="userDisplaySmall"></span>
+                  <!-- Small Screen Username -->
+                </a>
+              </div>
             </div>
             <button
               class="navbar-toggler mb-4"
@@ -39,12 +48,13 @@
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="hamburger-nav">
-              <form class="d-flex w-50">
+              <form class="d-flex col-12 col-lg-6" id="searchForm">
                 <input
                   class="form-control me-2"
                   type="search"
-                  placeholder="Search GavelGalore"
+                  placeholder="Search by title, tag or description"
                   aria-label="Search"
+                  name="query"
                 />
               </form>
               <ul class="navbar-nav">
@@ -54,7 +64,9 @@
                   >
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/src/html/buy-page/index.html"
+                  <a
+                    class="nav-link"
+                    href="/src/html/buy-page/index.html#popular"
                     >BUY</a
                   >
                 </li>
@@ -66,8 +78,27 @@
                   >
                 </li>
               </ul>
-              <ul class="navbar-nav ms-auto">
+              <!-- Duplicated dropdown items and login/register for small screens -->
+              <ul class="navbar-nav d-lg-none">
                 <li class="nav-item">
+                  <a
+                    class="nav-link show-when-logged-in"
+                    href="/src/html/profile/index.html"
+                    >My Profile</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a
+                    class="dropdown-item logoutLink show-when-logged-in"
+                    href="#"
+                  >
+                    <span
+                      class="material-symbols-outlined align-middle fs-5 pe-1"
+                      >logout</span
+                    >Logout
+                  </a>
+                </li>
+                <li class="nav-item show-when-logged-out">
                   <a
                     class="nav-link"
                     href="/src/html/login-register/index.html#login"
@@ -78,7 +109,66 @@
                     >Login
                   </a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item show-when-logged-out">
+                  <a
+                    class="nav-link"
+                    href="/src/html/login-register/index.html#register"
+                  >
+                    <span
+                      class="material-symbols-outlined align-middle fs-5 pe-1"
+                      >how_to_reg</span
+                    >Register
+                  </a>
+                </li>
+              </ul>
+              <!-- Dropdown menu for profile and logout -->
+              <ul class="navbar-nav ms-auto d-none d-lg-flex">
+                <li class="nav-item dropdown show-when-logged-in">
+                  <a
+                    class="nav-link dropdown-toggle"
+                    href="#"
+                    id="navbarDropdownLargeScreen"
+                    role="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    aria-label="Dropdown Menu"
+                  >
+                    <span id="userDisplayLarge"></span>
+                    <!-- Username and Credits -->
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li class="nav-item">
+                      <a
+                        class="dropdown-item"
+                        href="/src/html/profile/index.html"
+                        >My Profile</a
+                      >
+                    </li>
+                    <li class="nav-item">
+                      <a
+                        class="dropdown-item logoutLink show-when-logged-in"
+                        href="#"
+                      >
+                        <span
+                          class="material-symbols-outlined align-middle fs-5 pe-1"
+                          >logout</span
+                        >Logout
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="nav-item show-when-logged-out">
+                  <a
+                    class="nav-link"
+                    href="/src/html/login-register/index.html#login"
+                  >
+                    <span
+                      class="material-symbols-outlined align-middle fs-5 pe-1"
+                      >login</span
+                    >Login
+                  </a>
+                </li>
+                <li class="nav-item show-when-logged-out">
                   <a
                     class="nav-link"
                     href="/src/html/login-register/index.html#register"

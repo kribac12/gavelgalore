@@ -4,6 +4,7 @@ import { updateUserCredits } from '../utilities/update-credit.mjs';
 import { loadListing } from '../api/listings/load-listing.mjs';
 import { setUpSearchForm } from '../setup/set-up-search.mjs';
 import { handleActionForLoggedOutUsers } from '../utilities/modal-prompt.mjs';
+import { setUpBackToTopButton } from '../setup/setup-back-to-top.mjs';
 
 document.addEventListener('DOMContentLoaded', () => {
   setUpLogoutLink();
@@ -17,4 +18,5 @@ document.addEventListener('DOMContentLoaded', () => {
       handleActionForLoggedOutUsers('sell your items', event);
     });
   });
+  setUpBackToTopButton(); // Initialize the Back to Top button
 });
