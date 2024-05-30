@@ -54,8 +54,6 @@ To lint your code, run:
 To automatically fix inting errors, run:
 `npm run lint-fix`
 
-## Running tests
-Currently, GavelGalore does not include tests, but this will be developed further. 
 
 ## Deployment
 Visit https://gavelgalore.netlify.app  to view live version.
