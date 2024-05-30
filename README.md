@@ -13,11 +13,11 @@ Responsive design: Fully responsive web design using Bootstrap, ensuring compati
 - Styling: Bootstrap for responsive design and user interface components.
 - API: Interaction with a RESTful API for managing auctions.
 - Tooling:
--- Node.js: For running development tools.
--- SASS: For advanced CSS pre-processing.
--- Prettier: For code formatting.
--- ESLint: For JavaScript code linting.
--- Husky: For managing Git hooks.
+  - Node.js: For running development tools.
+  - SASS: For advanced CSS pre-processing.
+  - Prettier: For code formatting.
+  - ESLint: For JavaScript code linting.
+  - Husky: For managing Git hooks.
 
 ## Prerequisites
 Before you begin, ensure you have installed the latest version of Node.js: https://nodejs.org/en 
@@ -63,4 +63,4 @@ This project includes multiple licenses:
 
 - The source code of the project is licensed under the MIT License. See the [LICENSE-MIT](/LICENSE-MIT) file for details.
 - The Material Symbols from Google Fonts are licensed under the Apache License, Version 2.0. See the [LICENSE-APACHE](/LICENSE-APACHE) file for details.
-  -- This project includes components under the Apache License, Version 2.0. For attributions and notices related to these components, please see the [NOTICE](/NOTICE) file in this repository.
+  - This project includes components under the Apache License, Version 2.0. For attributions and notices related to these components, please see the [NOTICE](/NOTICE) file in this repository.
